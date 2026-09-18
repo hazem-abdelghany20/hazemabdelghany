@@ -9,8 +9,11 @@ import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/essays/$id")({
   loader: async ({ params }) => {
-    const moved = ESSAY_REDIRECTS[params.id];
-    if (moved) throw redirect({ to: "/essays/$id/", params: { id: moved }, statusCode: 301 });
+    const moved = ESSAY_REDIRECTS[`/essays/${params.id}/`];
+    if (moved) {
+      const id = moved.split("/")[2]!;
+      throw redirect({ to: "/essays/$id/", params: { id }, statusCode: 301 });
+    }
     const essay = publishedEssays().find((e) => e.id === params.id);
     const html = essay && (await essayHtml(essay.id));
     if (!essay || html === undefined) throw notFound();

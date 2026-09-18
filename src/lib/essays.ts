@@ -1,5 +1,6 @@
 import index from "virtual:essays";
 import type { EssayFrontmatter } from "@/content/schema";
+import redirects from "@/content/redirects.json";
 
 export type Essay = { id: string; data: EssayFrontmatter };
 
@@ -26,8 +27,6 @@ export async function essayHtml(id: string): Promise<string | undefined> {
   return load ? await load() : undefined;
 }
 
-/** Old essay ids that moved, old id -> new id. */
-export const ESSAY_REDIRECTS: Record<string, string> = {
-  "ro-07-focus": "ro-06-flow",
-  "ro-07-focus-ar": "ro-06-flow-ar",
-};
+/** Old essay URLs that moved (old path -> new path). One list, read by the
+ *  essay route here and by scripts/static-extras.mjs for the static build. */
+export const ESSAY_REDIRECTS: Record<string, string> = redirects;

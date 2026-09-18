@@ -50,10 +50,12 @@ bun run dev      # dev server
 bun run build    # production build (Cloudflare Workers output in .output/)
 ```
 
-Local production check: `NITRO_PRESET=node-server bun run build && PORT=5211 node .output/server/index.mjs`.
+Local check of what ships: `bun run build:static`, then serve `dist/client/` with any static server.
 
 ⚠️ The build breaks if the repo path contains an apostrophe (TanStack's code splitter). The working copy lives at `~/Documents/kaufmann/hazemabdelghany`; `Hazem's code/hazemabdelghany` is a symlink to it.
 
 ## Deploy
 
-Push to `main` → Lovable syncs → **Publish → Update** in Lovable puts it live.
+Push to `main` → GitHub Actions (`.github/workflows/deploy.yml`) runs `bun run build:static`, which prerenders every page to HTML in `dist/client/` (plus `404.html` and redirect stubs via `scripts/static-extras.mjs`), and publishes it to GitHub Pages at hazemabdelghany.com. Lovable edits land on `main` too, so they deploy the same way.
+
+No server runs in production — database features call Supabase from the browser (see `AGENTS.md`).
