@@ -1,0 +1,257 @@
+
+/* ---------- Bedrock and Weather: the book's own components ----------
+   The book was designed with its own token names; map them onto the site's
+   palette once here so its component CSS can be carried over unchanged. */
+.bw {
+  --ground: var(--bg);
+  --surface: var(--fig-surface);
+  --surface-2: var(--line);
+  --ink-soft: var(--ink-2);
+  --rule: var(--line);
+  --rule-soft: var(--line);
+  --iron: var(--c1);
+  --iron-wash: color-mix(in srgb, var(--c1) 9%, transparent);
+  --slate: var(--c2);
+  --slate-wash: color-mix(in srgb, var(--c2) 9%, transparent);
+  --ochre: var(--c3);
+  --ochre-wash: color-mix(in srgb, var(--c3) 9%, transparent);
+  --f-display: var(--font-en);
+  --f-body: var(--font-en);
+  --f-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  --col: 100%;
+  --rail: 11rem;
+  font-size: 17px;
+  line-height: 1.62;
+}
+.bw p { margin: 0 0 1.15em; max-width: var(--col); }
+.bw strong { font-weight: 600; color: var(--ink); }
+.bw a { color: var(--accent); }
+.bw h3, .bw h4 { font-family: var(--f-display); font-weight: 600; line-height: 1.15; }
+.bw h3 { font-size: 21px; margin: 2.4rem 0 .7rem; }
+.bw h4 { font-size: 17px; margin: 1.8rem 0 .5rem; }
+
+.bw .wrap{max-width:calc(var(--col) + var(--rail) + 6rem);margin:0 auto;padding:0 1.6rem}
+.bw p{margin:0 0 1.15em;max-width:var(--col)}
+.bw a{color:var(--iron);text-underline-offset:3px;text-decoration-thickness:1px}
+.bw a:focus-visible,.bw button:focus-visible{outline:2px solid var(--iron);outline-offset:3px;border-radius:2px}
+.bw strong{font-weight:600;color:var(--ink)}
+.bw em{font-style:italic}
+.bw hr{border:0;border-top:1px solid var(--rule);margin:3rem 0}
+.bw h1,.bw h2,.bw h3,.bw h4{font-family:var(--f-display);text-wrap:balance;font-weight:600;line-height:1.08;letter-spacing:-.02em;margin:0}
+.bw h2{font-size:clamp(1.75rem,3.6vw,2.5rem);font-variation-settings:"SOFT" 20,"WONK" 1}
+.bw h3{font-size:clamp(1.25rem,2.2vw,1.55rem);letter-spacing:-.012em;margin:2.6rem 0 .7rem}
+.bw h4{font-size:1.02rem;letter-spacing:.01em;margin:1.9rem 0 .5rem}
+.bw .eyebrow{
+  font-family:var(--f-mono);font-size:.68rem;font-weight:600;
+  letter-spacing:.17em;text-transform:uppercase;color:var(--iron);
+  display:block;margin-bottom:.75rem;
+}
+.bw .eyebrow.slate{color:var(--slate)}
+.bw .eyebrow.muted{color:var(--faint)}
+.bw /* ============ PART DIVIDERS ============ */
+.part{
+  margin:5.5rem 0 2.4rem;padding-top:1.6rem;
+  border-top:2px solid var(--ink);
+}
+.bw /* ============ CALLOUTS ============ */
+.note{
+  background:var(--surface);border:1px solid var(--rule-soft);
+  border-left:3px solid var(--slate);
+  padding:1.15rem 1.3rem;margin:1.8rem 0;max-width:var(--col);
+  font-size:.96rem;line-height:1.55;
+}
+.bw .note p:last-child{margin-bottom:0}
+.bw .note.warn{border-left-color:var(--iron)}
+.bw .note.ochre{border-left-color:var(--ochre)}
+.bw .note .lbl{
+  font-family:var(--f-mono);font-size:.66rem;font-weight:600;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.5rem;
+}
+.bw .pull{
+  font-family:var(--f-display);font-size:clamp(1.35rem,2.8vw,1.85rem);
+  line-height:1.22;letter-spacing:-.02em;font-weight:500;
+  font-variation-settings:"SOFT" 24,"WONK" 1;
+  color:var(--slate);max-width:34ch;
+  margin:2.6rem 0;padding-left:1.2rem;border-left:2px solid var(--iron);
+}
+.bw /* ============ STATION (profile) ============ */
+.station{
+  border-top:1px solid var(--rule);
+  padding:2.2rem 0 .6rem;margin-top:2.2rem;
+}
+.bw .station-head{display:flex;align-items:baseline;gap:.9rem;flex-wrap:wrap;margin-bottom:.3rem}
+.bw .station-n{
+  font-family:var(--f-mono);font-size:.78rem;font-weight:600;
+  color:var(--iron);letter-spacing:.1em;
+}
+.bw .station-head h3{margin:0;font-size:clamp(1.5rem,3vw,2rem);font-variation-settings:"SOFT" 20}
+.bw .tag{
+  font-family:var(--f-mono);font-size:.62rem;font-weight:600;letter-spacing:.13em;
+  text-transform:uppercase;padding:.24rem .55rem;border-radius:2px;
+  background:var(--slate-wash);color:var(--slate);border:1px solid var(--slate);
+  white-space:nowrap;
+}
+.bw .engine{
+  font-size:1.06rem;line-height:1.48;color:var(--ink-soft);
+  max-width:var(--col);margin:.9rem 0 1.5rem;font-style:italic;
+}
+.bw .fields{
+  display:grid;gap:0;max-width:var(--col);
+  border-top:1px solid var(--rule-soft);margin-bottom:1.5rem;
+}
+.bw .field{
+  display:grid;grid-template-columns:var(--rail) 1fr;gap:1.4rem;
+  padding:.85rem 0;border-bottom:1px solid var(--rule-soft);
+}
+.bw .field dt{
+  font-family:var(--f-mono);font-size:.63rem;font-weight:600;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--faint);padding-top:.28rem;
+}
+.bw .field dd{margin:0;font-size:.97rem;line-height:1.52}
+.bw .split{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;max-width:var(--col);margin-bottom:1.4rem}
+.bw .split h4{margin-top:0;font-family:var(--f-mono);font-size:.66rem;font-weight:600;
+  letter-spacing:.13em;text-transform:uppercase}
+.bw .split .yes h4{color:var(--slate)}
+.bw .split .no h4{color:var(--iron)}
+.bw .split ul{margin:0;padding-left:1.05rem;font-size:.93rem;line-height:1.48}
+.bw .split li{margin-bottom:.6rem}
+.bw .split li::marker{color:var(--faint)}
+.bw /* ============ MATRIX ============ */
+.matrix-wrap{
+  overflow-x:auto;margin:2.2rem 0 1rem;
+  border:1px solid var(--rule);background:var(--surface);
+}
+.bw table.matrix{border-collapse:collapse;width:100%;min-width:860px;font-family:var(--f-mono);font-size:.7rem}
+.bw table.matrix th,.bw table.matrix td{padding:.5rem .35rem;text-align:center;border-bottom:1px solid var(--rule-soft)}
+.bw table.matrix thead th{
+  font-weight:600;letter-spacing:.04em;color:var(--muted);
+  font-size:.62rem;text-transform:uppercase;vertical-align:bottom;
+  border-bottom:1px solid var(--rule);padding-bottom:.7rem;line-height:1.15;
+}
+.bw table.matrix th.trait{
+  text-align:left;width:15rem;min-width:15rem;padding-left:.9rem;
+  font-family:var(--f-body);font-size:.88rem;font-weight:500;
+  text-transform:none;letter-spacing:0;color:var(--ink);line-height:1.3;
+}
+.bw table.matrix tbody tr:hover{background:var(--surface-2)}
+.bw .dot{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:middle}
+.bw .dot.full{background:var(--slate)}
+.bw .dot.part{background:transparent;border:2px solid var(--slate)}
+.bw .dot.none{background:transparent;border:1px solid var(--rule);width:9px;height:9px}
+.bw tr.universal th.trait{font-weight:600}
+.bw tr.universal{background:var(--slate-wash)}
+.bw .tally{font-weight:600;color:var(--ink);font-size:.72rem;padding-right:.9rem !important;text-align:right !important}
+.bw .legend{
+  display:flex;gap:1.5rem;flex-wrap:wrap;font-family:var(--f-mono);font-size:.68rem;
+  color:var(--muted);letter-spacing:.04em;margin-bottom:2rem;
+}
+.bw .legend span{display:flex;align-items:center;gap:.45rem}
+.bw /* ============ VERDICT / LISTS ============ */
+.verdicts{display:grid;gap:1rem;max-width:var(--col);margin:2rem 0}
+.bw .verdict{border:1px solid var(--rule-soft);background:var(--surface);padding:1.1rem 1.25rem}
+.bw .verdict .v-top{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:.55rem}
+.bw .verdict .v-claim{font-family:var(--f-display);font-size:1.06rem;font-weight:600;line-height:1.25;letter-spacing:-.01em}
+.bw .stamp{
+  font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;padding:.22rem .5rem;white-space:nowrap;border-radius:2px;
+}
+.bw .stamp.u{background:var(--slate);color:var(--ground)}
+.bw .stamp.n{background:var(--ochre-wash);color:var(--ochre);border:1px solid var(--ochre)}
+.bw .stamp.r{background:var(--iron-wash);color:var(--iron);border:1px solid var(--iron)}
+.bw .verdict p{font-size:.94rem;line-height:1.5;margin-bottom:.6rem}
+.bw .verdict p:last-child{margin-bottom:0}
+.bw .verdict .ex{font-size:.88rem;color:var(--muted);font-style:italic}
+.bw ul.body,.bw ol.body{max-width:var(--col);padding-left:1.2rem;margin:0 0 1.3rem}
+.bw ul.body li,.bw ol.body li{margin-bottom:.75rem;line-height:1.55}
+.bw ul.body li::marker,.bw ol.body li::marker{color:var(--faint)}
+.bw .rule-list{max-width:var(--col);margin:1.5rem 0;border-top:1px solid var(--rule)}
+.bw .rule-list .item{padding:1.05rem 0;border-bottom:1px solid var(--rule-soft)}
+.bw .rule-list .item h4{margin:0 0 .35rem;font-family:var(--f-display);font-size:1.06rem;
+  font-weight:600;letter-spacing:-.01em}
+.bw .rule-list .item p{font-size:.95rem;margin:0;color:var(--ink-soft)}
+.bw .rule-list .item .n{
+  font-family:var(--f-mono);font-size:.68rem;color:var(--iron);font-weight:600;
+  letter-spacing:.1em;margin-right:.6rem;
+}
+.bw /* ============ FRAMEWORK CARDS ============ */
+.fw{border-top:1px solid var(--rule);padding:1.8rem 0 .4rem;max-width:var(--col)}
+.bw .fw-head{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin-bottom:.2rem}
+.bw .fw h3{margin:0;font-size:1.35rem}
+.bw .fw .src{font-family:var(--f-mono);font-size:.68rem;color:var(--faint);letter-spacing:.05em}
+.bw .fw .claim{font-size:1rem;color:var(--ink-soft);margin:.8rem 0 1.1rem;line-height:1.5}
+.bw .fw-grid{display:grid;gap:1.1rem;margin-bottom:.8rem}
+.bw .fw-box{border-left:2px solid var(--rule);padding-left:.95rem}
+.bw .fw-box.test{border-left-color:var(--slate)}
+.bw .fw-box.wrong{border-left-color:var(--iron)}
+.bw .fw-box .lbl{font-family:var(--f-mono);font-size:.63rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem}
+.bw .fw-box p,.bw .fw-box ul{font-size:.93rem;line-height:1.5;margin:0}
+.bw .fw-box ul{padding-left:1.05rem}
+.bw .fw-box li{margin-bottom:.45rem}
+.bw /* ============ CLASH ============ */
+.clash{
+  display:grid;grid-template-columns:1fr auto 1fr;gap:1.2rem;align-items:stretch;
+  max-width:var(--col);margin:1.6rem 0;
+}
+.bw .clash .side{background:var(--surface);border:1px solid var(--rule-soft);padding:1rem 1.1rem}
+.bw .clash .side .who{font-family:var(--f-mono);font-size:.65rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--iron);display:block;margin-bottom:.45rem}
+.bw .clash .side:last-child .who{color:var(--slate)}
+.bw .clash .side p{font-size:.93rem;line-height:1.48;margin:0}
+.bw .clash .vs{
+  display:flex;align-items:center;font-family:var(--f-mono);font-size:.7rem;
+  font-weight:600;color:var(--faint);letter-spacing:.1em;
+}
+.bw .resolve{font-size:.96rem;max-width:var(--col);color:var(--ink-soft)}
+.bw .resolve strong{color:var(--ink)}
+
+/* The essay header already carries the name, so the station head is just the
+   number and the leverage it ran on. */
+.bw .station { border-top: 0; padding-top: 0; margin-top: 0; }
+.bw .station-head { margin-bottom: 1rem; }
+
+/* `.dot.part` must never pick up the part-divider box. */
+.bw .dot { display: inline-block; box-sizing: border-box; margin: 0; border-top: 0; padding: 0; vertical-align: middle; }
+.bw .dot.full { width: 11px; height: 11px; }
+.bw .dot.part { width: 11px; height: 11px; border: 2px solid var(--slate); background: transparent; }
+.bw .dot.none { width: 9px; height: 9px; }
+/* 11.2px is below the legible floor; the wrapper already scrolls. */
+.bw table.matrix { font-size: 12.5px; }
+.bw table.matrix thead th { font-size: 11.5px; }
+
+/* The book's own responsive block. The port lost it (splitting CSS on "}"
+   fragments a nested @media), which left .field's 11rem rail and .clash's
+   three columns uncollapsed on a phone. */
+@media (max-width: 760px) {
+  .bw { --rail: 7rem; }
+  .bw .field { grid-template-columns: 1fr; gap: 0.3rem; }
+  .bw .split { grid-template-columns: 1fr; gap: 1.2rem; }
+  .bw .clash { grid-template-columns: 1fr; gap: 0.7rem; }
+  .bw .clash .vs { justify-content: center; }
+  .bw .fw-grid { grid-template-columns: 1fr; }
+}
+
+/* Several of the book's micro-labels ship at 0.62–0.68rem (10–11px). Raise the
+   floor without touching the type hierarchy. */
+.bw .field dt,
+.bw .split h4,
+.bw .fw-box .lbl,
+.bw .note .lbl,
+.bw .stamp,
+.bw .tag,
+.bw .clash .side .who,
+.bw .fw .src,
+.bw .legend,
+.bw .verdict .ex { font-size: 11.5px; }
+.bw .eyebrow { font-size: 11.5px; }
+
+/* ---------- Station intro: who the person is ----------
+   The engine line assumes you already know the name. This doesn't. It runs
+   above it, in plain narrative, for a reader meeting the person cold. */
+.bw .station-intro{
+  max-width:var(--col);margin:1rem 0 1.9rem;
+  padding-left:1.15rem;border-left:1px solid var(--rule);
+}
+.bw .station-intro p{font-size:1.01rem;line-height:1.74;color:var(--ink-soft);margin-bottom:.95em}
+.bw .station-intro p:last-child{margin-bottom:0}
+.bw .station-intro .eyebrow{color:var(--muted);margin-bottom:.85rem}

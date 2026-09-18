@@ -5,8 +5,11 @@
 //     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { essaysPlugin } from "./essays-plugin";
 
 export default defineConfig({
+  // Renders src/content/essays/*.md at build time — see essays-plugin.ts.
+  plugins: [essaysPlugin()],
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this

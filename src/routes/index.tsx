@@ -1,197 +1,198 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-import meridianBanking from "../assets/meridian-banking.jpg";
-import sanaeHealth from "../assets/sanae-health.jpg";
-import hazemPortrait from "../assets/hazem-portrait.jpg";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { EssayRow } from "@/components/EssayRow";
+import { publishedEssays } from "@/lib/essays";
+import { THREADS, type ThreadKey } from "@/lib/threads";
+import { SERIES } from "@/lib/series";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Hazem — Product Designer" },
-      { name: "description", content: "Hazem is a product designer building calm, considered digital products from Cairo." },
-      { property: "og:title", content: "Hazem — Product Designer" },
-      { property: "og:description", content: "Hazem is a product designer building calm, considered digital products from Cairo." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
-  component: Index,
+  head: () => seo({ path: "/" }),
+  component: Home,
 });
 
-function Index() {
+function Home() {
+  const published = publishedEssays();
+
+  // Series parts are represented by their series card, not as individual rows —
+  // otherwise one multi-part book occupies the entire homepage.
+  const essays = published.filter((e) => !e.data.series).slice(0, 4);
+  const seriesCards = Object.values(SERIES)
+    .map((s) => ({
+      s,
+      count: published.filter((e) => e.data.series === s.key && e.data.lang === "en").length,
+    }))
+    .filter((c) => c.count > 0);
+
+  // Each thread advertises how much is actually behind it.
+  const threadCount = (key: ThreadKey) => {
+    const inThread = published.filter((e) => e.data.thread === key);
+    const standalone = inThread.filter((e) => !e.data.series).length;
+    const series = new Set(inThread.filter((e) => e.data.series).map((e) => e.data.series)).size;
+    return standalone + series;
+  };
+
   return (
-    <div className="min-h-screen bg-ink text-paper font-sans antialiased selection:bg-accent selection:text-ink">
-      {/* Nav */}
-      <header className="sticky top-0 z-40 border-b border-line/70 bg-ink/85 backdrop-blur-sm">
-        <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
-          <a href="#top" className="font-serif text-xl tracking-tight">
-            Hazem<span className="text-accent">.</span>
-          </a>
-          <nav className="hidden md:flex items-center gap-8 text-sm text-muted">
-            <a href="#work" className="hover:text-paper transition-colors">Work</a>
-            <a href="#about" className="hover:text-paper transition-colors">About</a>
-            <a href="#contact" className="hover:text-paper transition-colors">Contact</a>
-          </nav>
-          <a
-            href="#contact"
-            className="hidden md:inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm font-medium hover:bg-paper hover:text-ink transition-colors"
-          >
-            Let's talk
-            <span className="size-1.5 rounded-full bg-accent"></span>
-          </a>
-        </div>
-      </header>
-
-      {/* Hero */}
-      <section id="top" className="mx-auto max-w-6xl px-6 pt-16 pb-10">
-        <div className="flex items-end justify-between gap-6 flex-wrap">
-          <div className="max-w-2xl">
-            <p className="text-xs uppercase tracking-[0.3em] text-accent mb-4">Product Designer — Cairo</p>
-            <h1 className="font-serif text-5xl md:text-7xl leading-[0.95] tracking-tight">
-              Hazem builds<br />
-              <span className="italic text-muted">calm, considered</span><br />
-              interfaces.
-            </h1>
-          </div>
-          <p className="max-w-xs text-sm text-muted leading-relaxed">
-            Eight years shaping digital products for fintech, health and culture — from first sketch to shipped system.
+    <div className="page-home">
+      <section className="hero">
+        <div className="hero-copy">
+          <div className="hero-mark">A place for deeper conversations</div>
+          <h1 className="hero-statement">
+            This is where I <em>think out loud</em> — about building, faith, the body, and the mind.
+          </h1>
+          <p className="hero-ar" dir="rtl" lang="ar">
+            هنا بفكّر بصوت عالي — عن البناء، والإيمان، والجسد، والعقل.
           </p>
-        </div>
-
-        {/* App screen */}
-        <div className="mt-12 rounded-2xl border border-line bg-ink-2 shadow-[0_40px_120px_-40px_rgba(0,0,0,0.8)] overflow-hidden">
-          <div className="flex items-center gap-2 border-b border-line px-4 py-3">
-            <span className="size-3 rounded-full bg-line"></span>
-            <span className="size-3 rounded-full bg-line"></span>
-            <span className="size-3 rounded-full bg-line"></span>
-            <span className="ml-3 text-xs text-muted font-medium">hazem.design — Studio Portfolio</span>
-            <span className="ml-auto text-xs text-muted">v2.4</span>
+          <p className="hero-bio">
+            Founder at Catalyst. Muslim. Athlete mid-rebuild. Student of the mind. This site is the
+            whole picture — not the highlight reel.
+          </p>
+          <div className="hero-foot">
+            <hr className="rule" />
+            <span>Cairo · 2026</span>
           </div>
-          <div className="grid md:grid-cols-[220px_1fr]">
-            {/* sidebar */}
-            <aside className="border-b md:border-b-0 md:border-r border-line p-5 space-y-1 text-sm">
-              <p className="text-[10px] uppercase tracking-[0.2em] text-muted mb-3">Menu</p>
-              <a href="#top" className="block rounded-lg px-3 py-2 bg-paper text-ink font-medium">Overview</a>
-              <a href="#work" className="block rounded-lg px-3 py-2 text-muted hover:text-paper transition-colors">Projects</a>
-              <a href="#work" className="block rounded-lg px-3 py-2 text-muted hover:text-paper transition-colors">Case Studies</a>
-              <a href="#about" className="block rounded-lg px-3 py-2 text-muted hover:text-paper transition-colors">Process</a>
-              <a href="#contact" className="block rounded-lg px-3 py-2 text-muted hover:text-paper transition-colors">Contact</a>
-              <div className="pt-4 mt-4 border-t border-line">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted mb-2">Status</p>
-                <p className="flex items-center gap-2 text-sm">
-                  <span className="size-1.5 rounded-full bg-accent"></span>
-                  Available Q3
+        </div>
+        <figure className="hero-visual" aria-label="A writer's desk overlooking Cairo and the Nile">
+          <img
+            className="hero-image hero-image-light"
+            src="/images/brand/hero-cairo-light.webp"
+            alt="A notebook and books beside a Cairo window overlooking the Nile in daylight"
+            width="1440"
+            height="960"
+            fetchPriority="high"
+          />
+          <img
+            className="hero-image hero-image-dark"
+            src="/images/brand/hero-cairo-dark.webp"
+            alt="The same Cairo desk and Nile view at blue hour"
+            width="1440"
+            height="960"
+          />
+          <figcaption>Same river. A deeper conversation.</figcaption>
+        </figure>
+      </section>
+
+      <section className="threads">
+        <div className="section-head">
+          <h2 className="kicker">The Five Threads</h2>
+          <span dir="rtl" lang="ar" className="section-head-ar">
+            الخيوط الخمسة
+          </span>
+        </div>
+        <div className="threads-grid">
+          {THREADS.map((t, i) => {
+            const count = threadCount(t.key);
+            return (
+              <Link
+                key={t.key}
+                className="thread"
+                to="/threads/$thread/"
+                params={{ thread: t.key }}
+              >
+                <div className="thread-image-frame">
+                  <img
+                    className="thread-image"
+                    src={`/images/threads/${t.key}.webp`}
+                    alt=""
+                    width="960"
+                    height="720"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="thread-title-line">
+                  <span className="row-num">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="thread-ar" dir="rtl" lang="ar">
+                    {t.ar}
+                  </span>
+                </div>
+                <span className="tag">{t.en}</span>
+                <span className="thread-blurb">{t.blurb}</span>
+                <span className="thread-count">
+                  {count === 0 ? "Nothing yet" : `${count} to read →`}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="essays">
+        <div className="section-head">
+          <div style={{ display: "flex", alignItems: "baseline", gap: "14px" }}>
+            <h2 className="kicker">Books</h2>
+            <span dir="rtl" lang="ar" className="section-head-ar">
+              كتب
+            </span>
+          </div>
+          <Link to="/books/" className="meta">
+            All books →
+          </Link>
+        </div>
+        <div className="home-books-grid">
+          {seriesCards.map(({ s, count }) => (
+            <Link key={s.key} className="home-series" to="/$series/" params={{ series: s.slug }}>
+              <img
+                className="home-series-cover"
+                src={s.cover}
+                alt={`Cover of ${s.title}`}
+                width="800"
+                height="1200"
+                loading="lazy"
+              />
+              <div className="home-series-copy">
+                <div className="home-series-top">
+                  <span className="tag">{s.category}</span>
+                  <span className="home-series-category-ar" dir="rtl" lang="ar">
+                    {s.categoryAr}
+                  </span>
+                </div>
+                <h3 className="home-series-title">{s.title}</h3>
+                <p className="home-series-title-ar" dir="rtl" lang="ar">
+                  {s.ar}
                 </p>
+                <p className="home-series-sub">{s.subtitle}</p>
+                <span className="meta">{`${count} of ${s.parts} parts · Start reading →`}</span>
               </div>
-            </aside>
-            {/* main */}
-            <div className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted">Featured</p>
-                  <h2 className="font-serif text-2xl mt-1">Selected Works</h2>
-                </div>
-                <span className="text-xs text-muted">2023 — 2025</span>
-              </div>
-
-              <div className="mt-5 grid sm:grid-cols-2 gap-4">
-                <div className="rounded-xl border border-line p-4 hover:border-accent/60 transition-colors">
-                  <img
-                    src={meridianBanking}
-                    alt="Meridian Banking dashboard"
-                    width={1024}
-                    height={768}
-                    loading="lazy"
-                    className="aspect-[4/3] w-full object-cover rounded-lg"
-                  />
-                  <p className="mt-3 font-medium">Meridian Banking</p>
-                  <p className="text-xs text-muted">Product design · 2024</p>
-                </div>
-                <div className="rounded-xl border border-line p-4 hover:border-accent/60 transition-colors">
-                  <img
-                    src={sanaeHealth}
-                    alt="Sanae Health mobile screens"
-                    width={1024}
-                    height={768}
-                    loading="lazy"
-                    className="aspect-[4/3] w-full object-cover rounded-lg"
-                  />
-                  <p className="mt-3 font-medium">Sanae Health</p>
-                  <p className="text-xs text-muted">Design system · 2023</p>
-                </div>
-              </div>
-            </div>
-          </div>
+            </Link>
+          ))}
         </div>
       </section>
 
-      {/* Marquee */}
-      <div className="border-y border-line py-4 overflow-hidden">
-        <div className="marquee-track flex whitespace-nowrap gap-10 font-serif text-2xl text-muted/70">
-          <span>Product Design</span><span className="text-accent">·</span>
-          <span>Design Systems</span><span className="text-accent">·</span>
-          <span>Prototyping</span><span className="text-accent">·</span>
-          <span>Art Direction</span><span className="text-accent">·</span>
-          <span>Product Design</span><span className="text-accent">·</span>
-          <span>Design Systems</span><span className="text-accent">·</span>
-          <span>Prototyping</span><span className="text-accent">·</span>
-          <span>Art Direction</span><span className="text-accent">·</span>
+      <section className="essays">
+        <div className="section-head">
+          <div style={{ display: "flex", alignItems: "baseline", gap: "14px" }}>
+            <h2 className="kicker">Articles</h2>
+            <span dir="rtl" lang="ar" className="section-head-ar">
+              مقالات
+            </span>
+          </div>
+          <Link to="/essays/" className="meta">
+            All articles →
+          </Link>
         </div>
-      </div>
+        <div className="row-list">
+          {essays.map((e, i) => (
+            <EssayRow key={e.id} essay={e} num={String(i + 1).padStart(2, "0")} />
+          ))}
+        </div>
+      </section>
 
-      {/* About */}
-      <section id="about" className="mx-auto max-w-6xl px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
-        <img
-          src={hazemPortrait}
-          alt="Hazem at his desk"
-          width={1080}
-          height={1280}
-          loading="lazy"
-          className="aspect-[4/5] w-full object-cover rounded-2xl"
-        />
-        <div>
-          <p className="text-xs uppercase tracking-[0.3em] text-accent mb-4">About</p>
-          <h2 className="font-serif text-4xl leading-tight tracking-tight">Design that respects<br />people's attention.</h2>
-          <p className="mt-6 text-muted leading-relaxed">
-            I'm Hazem — a product designer who believes good software should feel quiet, honest and a little bit warm. I work across the full arc: research, interface, and the systems that keep it all coherent.
+      <section className="about">
+        <div className="about-head">
+          <span className="about-ar" dir="rtl" lang="ar">
+            عنّي
+          </span>
+          <h2 className="kicker">About</h2>
+        </div>
+        <div className="about-body">
+          <p>
+            I'm Hazem — from Cairo. I run <em>Catalyst</em>, an AI and software company, and
+            co-build <em>Mental Diet</em> with a psychiatrist. I code everything with agentic AI,
+            train around a rebuilt ACL, memorize Qur'an on Mondays, and keep my whole life in one
+            system. The essays here are how I think — drafted with AI, but the thinking is mine.
           </p>
-          <div className="mt-8 grid grid-cols-3 gap-4">
-            <div className="border-t border-line pt-3">
-              <p className="font-serif text-3xl">08</p>
-              <p className="text-xs text-muted mt-1">Years</p>
-            </div>
-            <div className="border-t border-line pt-3">
-              <p className="font-serif text-3xl">40+</p>
-              <p className="text-xs text-muted mt-1">Projects</p>
-            </div>
-            <div className="border-t border-line pt-3">
-              <p className="font-serif text-3xl">12</p>
-              <p className="text-xs text-muted mt-1">Awards</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact */}
-      <section id="contact" className="border-t border-line">
-        <div className="mx-auto max-w-6xl px-6 py-20 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-accent mb-4">Contact</p>
-          <h2 className="font-serif text-5xl md:text-6xl tracking-tight">Have a project<br /><span className="italic text-muted">in mind?</span></h2>
-          <a
-            href="mailto:hello@hazem.design"
-            className="mt-8 inline-flex items-center gap-3 rounded-full bg-paper text-ink px-7 py-4 text-base font-medium hover:bg-accent transition-colors"
-          >
-            hello@hazem.design
-            <span aria-hidden="true">→</span>
-          </a>
-          <div className="mt-14 flex items-center justify-between border-t border-line pt-6 text-xs text-muted flex-wrap gap-4">
-            <p>© 2025 Hazem — Portfolio</p>
-            <div className="flex gap-6">
-              <a href="https://dribbble.com" className="hover:text-paper transition-colors">Dribbble</a>
-              <a href="https://linkedin.com" className="hover:text-paper transition-colors">LinkedIn</a>
-              <a href="https://are.na" className="hover:text-paper transition-colors">Are.na</a>
-            </div>
-          </div>
+          <Link to="/about/" className="meta">
+            More about me →
+          </Link>
         </div>
       </section>
     </div>

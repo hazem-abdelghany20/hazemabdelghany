@@ -10,33 +10,154 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SeriesRouteImport } from './routes/$series'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ArAboutRouteImport } from './routes/ar/about'
+import { Route as BooksIndexRouteImport } from './routes/books/index'
+import { Route as EssaysIndexRouteImport } from './routes/essays/index'
+import { Route as EssaysIdRouteImport } from './routes/essays/$id'
+import { Route as ThreadsThreadRouteImport } from './routes/threads/$thread'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SeriesRoute = SeriesRouteImport.update({
+  id: '/$series',
+  path: '/$series',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RssDotxmlRoute = RssDotxmlRouteImport.update({
+  id: '/rss.xml',
+  path: '/rss.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArAboutRoute = ArAboutRouteImport.update({
+  id: '/ar/about',
+  path: '/ar/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BooksIndexRoute = BooksIndexRouteImport.update({
+  id: '/books/',
+  path: '/books/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EssaysIndexRoute = EssaysIndexRouteImport.update({
+  id: '/essays/',
+  path: '/essays/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EssaysIdRoute = EssaysIdRouteImport.update({
+  id: '/essays/$id',
+  path: '/essays/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ThreadsThreadRoute = ThreadsThreadRouteImport.update({
+  id: '/threads/$thread',
+  path: '/threads/$thread',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$series': typeof SeriesRoute
+  '/about': typeof AboutRoute
+  '/rss.xml': typeof RssDotxmlRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/ar/about': typeof ArAboutRoute
+  '/essays/$id': typeof EssaysIdRoute
+  '/threads/$thread': typeof ThreadsThreadRoute
+  '/books/': typeof BooksIndexRoute
+  '/essays/': typeof EssaysIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$series': typeof SeriesRoute
+  '/about': typeof AboutRoute
+  '/rss.xml': typeof RssDotxmlRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/ar/about': typeof ArAboutRoute
+  '/essays/$id': typeof EssaysIdRoute
+  '/threads/$thread': typeof ThreadsThreadRoute
+  '/books': typeof BooksIndexRoute
+  '/essays': typeof EssaysIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$series': typeof SeriesRoute
+  '/about': typeof AboutRoute
+  '/rss.xml': typeof RssDotxmlRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/ar/about': typeof ArAboutRoute
+  '/essays/$id': typeof EssaysIdRoute
+  '/threads/$thread': typeof ThreadsThreadRoute
+  '/books/': typeof BooksIndexRoute
+  '/essays/': typeof EssaysIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/$series'
+    | '/about'
+    | '/rss.xml'
+    | '/sitemap.xml'
+    | '/ar/about'
+    | '/essays/$id'
+    | '/threads/$thread'
+    | '/books/'
+    | '/essays/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/$series'
+    | '/about'
+    | '/rss.xml'
+    | '/sitemap.xml'
+    | '/ar/about'
+    | '/essays/$id'
+    | '/threads/$thread'
+    | '/books'
+    | '/essays'
+  id:
+    | '__root__'
+    | '/'
+    | '/$series'
+    | '/about'
+    | '/rss.xml'
+    | '/sitemap.xml'
+    | '/ar/about'
+    | '/essays/$id'
+    | '/threads/$thread'
+    | '/books/'
+    | '/essays/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SeriesRoute: typeof SeriesRoute
+  AboutRoute: typeof AboutRoute
+  RssDotxmlRoute: typeof RssDotxmlRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ArAboutRoute: typeof ArAboutRoute
+  EssaysIdRoute: typeof EssaysIdRoute
+  ThreadsThreadRoute: typeof ThreadsThreadRoute
+  BooksIndexRoute: typeof BooksIndexRoute
+  EssaysIndexRoute: typeof EssaysIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +169,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$series': {
+      id: '/$series'
+      path: '/$series'
+      fullPath: '/$series'
+      preLoaderRoute: typeof SeriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rss.xml': {
+      id: '/rss.xml'
+      path: '/rss.xml'
+      fullPath: '/rss.xml'
+      preLoaderRoute: typeof RssDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ar/about': {
+      id: '/ar/about'
+      path: '/ar/about'
+      fullPath: '/ar/about'
+      preLoaderRoute: typeof ArAboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/books/': {
+      id: '/books/'
+      path: '/books'
+      fullPath: '/books/'
+      preLoaderRoute: typeof BooksIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/essays/': {
+      id: '/essays/'
+      path: '/essays'
+      fullPath: '/essays/'
+      preLoaderRoute: typeof EssaysIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/essays/$id': {
+      id: '/essays/$id'
+      path: '/essays/$id'
+      fullPath: '/essays/$id'
+      preLoaderRoute: typeof EssaysIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/threads/$thread': {
+      id: '/threads/$thread'
+      path: '/threads/$thread'
+      fullPath: '/threads/$thread'
+      preLoaderRoute: typeof ThreadsThreadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SeriesRoute: SeriesRoute,
+  AboutRoute: AboutRoute,
+  RssDotxmlRoute: RssDotxmlRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ArAboutRoute: ArAboutRoute,
+  EssaysIdRoute: EssaysIdRoute,
+  ThreadsThreadRoute: ThreadsThreadRoute,
+  BooksIndexRoute: BooksIndexRoute,
+  EssaysIndexRoute: EssaysIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

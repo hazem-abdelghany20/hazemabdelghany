@@ -1,0 +1,366 @@
+/* ---------- theme tokens ----------
+   Light = Cairo paper (parchment + oxblood)
+   Dark  = Nocturne archive (midnight + oxidized copper) */
+:root {
+  color-scheme: light;
+  --bg: #f7f1e7;
+  --ink: #25211b;
+  --ink-2: #4d453a;
+  --muted: #6e6458;
+  --faint: #6b6054;
+  --hairline: #b7a996;
+  --line: #ded3c3;
+  --accent: #8e3f32;
+  --teal: #2f6862;
+
+  --font-en: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-ar: 'Amiri', 'Times New Roman', serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #0b1020;
+    --ink: #f1e8d8;
+    --ink-2: #d0c3b1;
+    --muted: #9b8f80;
+    --faint: #aaa08f;
+    --hairline: #435068;
+    --line: #263247;
+    --accent: #b56b45;
+    --teal: #7a8c7a;
+  }
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0b1020;
+  --ink: #f1e8d8;
+  --ink-2: #d0c3b1;
+  --muted: #9b8f80;
+  --faint: #aaa08f;
+  --hairline: #435068;
+  --line: #263247;
+  --accent: #b56b45;
+  --teal: #7a8c7a;
+}
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-en);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.72s ease, color 0.72s ease;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--ink); }
+h1, h2, h3 { margin: 0; font-weight: 400; }
+[lang='ar'] { font-family: var(--font-ar); }
+
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+
+h2.kicker { font-size: 12px; }
+.kicker {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.tag {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--accent);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.meta { font-size: 13px; font-style: italic; color: var(--muted); }
+/* A standalone text link needs a tappable box, not just a line of text. */
+a.meta, a.back { display: inline-block; padding: 11px 0; }
+.dot { color: var(--hairline); }
+.rule { width: 48px; height: 1px; background: var(--hairline); border: 0; margin: 0; }
+
+/* ---------- nav ---------- */
+.nav { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 36px 0 0 0; flex-wrap: wrap; }
+.nav-name { display: flex; align-items: baseline; gap: 12px; color: var(--ink); }
+.nav-name:hover { color: var(--ink); }
+.nav-name .ar { font-weight: 700; font-size: 20px; }
+.nav-name .en { font-size: 11px; font-weight: 500; letter-spacing: 2.5px; color: var(--muted); }
+.nav-links { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.nav-links a { font-size: 15px; color: var(--ink); padding: 8px 0; }
+.nav-links a:hover { color: var(--accent); }
+.nav-links a .ar { color: var(--muted); font-size: 15px; }
+.nav-links a .en { color: var(--muted); font-family: var(--font-en); font-size: 12px; margin-inline-start: 3px; }
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; flex: none; border: 1px solid var(--line); border-radius: 999px;
+  background: none; color: var(--muted); cursor: pointer; padding: 0;
+}
+.theme-toggle:hover { color: var(--accent); border-color: var(--faint); }
+.theme-toggle svg { width: 16px; height: 16px; }
+/* the init script always stamps data-theme; no-JS fallback shows the moon */
+.icon-sun { display: none; }
+:root[data-theme='dark'] .icon-sun { display: block; }
+:root[data-theme='dark'] .icon-moon { display: none; }
+
+/* ---------- essay rows ---------- */
+.row-list { display: flex; flex-direction: column; }
+.row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 24px;
+  border-top: 1px solid var(--line); padding: 17px 0; color: var(--ink);
+}
+.row:last-child { border-bottom: 1px solid var(--line); }
+.row:hover .row-title { color: var(--accent); }
+.row-left { display: flex; align-items: baseline; gap: 18px; min-width: 0; }
+.row-num { font-style: italic; font-size: 15px; color: var(--faint); }
+.row-title { font-size: 19px; transition: color 0.15s ease; }
+.row-title[lang='ar'] { font-size: 21px; }
+.row-right { display: flex; align-items: baseline; gap: 16px; flex-shrink: 0; }
+
+/* ---------- essay prose ---------- */
+.prose { font-size: 19px; line-height: 1.75; color: var(--ink); }
+.prose p { margin: 0 0 26px 0; }
+.prose h2 { font-weight: 500; font-size: 26px; margin: 38px 0 18px 0; }
+.prose blockquote {
+  margin: 30px 0; padding: 6px 0 6px 28px;
+  border-left: 2px solid var(--accent);
+  font-size: 24px; line-height: 1.6; font-style: italic; color: var(--accent);
+}
+.prose a { text-decoration: underline; text-underline-offset: 3px; }
+.prose-ar { font-family: var(--font-ar); font-size: 21px; line-height: 2.05; }
+.prose-ar h2 { font-family: var(--font-ar); font-weight: 700; font-size: 27px; }
+.prose-ar blockquote {
+  padding: 6px 28px 6px 0;
+  border-left: 0; border-right: 2px solid var(--accent);
+  font-style: normal; font-size: 26px; line-height: 1.9;
+}
+.prose-ar strong, .prose-ar b { font-weight: 700; }
+/* Latin technical terms inside Arabic prose */
+.prose-ar code {
+  font-family: var(--font-en); font-size: 0.85em; background: none; padding: 0;
+}
+
+/* ---------- footer ---------- */
+.footer { margin-top: 96px; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .wrap { padding: 0 20px; }
+  .nav-name .en { display: none; }
+  .row { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .row[dir='rtl'] { align-items: flex-end; }
+}
+@media (max-width: 560px) {
+  .nav-links { gap: 14px; }
+}
+
+/* Everything else an essay can contain. Without these an image, table or code
+   block in the next essay overflows the column with a clean build. */
+.prose :is(img, video, svg) { max-width: 100%; height: auto; }
+.prose pre { overflow-x: auto; padding: 14px 16px; background: var(--fig-surface); border: 1px solid var(--line); }
+.prose :not(pre) > code { font-size: 0.9em; background: var(--fig-surface); padding: 1px 5px; border-radius: 3px; }
+.prose table { display: block; overflow-x: auto; width: 100%; border-collapse: collapse; }
+.prose th, .prose td { border-bottom: 1px solid var(--line); padding: 9px 12px; text-align: start; }
+.prose h3 { font-size: 20px; font-weight: 500; margin: 32px 0 10px 0; }
+.prose ul, .prose ol { padding-inline-start: 22px; margin: 0 0 18px 0; line-height: 1.75; }
+.prose li { margin-bottom: 9px; }
+.prose li::marker { color: var(--faint); }
+.prose hr { border: 0; border-top: 1px solid var(--line); margin: 36px 0; }
+
+/* Emotion dashboard: a small code-native illustration for each gauge. */
+.emotion-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0 34px;
+  font-family: var(--font-en);
+}
+.prose-ar .emotion-panel { font-family: var(--font-ar); }
+.emotion-gauge {
+  --gauge: var(--accent);
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 12px;
+  align-items: center;
+  min-height: 72px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  background: var(--fig-surface);
+}
+.emotion-gauge::before {
+  content: '';
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background:
+    linear-gradient(112deg, transparent 47%, var(--ink) 48% 52%, transparent 53%) center / 58% 58% no-repeat,
+    conic-gradient(from 225deg, var(--gauge) 0 58%, var(--line) 58% 75%, transparent 75% 100%);
+  border: 1px solid var(--line);
+  box-sizing: border-box;
+}
+.emotion-gauge strong { display: block; font-size: 15px; line-height: 1.25; }
+.emotion-gauge span { display: block; margin-top: 3px; font-size: 12px; line-height: 1.4; color: var(--muted); }
+.prose-ar .emotion-gauge strong { font-size: 17px; }
+.prose-ar .emotion-gauge span { font-size: 14px; }
+.emotion-gauge.anger { --gauge: #a94f3d; }
+.emotion-gauge.fear { --gauge: #c28b36; }
+.emotion-gauge.sadness { --gauge: #5f7f91; }
+.emotion-gauge.envy { --gauge: #68815f; }
+.emotion-gauge.shame { --gauge: #765d78; }
+.emotion-gauge.boredom { --gauge: #8a8175; }
+.emotion-gauge.joy { --gauge: #d0a541; }
+@media (max-width: 560px) {
+  .emotion-panel { grid-template-columns: 1fr; }
+}
+
+/* ---------- figures & charts ----------
+   Chart hues are their own scale, not the UI accent: each set was validated
+   for lightness band, chroma floor, CVD separation, normal-vision separation
+   and contrast against its own surface. Light and dark are separately chosen
+   steps, not a flip. */
+:root {
+  --c1: #c05a2e;  /* terracotta */
+  --c2: #00809b;  /* teal */
+  --c3: #a8832a;  /* gold */
+  --grid: #ded3c3;
+  --fig-surface: #efe6d9;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --c1: #d2673a;
+    --c2: #1f9fbc;
+    --c3: #b38e2e;
+    --grid: #263247;
+    --fig-surface: #121a2a;
+  }
+}
+:root[data-theme='dark'] {
+  --c1: #d2673a;
+  --c2: #1f9fbc;
+  --c3: #b38e2e;
+  --grid: #263247;
+  --fig-surface: #121a2a;
+}
+
+.fig {
+  margin: 44px 0;
+  padding: 0;
+}
+.fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fig figcaption {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+  font-style: italic;
+}
+.fig-label {
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  fill: var(--muted);
+}
+.fig-value { font-family: var(--font-en); font-size: 13px; fill: var(--ink-2); }
+.fig-name  { font-family: var(--font-en); font-size: 14px; fill: var(--ink); }
+.fig-axis  { stroke: var(--grid); stroke-width: 1; }
+.fig-note  { font-family: var(--font-en); font-size: 12px; font-style: italic; fill: var(--muted); }
+
+/* full-bleed past the 680px prose column, for wide figures.
+   Symmetric inline margins rather than margin-left + translateX, which are
+   physical properties and push the figure off-screen in an RTL document. */
+.fig-wide {
+  width: min(920px, 92vw);
+  margin-inline: calc((100% - min(920px, 92vw)) / 2);
+}
+
+/* legend */
+.fig-legend {
+  display: flex; flex-wrap: wrap; gap: 8px 22px;
+  margin-top: 16px; font-size: 12.5px; color: var(--muted);
+}
+.fig-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.fig-legend i { width: 11px; height: 11px; border-radius: 2px; flex: none; }
+
+/* Narrow screens: a figure scaled to 345px renders its 13px labels at ~5px.
+   Scroll it at a legible width instead of shrinking it into illegibility. */
+@media (max-width: 860px) {
+  .fig-wide { width: auto; margin-inline: 0; }
+  .fig {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .fig > svg { min-width: 620px; }
+  .fig-wide > svg { min-width: 820px; }
+  .fig figcaption, .fig .fig-legend { position: sticky; inset-inline-start: 0; }
+  /* Say the figure scrolls — otherwise a clipped chart reads as a broken one. */
+  .fig::after {
+    content: 'Scroll the figure sideways →';
+    display: block;
+    position: sticky;
+    inset-inline-start: 0;
+    margin-top: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  [dir='rtl'] .fig::after { content: '← اسحب الرسم جنب'; }
+}
+
+/* ---------- skip link ---------- */
+.skip-link {
+  /* Clipped rather than pushed off-screen: a negative `left` would extend the
+     scrollable area by that distance in an RTL document. */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  z-index: 100;
+  background: var(--bg);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 12px 20px;
+  font-size: 14px;
+}
+.skip-link:focus {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  inset-inline-start: 16px;
+  top: 16px;
+}
+
+/* ---------- English / Arabic edition toggle on a book page ---------- */
+.lang-switch { display: inline-flex; border: 1px solid var(--line); }
+.lang-btn {
+  font: inherit; font-size: 11px; font-weight: 500; letter-spacing: 1.4px;
+  text-transform: uppercase; color: var(--muted); background: none;
+  border: 0; padding: 7px 14px; cursor: pointer;
+}
+.lang-btn + .lang-btn { border-inline-start: 1px solid var(--line); }
+.lang-btn:hover { color: var(--accent); }
+.lang-btn.is-on { color: var(--accent); background: var(--fig-surface); }
+.bw-list-ar .bw-part-title { font-weight: 700; }

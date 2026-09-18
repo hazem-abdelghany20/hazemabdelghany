@@ -1,0 +1,52 @@
+---
+title: "The ground you are standing on"
+date: 2026-09-13
+lang: en
+thread: building
+minutes: 7
+description: "Currency that loses value, capital controls, thin local credit, courts you cannot rely on. Which roads are actually open to you."
+translationOf: "bw-16-the-ground-you-are-standing-on-ar"
+series: bedrock-and-weather
+part: 16
+partLabel: "Part Seven"
+---
+
+<div class="bw">
+<section>
+<p>Every one of these ten made real decisions, and choices are portable. Arnault chose to keep the name and burn the business under it. Rihanna turned down a cheque. Huang funded a decade of software out of gaming margin while his stock sat underwater. What follows is an inventory of the things sitting <em>underneath</em> the choices, which are not portable at all.</p>
+<h3>Start with the currency, because it eats everything else</h3>
+<p>Between 2022 and the end of 2024 the Egyptian pound went from 19.16 to the dollar to 50.83 — it lost 62% of its dollar value in under three years, most of it in two step-changes. The naira fell roughly 70% across 2023–24.</p>
+<p>Now run an ordinary business through the March 2024 Egyptian move, when the pound went from 31 to about 50.5 overnight. Take a company with a 25% net margin: 100 of revenue, 40 of imported inputs, 35 of local cost, 25 of profit. The morning after, those inputs cost 65.2 — <strong>and the business earns nothing.</strong> To restore the old margin you must raise prices 25% in the same month your customers' real incomes fell by a third. Measured in the currency that actually buys equipment and travel, profit fell from $0.81 to $0.49 per hundred of revenue: local profit has to grow 63% just to stand still.</p>
+<div class="pull">This is not a bad year. It is a repricing of the entire enterprise, and it happens on a Wednesday.</div>
+<h3>Which engines are structurally closed</h3>
+<div class="rule-list">
+<div class="item"><h4><span class="n">✕</span>Buffett — closed by the currency itself</h4><p>His engine is float: other people's money held at negative cost and compounded for sixty years. <strong>Float is only free if the unit it is held in holds its value.</strong> Egyptian headline inflation averaged 28.3% in 2024. Float held in a currency losing a quarter of its purchasing power annually is not negative-cost leverage — it is a liability growing 28% a year while you try to out-invest it. Add four more institutional gifts he needed: insurance regulation permitting retained reserves, sixty years of continuous market pricing, no capital controls, and deferral of tax on unrealised gains.</p></div>
+<div class="item"><h4><span class="n">✕</span>Zell — closed, and "no cheap debt" undersells it</h4><p>His real instrument was the thirty-year fixed-rate <em>non-recourse</em> loan: the lender carries interest-rate risk for three decades, and if the asset fails you hand back the keys and keep your house. That product exists in the United States because of government-sponsored securitisation and essentially nowhere else on earth. In Cairo in late 2024 the overnight lending rate was 27.25%. Financing a property yielding 7–8% at 22–25%, <em>with</em> recourse and a personal guarantee, is negative carry with an unlimited downside. <strong>The structure inverts: he had capped losses and unlimited upside; you have capped upside and unlimited losses.</strong> And the second half of his engine is missing too — without a functioning bankruptcy code, distressed assets never become orderly inventory. A failed building sits in litigation for nine years.</p></div>
+<div class="item"><h4><span class="n">✕</span>Naval — closed by a piece of paper</h4><p>The smallest missing institution and the most decisive: a written letter from a securities regulator saying a thing is permitted <em>before</em> you build it. In most of the world regulators do not pre-clear — you discover the answer through enforcement, after you have users. This is precisely why the rational move for a Lagos or Karachi founder is a Delaware or ADGM holding company with the local operation as a subsidiary. <em>You are importing the one institution you cannot build.</em></p></div>
+<div class="item"><h4><span class="n">✕</span>Arnault — the gift that looks most like skill</h4><p>FF 400m of equity he did not have, three-quarters from a bank syndicate plus hundreds of millions of state money, after an introduction from a former presidential official. That kind of capital <em>does</em> exist in Cairo, Lagos and Jakarta. <strong>It arrives attached to a political principal who can revise the terms later.</strong></p></div>
+</div>
+<h3>What Sawiris actually teaches</h3>
+<p>He is the only one of the ten who built primarily where you are building, and he teaches three things. The third is the expensive one.</p>
+<ul class="body">
+<li><strong>Go where the incumbents will not underwrite.</strong> The Algerian, Iraqi and Bangladeshi licences were cheap because global operators could not price the risk and he could.</li>
+<li><strong>Prepaid — and this is the mechanism people skip.</strong> Poor customers paying <em>before</em> they consumed meant the network was funded by its own users, not by capital raised in a market that had none.</li>
+<li><strong>The state is a counterparty in every deal whether or not it is on your cap table.</strong> Algeria blocked the sale of Djezzy using a pre-emption right, its sovereign fund took 51%, and the arbitration claim was held inadmissible in 2017 and definitively rejected in 2020. Eight years, nothing recovered.</li>
+</ul>
+<div class="note warn"><p>He was one of Egypt's most protected men, with treaty cover and world-class counsel, <strong>and the best asset was taken anyway.</strong> Treaty protection is a cost of litigation, not a put option. Build as though the state can take the crown jewel, because it can — and never let the crown jewel depend on a single relationship with it.</p></div>
+<h3>What remains open — and it is more than a consolation</h3>
+<div class="rule-list">
+<div class="item"><h4><span class="n">01</span>Earn hard, spend soft</h4><p>The largest arbitrage available to a technically capable person on earth right now. Egypt's outsourcing exports went from $2.4bn in 2022 to roughly $5bn in 2025 — tens of thousands of people already run this trade. A Cairo engineer billing $40 an hour against Cairo costs operates at a margin no London shop can survive.</p><p><strong>But treat the payment rail as a P&amp;L line, not an admin detail.</strong> Converting $1,000 through one common processor costs about $85 all-in; through another, about $22. On $200,000 of annual billings that difference is $12,600 — a senior salary. Choose the rail with the seriousness you would choose a supplier.</p></div>
+<div class="item"><h4><span class="n">02</span>Treasury discipline, because money stops being yours to move</h4><p>Egypt's 2022 letter-of-credit mandate left roughly $9.5bn of goods stuck at the ports. Pakistan blocked over $1bn of multinational dividends for ten months. Nigeria trapped more than $800m of foreign airline revenue. <em>None of those companies did anything wrong.</em> The rule: hold hard currency offshore in a legitimate declared structure, convert on a payroll schedule rather than on receipt, and assume anything inside the local banking system may be illiquid for twelve months.</p></div>
+<div class="item"><h4><span class="n">03</span>Make the customer your lender</h4><p>The Sawiris and Bezos mechanism, and it is the same mechanism. When working capital costs 22%, sixty days of customer float on 10m of revenue is worth around 360,000 a year in avoided interest — frequently the entire net margin. Annual prepayment at a two-month discount, deposits, cohort courses, setup fees, staged payments, subscriptions.</p><p>And the inverse, which is the one that quietly kills people: <strong>a 90-day receivable priced in local currency is a short position against your own money.</strong> Cash today converts at today's rate; the invoice you write in January is worth a third less when it clears in April. Price in hard currency with local settlement at the day's rate wherever your buyer will bear it.</p></div>
+<div class="item"><h4><span class="n">04</span>Take the equity, not the fee — this one is a posture, not a passport</h4><p>Rihanna's decisive act is the most copyable thing in the entire book. Every capable operator in an emerging market is periodically offered a fee by a party who wants the thing only they can do — local distribution, local compliance, local talent, local trust. <em>That is the moment. Take the equity.</em></p></div>
+<div class="item"><h4><span class="n">05</span>Build what a foreign consolidator must eventually buy</h4><p>The only reliable liquidity event in your environment. Amazon paid $580m for Souq; Uber paid $3.1bn for Careem; VimpelCom bought Sawiris's bundle. That imposes engineering requirements from day one: a clean cap table in a jurisdiction the acquirer's lawyers recognise, audited accounts in hard currency, and a position in licence, distribution or user base that cannot be rebuilt faster than it can be bought.</p></div>
+<div class="item"><h4><span class="n">06</span>Where there is no reliable exit, the distribution <em>is</em> the exit</h4><p>The one Blakely and Hormozi actually ran. Both owned everything and took cash out along the way — Hormozi's roughly $42m of distributions mattered more than his sale. <strong>Compounding inside the vehicle, the Buffett–Bezos–Huang move, is a leveraged bet on your country's currency and stock market. You do not have that bet available.</strong> Take the money out, convert it, hold it outside, and let the business be a machine that produces hard currency rather than a share certificate you hope someone revalues.</p></div>
+</div>
+<div class="note">
+<span class="lbl">One closing honesty</span>
+<p>Eight of these ten had a floor under them — a father's brokerage, a jeweller who took half the equity in his son's deals, an engineer's household, a physician, a trial lawyer, a Sawiris. The two who genuinely did not each needed an event nobody can buy.</p>
+<p>And the clocks read thirteen years, twenty-three years, thirty-three years. <strong>Nothing here is a shortcut.</strong> The difference is only that some of these engines will not start where you live — and knowing which ones is worth more than another year spent trying to start them.</p>
+</div>
+</section>
+<!-- ============================ PART EIGHT ============================ -->
+</div>

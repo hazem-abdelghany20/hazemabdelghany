@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
-  Link,
   createRootRouteWithContext,
   useRouter,
   HeadContent,
@@ -11,28 +10,36 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/Footer";
+import { NotFound } from "@/components/NotFound";
+import { SITE } from "@/lib/seo";
+import { usePageLang } from "@/lib/use-page-lang";
 
-function NotFoundComponent() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
+declare module "@tanstack/react-router" {
+  interface StaticDataRouteOption {
+    /** Page language when it isn't known from loader data (e.g. /ar/about/). */
+    lang?: "en" | "ar";
+  }
 }
+
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Hazem Abdelghany",
+  alternateName: "حازم عبدالغني",
+  url: `${SITE}/`,
+  jobTitle: "Founder",
+  address: { "@type": "PostalAddress", addressLocality: "Cairo", addressCountry: "EG" },
+};
+
+// stamp the theme before first paint: saved choice wins, else system
+const THEME_INIT = `(function () {
+  var saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.dataset.theme = theme;
+})();`;
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
@@ -42,33 +49,26 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <button
-            onClick={() => {
-              router.invalidate();
-              reset();
-            }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Try again
-          </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-          >
-            Go home
-          </a>
-        </div>
+    <section className="nf">
+      <span className="kicker">Error</span>
+      <h1 className="nf-title">This page didn't load.</h1>
+      <p className="nf-body">Something went wrong on our end. Try again, or head back home.</p>
+      <div className="nf-links">
+        <button
+          type="button"
+          className="lang-btn"
+          onClick={() => {
+            router.invalidate();
+            reset();
+          }}
+        >
+          Try again
+        </button>
       </div>
-    </div>
+      <a href="/" className="meta">
+        ← Back home
+      </a>
+    </section>
   );
 }
 
@@ -77,40 +77,42 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Hazem — Product Designer" },
-      { name: "description", content: "Hazem is a product designer building calm, considered digital products from Cairo." },
-      { name: "author", content: "Hazem" },
-      { property: "og:title", content: "Hazem — Product Designer" },
-      { property: "og:description", content: "Hazem is a product designer building calm, considered digital products from Cairo." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@hazem" },
+      { "script:ld+json": person },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       {
-        rel: "stylesheet",
-        href: appCss,
+        rel: "alternate",
+        type: "application/rss+xml",
+        title: "Hazem Abdelghany — Essays",
+        href: "/rss.xml",
       },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Space+Grotesk:wght@400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
+    scripts: [{ children: THEME_INIT }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
-  notFoundComponent: NotFoundComponent,
+  notFoundComponent: NotFound,
   errorComponent: ErrorComponent,
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const lang = usePageLang();
   return (
-    <html lang="en">
+    // data-theme is stamped by THEME_INIT before React hydrates
+    <html lang={lang} dir={lang === "ar" ? "rtl" : "ltr"} suppressHydrationWarning>
       <head>
         <HeadContent />
+        {/* two theme-colors share a name, which head() would dedupe to one */}
+        <meta name="theme-color" content="#f7f1e7" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)" />
       </head>
       <body>
         {children}
@@ -122,11 +124,21 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const lang = usePageLang();
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <a className="skip-link" href="#main">
+        {lang === "ar" ? "روح للمحتوى" : "Skip to content"}
+      </a>
+      <div className="wrap">
+        <Nav lang={lang} />
+        <main id="main">
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+        <Footer lang={lang} />
+      </div>
     </QueryClientProvider>
   );
 }

@@ -1,24 +1,59 @@
-# Hazem's Digital Space
+# hazemabdelghany.com
 
-lets build hazems personal website
+Hazem's personal site — bilingual (Egyptian Arabic + English) essays and books across five threads: Building · Faith · Body · Mind · Perspective.
 
-This project was built with [Lovable](https://lovable.dev).
+Built on Lovable's TanStack Start template so the database side (Lovable Cloud / Supabase) can be added from the [Lovable editor](https://lovable.dev/projects/4a6a097c-e782-4f65-93e0-1c26f93fd64b). Ported 1:1 from the original Astro site (`hazem-abdelghany20.github.io`) on 2026-09-19 — same design, same URLs, same essay HTML.
 
-## Build with Lovable
+Design: **Warm Editorial** (Newsreader + Amiri, paper tones) in light mode; dark mode is the **Nocturne** palette.
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/4a6a097c-e782-4f65-93e0-1c26f93fd64b).
+## Where things live
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+| What | Where |
+| --- | --- |
+| Essays (markdown) | `src/content/essays/<id>.md` → `/essays/<id>/` |
+| Frontmatter rules | `src/content/schema.ts` (checked at build) |
+| Markdown → HTML | `essays-plugin.ts` (build time) |
+| Pages | `src/routes/` (file-based, TanStack Router) |
+| Books / series | `src/lib/series.ts` → `/<slug>/` |
+| Threads | `src/lib/threads.ts` → `/threads/<key>/` |
+| Side-reading notes | `src/lib/refs.ts` |
+| About copy | `src/lib/about.ts` |
+| Styles | `src/styles.css` (entry) + `src/styles/*.css` |
+| RSS / sitemap | `src/routes/rss[.]xml.ts`, `src/routes/sitemap[.]xml.ts` |
+| Database client | `src/integrations/supabase/` (Lovable Cloud) |
 
-## Development
+## Writing an essay
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Create `src/content/essays/<slug>.md`:
+
+```yaml
+---
+title: "..."
+date: 2026-09-01
+lang: ar            # ar | en — sets RTL + Amiri vs LTR + Newsreader
+thread: mind        # building | faith | body | mind | perspective
+minutes: 6          # optional read time
+description: "..."  # optional, used for meta description
+draft: false        # true hides it everywhere
+translationOf: other-slug   # optional — links the AR/EN versions to each other
+heroImage: /images/essays/x.webp   # optional
+---
+```
+
+Body is markdown (raw HTML allowed). `> quote` renders as the accent pull-quote; backticked terms inside Arabic prose render as inline Latin technical terms; `##` for section headings. A future `date` stays hidden until that day.
+
+## Commands
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+bun install
+bun run dev      # dev server
+bun run build    # production build (Cloudflare Workers output in .output/)
 ```
+
+Local production check: `NITRO_PRESET=node-server bun run build && PORT=5211 node .output/server/index.mjs`.
+
+⚠️ The build breaks if the repo path contains an apostrophe (TanStack's code splitter). The working copy lives at `~/Documents/kaufmann/hazemabdelghany`; `Hazem's code/hazemabdelghany` is a symlink to it.
+
+## Deploy
+
+Push to `main` → Lovable syncs → **Publish → Update** in Lovable puts it live.
