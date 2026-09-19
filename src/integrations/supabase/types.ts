@@ -14,13 +14,88 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      essay_reactions: {
+        Row: {
+          count: number
+          kind: string
+          slug: string
+        }
+        Insert: {
+          count?: number
+          kind: string
+          slug: string
+        }
+        Update: {
+          count?: number
+          kind?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      essay_stats: {
+        Row: {
+          reads: number
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          reads?: number
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          reads?: number
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      highlights: {
+        Row: {
+          created_at: string
+          id: number
+          lang: string
+          slug: string
+          text: string
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          lang: string
+          slug: string
+          text: string
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          lang?: string
+          slug?: string
+          text?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      add_highlight: {
+        Args: { p_lang: string; p_slug: string; p_text: string }
+        Returns: undefined
+      }
+      is_essay_slug: { Args: { p_slug: string }; Returns: boolean }
+      most_highlighted: {
+        Args: { p_lang: string; p_slug: string }
+        Returns: {
+          passage: string
+          readers: number
+        }[]
+      }
+      react: {
+        Args: { p_kind: string; p_on?: boolean; p_slug: string }
+        Returns: Json
+      }
+      record_read: { Args: { p_slug: string }; Returns: number }
     }
     Enums: {
       [_ in never]: never
