@@ -1,8 +1,10 @@
 import { Fragment } from "react";
 import { BookPartsList } from "@/components/BookPartsList";
+import { ContinueReading } from "@/components/ContinueReading";
 import { L } from "@/components/L";
 import { publishedEssays, siteEssays } from "@/lib/essays";
 import { localePath, type Lang } from "@/lib/i18n";
+import { useBookProgress } from "@/lib/reading";
 import { SERIES, type SeriesKey } from "@/lib/series";
 
 const md = (t: string) => t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
@@ -24,6 +26,7 @@ export function SeriesPage({ lang, seriesKey }: { lang: Lang; seriesKey: SeriesK
   const titleParts = isAr ? s.titlePartsAr : s.titleParts;
   const note = isAr ? s.noteAr : s.note;
   const front = isAr ? s.frontAr : s.front;
+  const progress = useBookProgress(seriesKey, lang);
 
   return (
     <div className="page-series">
@@ -109,7 +112,15 @@ export function SeriesPage({ lang, seriesKey }: { lang: Lang; seriesKey: SeriesK
             {isAr ? "أول جزء نازل قريب." : "The first part goes up shortly."}
           </p>
         ) : (
-          <BookPartsList parts={parts} sections={s.sections} lang={lang} />
+          <>
+            <ContinueReading progress={progress} parts={parts} lang={lang} />
+            <BookPartsList
+              parts={parts}
+              sections={s.sections}
+              lang={lang}
+              read={progress ? new Set(progress.read) : undefined}
+            />
+          </>
         )}
       </section>
 

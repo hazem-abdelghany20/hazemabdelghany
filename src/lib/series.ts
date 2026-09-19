@@ -1,3 +1,5 @@
+import type { Essay } from "./essays";
+
 export type SeriesKey = "bedrock-and-weather" | "riding-out";
 
 export type SeriesSection = {
@@ -254,3 +256,22 @@ export const SERIES: Record<SeriesKey, SeriesDef> = {
 
 export const seriesDef = (key: SeriesKey) => SERIES[key];
 export const seriesHref = (key: SeriesKey) => `/${SERIES[key].slug}/`;
+
+/** A book's parts split the way the book is laid out: parts before the first
+ *  section, one group per section, parts after the last. */
+export function groupParts(parts: Essay[], sections: SeriesSection[] = []) {
+  const hasSections = sections.length > 0;
+  const firstSectionPart = sections[0]?.startPart ?? Number.POSITIVE_INFINITY;
+  const lastSectionPart = sections.at(-1)?.endPart ?? Number.NEGATIVE_INFINITY;
+  return {
+    opening: hasSections ? parts.filter((part) => (part.data.part ?? 0) < firstSectionPart) : parts,
+    divisions: sections.map((section) => ({
+      section,
+      parts: parts.filter((part) => {
+        const number = part.data.part ?? 0;
+        return number >= section.startPart && number <= section.endPart;
+      }),
+    })),
+    closing: hasSections ? parts.filter((part) => (part.data.part ?? 0) > lastSectionPart) : [],
+  };
+}

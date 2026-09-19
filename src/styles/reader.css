@@ -1,0 +1,372 @@
+/* Reading aids on book parts (components/BookReader.tsx) and the "Continue"
+   link on a book's page (components/ContinueReading.tsx). */
+
+/* ---- progress line along the top of the screen ---- */
+.reader-progress {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: 150;
+  height: 2px;
+  pointer-events: none;
+}
+.reader-progress span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.reader-progress[dir='rtl'] span {
+  transform-origin: right;
+}
+
+/* ---- the "Contents" button ---- */
+.reader-pill {
+  position: fixed;
+  bottom: 18px;
+  inset-inline-end: 18px;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 0 17px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(38, 34, 27, 0.1);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0s linear 0s,
+    border-color 0.16s ease,
+    color 0.16s ease;
+}
+:root[data-theme='dark'] .reader-pill {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+}
+.reader-pill:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.reader-pill:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.reader-pill svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+.reader-pill-left {
+  color: var(--muted);
+}
+.reader-pill-left::before {
+  content: '·';
+  margin-inline-end: 9px;
+  color: var(--faint);
+}
+.reader-pill[lang='ar'] {
+  font-size: 16px;
+}
+.reader-pill.is-away {
+  opacity: 0;
+  transform: translateY(8px);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0s linear 0.3s;
+}
+
+/* ---- the contents drawer ---- */
+.reader-drawer {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+  width: min(420px, 100%);
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-inline-start: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+}
+.reader-drawer::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+.reader-drawer-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.reader-drawer-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 26px 26px 18px;
+  border-bottom: 1px solid var(--line);
+}
+.reader-drawer-head h2 {
+  margin-top: 8px;
+  font-size: 24px;
+  line-height: 1.2;
+}
+.reader-drawer[lang='ar'] .reader-drawer-head h2 {
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.reader-drawer-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.reader-drawer-close:hover {
+  border-color: var(--faint);
+  color: var(--accent);
+}
+.reader-drawer-list {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 6px 26px 26px;
+}
+.reader-drawer-list ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.reader-drawer-list h3 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin: 26px 0 4px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.reader-drawer-list h3 span {
+  font-size: 15px;
+  font-style: italic;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-2);
+}
+.reader-drawer-list a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px;
+  padding: 10px 0;
+  padding-inline-start: 14px;
+  border-inline-start: 2px solid transparent;
+  color: var(--ink);
+}
+.reader-part-label {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.reader-part-title {
+  grid-column: 1;
+  font-size: 16px;
+  line-height: 1.35;
+}
+.reader-drawer-list .read-tick {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+}
+.reader-drawer-list a:hover .reader-part-title {
+  color: var(--accent);
+}
+.reader-drawer-list a[aria-current='page'] {
+  border-inline-start-color: var(--accent);
+}
+.reader-drawer-list a[aria-current='page'] .reader-part-title {
+  color: var(--accent);
+}
+.reader-drawer-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 26px 12px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+.reader-drawer-foot a {
+  display: inline-block;
+  padding: 11px 0;
+}
+.reader-keys {
+  display: none;
+  font-size: 12px;
+  color: var(--faint);
+}
+@media (hover: hover) and (pointer: fine) {
+  .reader-keys {
+    display: inline;
+  }
+}
+/* Arabic: no spaced-out capitals, no italics, a readable size */
+.reader-drawer[lang='ar'] :is(.reader-part-label, .reader-drawer-list h3) {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.reader-drawer[lang='ar'] .reader-drawer-list h3 span {
+  font-size: 17px;
+  font-weight: 400;
+  font-style: normal;
+}
+.reader-drawer[lang='ar'] .reader-part-title {
+  font-size: 19px;
+  line-height: 1.6;
+}
+.reader-drawer[lang='ar'] .reader-drawer-foot {
+  font-size: 16px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reader-drawer[open] {
+    animation: reader-drawer-in 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reader-drawer[dir='rtl'][open] {
+    animation-name: reader-drawer-in-rtl;
+  }
+  .reader-drawer[open]::backdrop {
+    animation: reader-fade-in 0.3s ease-out;
+  }
+}
+@keyframes reader-drawer-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+@keyframes reader-drawer-in-rtl {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+}
+@keyframes reader-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ---- read marks ---- */
+.read-tick {
+  margin-inline-start: 8px;
+  font-size: 12px;
+  font-style: normal;
+  letter-spacing: 0;
+  color: var(--accent);
+}
+
+/* ---- "Continue" on a book's page ---- */
+.continue-reading {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-inline-start: 2px solid var(--accent);
+  color: var(--ink);
+}
+.continue-reading:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+.continue-reading-kicker {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.continue-reading-part {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 12px;
+}
+.continue-reading-label {
+  font-size: 13px;
+  color: var(--muted);
+}
+.continue-reading-title {
+  font-size: 18px;
+}
+.continue-reading:hover .continue-reading-title,
+.continue-reading:hover .continue-reading-arrow {
+  color: var(--accent);
+}
+.continue-reading-pct {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--muted);
+}
+.continue-reading-arrow {
+  color: var(--faint);
+}
+html[dir='rtl'] .continue-reading-kicker {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+html[dir='rtl'] .continue-reading-label {
+  font-size: 15px;
+}
+html[dir='rtl'] .continue-reading-title {
+  font-size: 20px;
+}
+@media (max-width: 560px) {
+  .continue-reading {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 14px;
+    padding: 14px 16px;
+  }
+  .continue-reading-part {
+    grid-column: 1;
+  }
+  .continue-reading-pct {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .continue-reading-arrow {
+    display: none;
+  }
+}

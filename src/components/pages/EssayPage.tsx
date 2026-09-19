@@ -1,3 +1,4 @@
+import { BookReader } from "@/components/BookReader";
 import { EssayRow } from "@/components/EssayRow";
 import { L } from "@/components/L";
 import { RefPanels } from "@/components/RefPanels";
@@ -112,6 +113,10 @@ export function EssayPage({ lang, id, html }: { lang: Lang; id: string; html: st
       />
 
       <RefPanels contentKey={essay.id} />
+
+      {series && (
+        <BookReader essay={essay} parts={siblings} prev={prevPart} next={nextPart} site={lang} />
+      )}
 
       {series && (
         <SeriesNav

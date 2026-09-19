@@ -17,6 +17,7 @@
 @import "./styles/components.css" layer(base);
 @import "./styles/pages.css" layer(base);
 @import "./styles/refpanel.css" layer(base);
+@import "./styles/reader.css" layer(base);
 @import "./styles/bilingual.css" layer(base);
 
 @source "../src";

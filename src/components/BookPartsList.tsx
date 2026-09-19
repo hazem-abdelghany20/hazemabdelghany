@@ -1,16 +1,28 @@
 import { L } from "@/components/L";
 import { essayPath, type Essay } from "@/lib/essays";
-import type { SeriesSection } from "@/lib/series";
+import { groupParts, type SeriesSection } from "@/lib/series";
 
-function PartItem({ part, lang }: { part: Essay; lang: "en" | "ar" }) {
+function PartItem({ part, lang, read }: { part: Essay; lang: "en" | "ar"; read: boolean }) {
   return (
     <li>
       <L href={essayPath(part, lang)}>
-        <span className="bw-part">{part.data.partLabel}</span>
+        <span className="bw-part">
+          {part.data.partLabel}
+          {read && <ReadTick lang={lang} />}
+        </span>
         <span className="bw-part-title">{part.data.title}</span>
         <span className="bw-part-desc">{part.data.description}</span>
       </L>
     </li>
+  );
+}
+
+/** The mark on a part this device has read (see src/lib/reading.ts). */
+export function ReadTick({ lang }: { lang: "en" | "ar" }) {
+  return (
+    <span className="read-tick" role="img" aria-label={lang === "ar" ? "اتقرا" : "read"}>
+      ✓
+    </span>
   );
 }
 
@@ -19,29 +31,17 @@ export function BookPartsList({
   sections = [],
   lang,
   hidden = false,
+  read,
 }: {
   parts: Essay[];
   sections?: SeriesSection[] | undefined;
   lang: "en" | "ar";
   hidden?: boolean;
+  /** ids of the parts this device has read */
+  read?: ReadonlySet<string> | undefined;
 }) {
   const isArabic = lang === "ar";
-  const hasSections = sections.length > 0;
-  const firstSectionPart = sections[0]?.startPart ?? Number.POSITIVE_INFINITY;
-  const lastSectionPart = sections.at(-1)?.endPart ?? Number.NEGATIVE_INFINITY;
-  const opening = hasSections
-    ? parts.filter((part) => (part.data.part ?? 0) < firstSectionPart)
-    : parts;
-  const closing = hasSections
-    ? parts.filter((part) => (part.data.part ?? 0) > lastSectionPart)
-    : [];
-  const divisions = sections.map((section) => ({
-    section,
-    parts: parts.filter((part) => {
-      const number = part.data.part ?? 0;
-      return number >= section.startPart && number <= section.endPart;
-    }),
-  }));
+  const { opening, divisions, closing } = groupParts(parts, sections);
 
   return (
     <div
@@ -54,7 +54,7 @@ export function BookPartsList({
       {opening.length > 0 && (
         <ol className="bw-list bw-list-edge">
           {opening.map((part) => (
-            <PartItem key={part.id} part={part} lang={lang} />
+            <PartItem key={part.id} part={part} lang={lang} read={!!read?.has(part.id)} />
           ))}
         </ol>
       )}
@@ -85,7 +85,7 @@ export function BookPartsList({
           </header>
           <ol className="bw-list">
             {sectionParts.map((part) => (
-              <PartItem key={part.id} part={part} lang={lang} />
+              <PartItem key={part.id} part={part} lang={lang} read={!!read?.has(part.id)} />
             ))}
           </ol>
         </section>
@@ -94,7 +94,7 @@ export function BookPartsList({
       {closing.length > 0 && (
         <ol className="bw-list bw-list-edge bw-list-closing">
           {closing.map((part) => (
-            <PartItem key={part.id} part={part} lang={lang} />
+            <PartItem key={part.id} part={part} lang={lang} read={!!read?.has(part.id)} />
           ))}
         </ol>
       )}

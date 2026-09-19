@@ -15,6 +15,7 @@ Design: **Warm Editorial** (Newsreader + Amiri, paper tones) in light mode; dark
 | Markdown → HTML | `essays-plugin.ts` (build time) |
 | Pages | `src/routes/` (file-based, TanStack Router) |
 | Books / series | `src/lib/series.ts` → `/<slug>/` |
+| Book reading aids (progress line, contents drawer, ←/→, Continue, read ticks) | `src/components/BookReader.tsx` + `ContinueReading.tsx`; per-device state in localStorage `reading:<series>:<lang>` via `src/lib/reading.ts` (a part counts as read at 90%) |
 | Threads | `src/lib/threads.ts` → `/threads/<key>/` |
 | Side-reading notes | `src/lib/refs.ts` |
 | About copy | `src/lib/about.ts` |
