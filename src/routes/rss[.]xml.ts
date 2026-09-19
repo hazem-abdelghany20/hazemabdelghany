@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { publishedEssays } from "@/lib/essays";
+import { essayPath, publishedEssays } from "@/lib/essays";
 import { threadLabel } from "@/lib/threads";
 import { SITE } from "@/lib/seo";
 
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/rss.xml")({
       GET: () => {
         const items = publishedEssays()
           .map((e) => {
-            const url = new URL(`/essays/${e.id}/`, SITE).href;
+            const url = new URL(essayPath(e, e.data.lang), SITE).href;
             const thread = threadLabel(e.data.thread);
             const title =
               e.data.series && e.data.partLabel

@@ -1,4 +1,5 @@
-import { Link } from "@tanstack/react-router";
+import { L } from "@/components/L";
+import { localePath } from "@/lib/i18n";
 import { THREADS } from "@/lib/threads";
 import { liveLinks } from "@/lib/site";
 
@@ -15,7 +16,7 @@ export function Footer({ lang = "en" }: { lang?: "en" | "ar" }) {
           <ul>
             {THREADS.map((t) => (
               <li key={t.key}>
-                <Link to="/threads/$thread/" params={{ thread: t.key }}>
+                <L href={localePath(lang, `/threads/${t.key}/`)}>
                   {isAr ? (
                     <>
                       {`${t.ar} `}
@@ -31,7 +32,7 @@ export function Footer({ lang = "en" }: { lang?: "en" | "ar" }) {
                       </span>
                     </>
                   )}
-                </Link>
+                </L>
               </li>
             ))}
           </ul>
@@ -41,13 +42,13 @@ export function Footer({ lang = "en" }: { lang?: "en" | "ar" }) {
           <span className="kicker">{isAr ? "الموقع" : "Site"}</span>
           <ul>
             <li>
-              <Link to="/books/">{isAr ? "الكتب" : "Books"}</Link>
+              <L href={localePath(lang, "/books/")}>{isAr ? "الكتب" : "Books"}</L>
             </li>
             <li>
-              <Link to="/essays/">{isAr ? "المقالات" : "Articles"}</Link>
+              <L href={localePath(lang, "/essays/")}>{isAr ? "المقالات" : "Articles"}</L>
             </li>
             <li>
-              <Link to={isAr ? "/ar/about/" : "/about/"}>{isAr ? "عنّي" : "About"}</Link>
+              <L href={localePath(lang, "/about/")}>{isAr ? "عنّي" : "About"}</L>
             </li>
             <li>
               <a href="/rss.xml">{isAr ? "الخلاصة" : "RSS"}</a>

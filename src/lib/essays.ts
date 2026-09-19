@@ -1,6 +1,7 @@
 import index from "virtual:essays";
 import type { EssayFrontmatter } from "@/content/schema";
 import redirects from "@/content/redirects.json";
+import { localePath, type Lang } from "./i18n";
 
 export type Essay = { id: string; data: EssayFrontmatter };
 
@@ -17,6 +18,32 @@ export function publishedEssays(): Essay[] {
   return ALL.filter((e) => !e.data.draft && e.data.date <= now).sort(
     (a, b) => b.data.date.getTime() - a.data.date.getTime(),
   );
+}
+
+/** An essay's URL slug. The Arabic edition shares its English twin's slug, so
+ *  /essays/tazkiya/ and /ar/essays/tazkiya/ are the same essay. */
+export const essaySlug = (e: Essay) =>
+  e.data.lang === "ar" ? (e.data.translationOf ?? e.id.replace(/-ar$/, "")) : e.id;
+
+/** What the `lang` site shows: essays in that language, plus any essay that
+ *  has no translation yet (so it appears on both sites). */
+export function siteEssays(lang: Lang): Essay[] {
+  const all = publishedEssays();
+  const ids = new Set(all.map((e) => e.id));
+  return all.filter(
+    (e) => e.data.lang === lang || !(e.data.translationOf && ids.has(e.data.translationOf)),
+  );
+}
+
+/** The essay's page on the `lang` site. */
+export const essayPath = (e: Essay, lang: Lang) => localePath(lang, `/essays/${essaySlug(e)}/`);
+
+/** The other-language edition, when there is one. */
+export function translationOf(e: Essay): Essay | undefined {
+  const all = publishedEssays();
+  return e.data.translationOf
+    ? all.find((x) => x.id === e.data.translationOf)
+    : all.find((x) => x.data.translationOf === e.id);
 }
 
 // One lazily loaded chunk per essay, so a page only pulls its own body.

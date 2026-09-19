@@ -3,7 +3,7 @@
    - 404.html — GitHub Pages serves it for any missing path.
    - redirect stubs for moved essays (a static host can't send a 301),
      in the same shape the Astro site used. */
-import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { readFile, readdir, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 
 const OUT = "dist/client";
@@ -40,6 +40,12 @@ if (/type="module"|\$tsr/.test(notFound)) throw new Error("404.html still carrie
 await writeFile(path.join(OUT, "404.html"), notFound);
 
 const redirects = JSON.parse(await readFile("src/content/redirects.json", "utf8"));
+// Arabic essays used to live at /essays/<slug>-ar/; they're now /ar/essays/<slug>/.
+for (const file of await readdir("src/content/essays")) {
+  if (!file.endsWith("-ar.md")) continue;
+  const id = file.slice(0, -3);
+  redirects[`/essays/${id}/`] ??= `/ar/essays/${id.slice(0, -3)}/`;
+}
 for (const [from, to] of Object.entries(redirects)) {
   const html =
     `<!doctype html><title>Redirecting to: ${to}</title>` +

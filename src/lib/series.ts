@@ -36,6 +36,13 @@ export type SeriesDef = {
   note?: { label: string; body: string[] };
   /** Optional editorial dividers used to group the numbered entries. */
   sections?: SeriesSection[];
+  /** The same copy for the Arabic site. */
+  titlePartsAr: [string, string, string];
+  subtitleAr: string;
+  blurbAr: string;
+  factsAr: string[];
+  frontAr: { heading: string; body: string[] }[];
+  noteAr?: { label: string; body: string[] };
 };
 
 export const SERIES: Record<SeriesKey, SeriesDef> = {
@@ -80,6 +87,36 @@ export const SERIES: Record<SeriesKey, SeriesDef> = {
           "Books in this genre profile successful people and extract lessons. The problem is structural: when you study only winners, every trait they share looks like a cause. A book assembled that way will confidently tell you that all ten of these people were persistent — and never mention the ten thousand equally persistent people you have never heard of.",
           "So this book separates its ten cases into two categories, and the separation is the whole argument. **Bedrock** is what was present in every single case, without exception — candidates for genuine laws, and there are fewer than you would expect. **Weather** is what was present in some and absent in others: inherited money, technical skill, investors, a degree, a product, an audience. Each is disproved as a requirement by at least one person on this list, which means each one is an excuse you are no longer allowed to use.",
           "Every claimed invariant was put through a hostile review whose explicit instruction was to break it. Several broke. Those are reported as broken, with the exception named, because a false law is worse than no law at all.",
+        ],
+      },
+    ],
+    titlePartsAr: ["شروط", "الثراء", ""],
+    subtitleAr: "إيه اللي بيبني الثروة، وإيه اللي بيجيبه الحظ، وإيه اللي بيصمد قدام الأدلة",
+    blurbAr:
+      "عشر ثروات اتفكّت لحد الميكانيزم اللي وراها. خمس نظريات اتختبرت لحد ما اتكسرت. وخط صريح مرسوم بين اللي كان عند كل غني فيهم — واللي كان مجرد طقس صادف إنه واقف فيه.",
+    factsAr: ["عشر حالات", "خمس نظريات", "تسع ثوابت اتختبرت", "للي بادئ من الصفر"],
+    noteAr: {
+      label: "قبل أي حاجة",
+      body: [
+        "الكتاب ده ماكتبهوش واحد غني. ودي حاجة مهمة، وليها وشّين.",
+        "معناها إن مفيش هنا ثروة عايز أبيعهالك، ولا كورس في الآخر، ولا أي مصلحة إني أخلّي طريق يبان أسهل من حقيقته. ومعناها كمان إن كل الثقة اللي في الصفحات دي مستلفة بالكامل من السجل العام — تقارير سنوية، وقضايا، وإفصاحات، وتسريبات ضريبية، والأماكن اللي حكايات الناس فيها بتبطّل تطابق أرقامهم هم.",
+        "فاقراه على إنه مسح، مش موعظة.",
+      ],
+    },
+    frontAr: [
+      {
+        heading: "الكتاب ده لمين",
+        body: [
+          "لحد لسه في البداية أو قريب منها. ممكن تكون بتكسب كويس — ودي حاجة تانية — بس لسه ماعندكش أصل بيكبر من غيرك. إنت قادر، ومستعد تشتغل، واللي ناقصك مش المجهود، اللي ناقصك الخريطة.",
+          "ومكتوب باهتمام خاص للقرّاء اللي برّه أمريكا وغرب أوروبا، اللي معظم الكتب دي بتتكتب فيها وتقريبًا كلها بتدور فيها. لو إنت بتبني في بلد عملتها بتفقد قيمتها، وفيها قيود على حركة الفلوس، وائتمان محلي ضعيف، ومحاكم مش قادر تعتمد عليها بالكامل، فإنت مش هامش في الحكاية.",
+        ],
+      },
+      {
+        heading: "بيعمل إيه بشكل مختلف",
+        body: [
+          "كتب النوع ده بتحكي عن ناس ناجحة وتطلّع منهم دروس. المشكلة في الطريقة نفسها: لما تدرس الكسبانين بس، كل صفة مشتركة بينهم بتبان كأنها السبب. كتاب متجمّع بالشكل ده هيقولك بثقة إن العشرة دول كانوا كلهم مثابرين — ومش هيجيب سيرة العشر آلاف اللي كانوا مثابرين بنفس القدر وعمرك ما سمعت عنهم.",
+          "عشان كده الكتاب ده بيقسم حالاته العشرة لنوعين، والتقسيم ده هو الحجة كلها. **الصخر** هو اللي كان موجود في كل حالة من غير استثناء — مرشحين يبقوا قوانين حقيقية، وهما أقل بكتير مما تتوقع. **الطقس** هو اللي كان موجود عند ناس ومش موجود عند ناس: فلوس موروثة، مهارة تقنية، مستثمرين، شهادة، منتج، جمهور. كل واحدة فيهم في شخص واحد على الأقل في اللستة بيثبت إنها مش شرط، يعني كل واحدة فيهم عذر مابقاش مسموحلك تستخدمه.",
+          "كل ثابت اتقال عليه اتعرض لمراجعة عدائية تعليماتها الصريحة إنها تكسره. كذا واحد اتكسر. ودول مكتوب إنهم اتكسروا، ومعاهم الاستثناء بالاسم، لأن القانون الغلط أوحش من مفيش قانون خالص.",
         ],
       },
     ],
@@ -181,6 +218,34 @@ export const SERIES: Record<SeriesKey, SeriesDef> = {
         body: [
           "You are made of material that changes. Not an ability — some have more of those — but a property, issued to everyone. It is the one place in the whole book where the world is fair: same tools, same trainability, given out to all comers.",
           "Fair at the input. Unfair at the output. Live at the input.",
+        ],
+      },
+    ],
+    titlePartsAr: ["عليكَ", "السعي", ""],
+    subtitleAr: "إزاي تعيش بكل قلبك لما النتيجة عمرها ما كانت في إيدك",
+    blurbAr:
+      "راجل من القرن الحداشر، معاه سيف وقمل ومتوسط عمر 35 سنة، ممكن يكون كان أسعد منك. نفس الأهداف، حياة أقسى، ومشتتات أقل. لو السعادة بتيجي من الراحة، يبقى هو خسران في كل حاجة. بس هو مش خسران. الكتاب ده عن الحاجة اللي السعادة بتيجي منها بجد.",
+    factsAr: ["خمس أجزاء", "خمسة وعشرين فصل", "المجهود في إيدك، النتيجة لأ", "مسودة — v0.1"],
+    noteAr: {
+      label: "كلمة قبل ما نبدأ",
+      body: [
+        "كتبت الكتاب ده لقارئ واحد: أنا، من كام سنة. لو إنت تحت التلاتين، وبتحاول جامد في حاجة، وخايف في سرّك إن المحاولة ماتجيبش همّها — فهو ليك إنت كمان.",
+        "أنا مش عالم، ولا راهب، ولا ملياردير متقاعد. أنا واحد شغّال في القاهرة بيدير شركات ساعات بتنجح، بجسم اتكسر مرة، وبإيمان ماسك فيه من غير ما أدّعي إنه بيخلّي الحياة من غير وجع. كل حاجة هنا اتجربت عليّا الأول. لما آخد فكرة من حد، بقول من مين. ولما أحكي حكاية، فهي حصلت.",
+      ],
+    },
+    frontAr: [
+      {
+        heading: "الفكرة",
+        body: [
+          "إنت ماتملكش غير مجهودك. لا النتيجة، ولا التوقيت، ولا مين هياخد باله. ده بيبان خسارة لحد ما تفهم هو بيحررك من إيه — والكتاب ده عن إزاي تخلّيه كفاية.",
+          "البنية بتبعد خطوة لورا مع كل جزء: الجلسة، واليوم، والموسم، والعمر، وبعدين القدر. والسيطرة بتقل مع كل خطوة. الفارس بيبدأ الكتاب ماسك سيف، وبيخلّصه وإيده فاضية.",
+        ],
+      },
+      {
+        heading: "الإذن",
+        body: [
+          "إنت معمول من مادة بتتغيّر. مش موهبة — في ناس عندها أكتر — لكن خاصية، متوزعة على الكل. ده المكان الوحيد في الكتاب كله اللي الدنيا فيه عادلة: نفس الأدوات، ونفس القابلية للتدريب، متوزعة على أي حد.",
+          "عادلة في اللي داخل. ظالمة في اللي طالع. عيش في اللي داخل.",
         ],
       },
     ],

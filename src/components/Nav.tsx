@@ -1,64 +1,97 @@
-import { Link } from "@tanstack/react-router";
+import { useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { L } from "@/components/L";
+import { localePath, otherLang, switchPath, type Lang } from "@/lib/i18n";
 
-export function Nav({ lang = "en" }: { lang?: "en" | "ar" }) {
+export function Nav({ lang = "en" }: { lang?: Lang }) {
   const isAr = lang === "ar";
+  const to = (path: string) => localePath(lang, path);
   return (
     <nav className="nav">
-      <Link to="/" className="nav-name">
+      <L href={to("/")} className="nav-name">
         <span className="ar" dir="rtl" lang="ar">
           حازم عبدالغني
         </span>
         <span className="dot">·</span>
         <span className="en">HAZEM ABDELGHANY</span>
-      </Link>
+      </L>
       <div className="nav-links">
         {isAr ? (
           <>
-            <Link to="/books/">
+            <L href={to("/books/")}>
               {"كتب "}
               <span className="en" dir="ltr" lang="en">
                 Books
               </span>
-            </Link>
-            <Link to="/essays/">
+            </L>
+            <L href={to("/essays/")}>
               {"مقالات "}
               <span className="en" dir="ltr" lang="en">
                 Articles
               </span>
-            </Link>
-            <Link to="/ar/about/">
+            </L>
+            <L href={to("/about/")}>
               {"عنّي "}
               <span className="en" dir="ltr" lang="en">
                 About
               </span>
-            </Link>
+            </L>
           </>
         ) : (
           <>
-            <Link to="/books/">
+            <L href={to("/books/")}>
               {"Books "}
               <span className="ar" dir="rtl" lang="ar">
                 كتب
               </span>
-            </Link>
-            <Link to="/essays/">
+            </L>
+            <L href={to("/essays/")}>
               {"Articles "}
               <span className="ar" dir="rtl" lang="ar">
                 مقالات
               </span>
-            </Link>
-            <Link to="/about/">
+            </L>
+            <L href={to("/about/")}>
               {"About "}
               <span className="ar" dir="rtl" lang="ar">
                 عنّي
               </span>
-            </Link>
+            </L>
           </>
         )}
+        <LangSwitch lang={lang} />
         <ThemeToggle isAr={isAr} />
       </div>
     </nav>
+  );
+}
+
+/** EN ⇄ عربي: the same page in the other language. The choice is remembered,
+ *  so the home page opens in it next time (see THEME_INIT in __root.tsx). */
+function LangSwitch({ lang }: { lang: Lang }) {
+  const other = otherLang(lang);
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  // A missing page is missing in both languages — go to the other home instead.
+  const missing = useRouterState({
+    select: (s) => s.matches.some((m) => m.status === "notFound" || m.globalNotFound),
+  });
+  return (
+    <L
+      className="nav-lang"
+      href={missing ? localePath(other, "/") : switchPath(pathname)}
+      lang={other}
+      dir={other === "ar" ? "rtl" : "ltr"}
+      hrefLang={other === "ar" ? "ar-EG" : "en"}
+      onClick={() => {
+        try {
+          localStorage.setItem("lang", other);
+        } catch {
+          // storage blocked — the choice just won't be remembered
+        }
+      }}
+    >
+      {other === "ar" ? "عربي" : "English"}
+    </L>
   );
 }
 

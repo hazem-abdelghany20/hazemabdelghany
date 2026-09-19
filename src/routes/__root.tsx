@@ -33,10 +33,18 @@ const person = {
   address: { "@type": "PostalAddress", addressLocality: "Cairo", addressCountry: "EG" },
 };
 
-// stamp the theme before first paint: saved choice wins, else system
+// Runs before first paint.
+// 1. Theme: saved choice wins, else system.
+// 2. Language: the bare home page (/) opens in Arabic for a visitor who picked
+//    Arabic before, or who has never picked and whose device is in Arabic.
+//    Deep links are never redirected — a shared link opens as shared.
 const THEME_INIT = `(function () {
-  var saved = null;
-  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  var saved = null, lang = null;
+  try { saved = localStorage.getItem('theme'); lang = localStorage.getItem('lang'); } catch (e) {}
+  if (location.pathname === '/') {
+    var device = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+    if (lang ? lang === 'ar' : device.slice(0, 2).toLowerCase() === 'ar') { location.replace('/ar/'); return; }
+  }
   var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   document.documentElement.dataset.theme = theme;
 })();`;

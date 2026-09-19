@@ -1,15 +1,15 @@
-import { Link } from "@tanstack/react-router";
-import type { Essay } from "@/lib/essays";
+import { L } from "@/components/L";
+import { essayPath, type Essay } from "@/lib/essays";
 import type { SeriesSection } from "@/lib/series";
 
-function PartItem({ part }: { part: Essay }) {
+function PartItem({ part, lang }: { part: Essay; lang: "en" | "ar" }) {
   return (
     <li>
-      <Link to="/essays/$id/" params={{ id: part.id }}>
+      <L href={essayPath(part, lang)}>
         <span className="bw-part">{part.data.partLabel}</span>
         <span className="bw-part-title">{part.data.title}</span>
         <span className="bw-part-desc">{part.data.description}</span>
-      </Link>
+      </L>
     </li>
   );
 }
@@ -54,7 +54,7 @@ export function BookPartsList({
       {opening.length > 0 && (
         <ol className="bw-list bw-list-edge">
           {opening.map((part) => (
-            <PartItem key={part.id} part={part} />
+            <PartItem key={part.id} part={part} lang={lang} />
           ))}
         </ol>
       )}
@@ -85,7 +85,7 @@ export function BookPartsList({
           </header>
           <ol className="bw-list">
             {sectionParts.map((part) => (
-              <PartItem key={part.id} part={part} />
+              <PartItem key={part.id} part={part} lang={lang} />
             ))}
           </ol>
         </section>
@@ -94,7 +94,7 @@ export function BookPartsList({
       {closing.length > 0 && (
         <ol className="bw-list bw-list-edge bw-list-closing">
           {closing.map((part) => (
-            <PartItem key={part.id} part={part} />
+            <PartItem key={part.id} part={part} lang={lang} />
           ))}
         </ol>
       )}

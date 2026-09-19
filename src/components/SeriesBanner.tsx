@@ -1,22 +1,26 @@
-import { Link } from "@tanstack/react-router";
+import { L } from "@/components/L";
+import { localePath, type Lang } from "@/lib/i18n";
 import { seriesDef, type SeriesKey } from "@/lib/series";
 
+/** The pill above a book part's title. `lang` is the part's language, `site`
+ *  the site it's shown on (where the link goes). */
 export function SeriesBanner({
   series,
   partLabel,
   lang = "en",
+  site = lang,
 }: {
   series: SeriesKey;
   partLabel: string;
-  lang?: "en" | "ar";
+  lang?: Lang;
+  site?: Lang;
 }) {
   const s = seriesDef(series);
   const isAr = lang === "ar";
   return (
-    <Link
+    <L
       className="series-banner"
-      to="/$series/"
-      params={{ series: s.slug }}
+      href={localePath(site, `/${s.slug}/`)}
       dir={isAr ? "rtl" : "ltr"}
       lang={isAr ? "ar" : "en"}
     >
@@ -25,6 +29,6 @@ export function SeriesBanner({
       <span className="series-banner-part">{partLabel}</span>
       <span className="series-banner-sep">{isAr ? "من" : "of"}</span>
       <span className="series-banner-part">{s.parts}</span>
-    </Link>
+    </L>
   );
 }

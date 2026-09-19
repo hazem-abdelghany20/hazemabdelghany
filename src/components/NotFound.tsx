@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { L } from "@/components/L";
 import { THREADS } from "@/lib/threads";
 
 export function NotFound() {
@@ -18,17 +18,17 @@ export function NotFound() {
       </p>
       <div className="nf-links">
         {THREADS.map((t) => (
-          <Link key={t.key} to="/threads/$thread/" params={{ thread: t.key }}>
+          <L key={t.key} href={`/threads/${t.key}/`}>
             <span dir="rtl" lang="ar">
               {t.ar}
             </span>
             <span className="tag">{t.en}</span>
-          </Link>
+          </L>
         ))}
       </div>
-      <Link to="/" className="meta">
+      <L href="/" className="meta">
         ← Back home
-      </Link>
+      </L>
     </section>
   );
 }

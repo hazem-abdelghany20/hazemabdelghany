@@ -68,7 +68,10 @@ export function essaysPlugin(): Plugin {
         const { data, body } = await parse(file);
         processor ??= await createMarkdownProcessor();
         const { code } = await processor.render(body, { frontmatter: data });
-        return `export default ${JSON.stringify(code)};`;
+        // Arabic essays moved from /essays/<slug>-ar/ to /ar/essays/<slug>/;
+        // point in-essay links at the new address instead of the redirect.
+        const html = code.replace(/href="\/essays\/([a-z0-9-]+)-ar\/"/g, 'href="/ar/essays/$1/"');
+        return `export default ${JSON.stringify(html)};`;
       }
       return undefined;
     },

@@ -20,6 +20,9 @@ type SeoOptions = {
   section?: string | undefined;
   /** Equivalent editions of this page in other languages. */
   alternates?: Array<{ lang: string; href: string }> | undefined;
+  /** When the page is a copy of one that lives elsewhere (an untranslated
+   *  essay shown on the other language's site), the original's path. */
+  canonicalPath?: string | undefined;
 };
 
 /** Everything a page puts in <head>, for a route's `head()`. */
@@ -33,8 +36,9 @@ export function seo({
   noindex = false,
   section,
   alternates = [],
+  canonicalPath = path,
 }: SeoOptions) {
-  const canonical = new URL(path, SITE).href;
+  const canonical = new URL(canonicalPath, SITE).href;
   const ogImage = new URL("/og.png", SITE).href;
 
   const article =
@@ -42,7 +46,7 @@ export function seo({
       ? {
           "@context": "https://schema.org",
           "@type": "BlogPosting",
-          headline: title.replace(" — Hazem Abdelghany", ""),
+          headline: title.replace(" — Hazem Abdelghany", "").replace(" — حازم عبدالغني", ""),
           datePublished: published.toISOString(),
           inLanguage: lang === "ar" ? "ar-EG" : "en",
           ...(section ? { articleSection: section } : {}),
