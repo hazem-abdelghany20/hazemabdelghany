@@ -121,3 +121,39 @@ export async function react(
   writeLocal(`reactions:${slug}`, before); // didn't count, so don't remember it
   return null;
 }
+
+// ----------------------------------------------------------- highlights
+
+export const HIGHLIGHT_MIN = 10;
+export const HIGHLIGHT_MAX = 280;
+
+/** The passages this device has highlighted in one edition of an essay. */
+export const myHighlights = (slug: string, lang: "en" | "ar"): string[] =>
+  readLocal<string[]>(`highlights:${slug}:${lang}`, []).filter((t) => typeof t === "string");
+
+/** Keep the reader's highlight on this device and add it to the counts. */
+export async function addHighlight(slug: string, lang: "en" | "ar", text: string) {
+  const mine = myHighlights(slug, lang);
+  if (mine.includes(text)) return;
+  writeLocal(`highlights:${slug}:${lang}`, [...mine, text].slice(-100));
+  try {
+    await (await db()).rpc("add_highlight", { p_slug: slug, p_lang: lang, p_text: text });
+  } catch {
+    // not counted; it stays marked for the reader all the same
+  }
+}
+
+/** The passages most readers highlighted (3+ each), most first. */
+export async function fetchTopHighlights(slug: string, lang: "en" | "ar"): Promise<string[]> {
+  try {
+    const { data, error } = await (
+      await db()
+    ).rpc("most_highlighted", {
+      p_slug: slug,
+      p_lang: lang,
+    });
+    return error || !data ? [] : data.map((row) => row.passage);
+  } catch {
+    return [];
+  }
+}

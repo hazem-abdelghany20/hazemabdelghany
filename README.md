@@ -25,6 +25,7 @@ Design: **Warm Editorial** (Newsreader + Amiri, paper tones) in light mode; dark
 | Database client | `src/integrations/supabase/` (Lovable Cloud) |
 | Database changes | `drizzle/migrations/*.sql` — Lovable Cloud applies them only from its chat ("apply the migration in …"), never from a push to `main`; it then regenerates `src/integrations/supabase/types.ts` |
 | Reads & reactions | `src/components/ReaderCounts.tsx` + `src/lib/reader-db.ts`. Per essay, both languages together. Reads show from 100; a read = 15s open or half read, once per device per day. Reactions: *This landed · Made me think · Saving this* / *وصلتني · خلّتني أفكّر · هحفظها*, counts show after reacting or from 10 |
+| Highlights | `src/components/EssayHighlights.tsx` + `src/lib/text-marks.ts`. Select 10–280 characters in an essay → Highlight (a bottom bar on touch screens). The reader's own stay marked on their device; the line 3+ readers highlighted gets an underline, only if found word for word in the essay. Raw highlights are never readable, only `most_highlighted()` |
 
 ## Writing an essay
 

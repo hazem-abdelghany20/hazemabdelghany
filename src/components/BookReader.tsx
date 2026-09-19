@@ -13,6 +13,7 @@ import { localePath, type Lang } from "@/lib/i18n";
 import {
   loadProgress,
   minutesLeft,
+  onReaderIntent,
   progressOf,
   READ_AT,
   saveProgress,
@@ -106,12 +107,7 @@ export function BookReader({
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
     };
-    const intents = ["wheel", "touchstart", "keydown", "pointerdown"] as const;
-    const onIntent = () => {
-      moved = true;
-      for (const t of intents) window.removeEventListener(t, onIntent);
-    };
-    for (const t of intents) window.addEventListener(t, onIntent, { passive: true });
+    const stopIntent = onReaderIntent(() => (moved = true));
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
 
@@ -145,7 +141,7 @@ export function BookReader({
       timers.forEach((t) => window.clearTimeout(t));
       io?.disconnect();
       settle?.disconnect();
-      for (const t of intents) window.removeEventListener(t, onIntent);
+      stopIntent();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       if (drawer?.open) drawer.close();

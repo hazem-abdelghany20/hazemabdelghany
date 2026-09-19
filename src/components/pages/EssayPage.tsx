@@ -1,4 +1,5 @@
 import { BookReader } from "@/components/BookReader";
+import { EssayHighlights } from "@/components/EssayHighlights";
 import { EssayRow } from "@/components/EssayRow";
 import { L } from "@/components/L";
 import { EssayReactions, EssayReads } from "@/components/ReaderCounts";
@@ -124,6 +125,7 @@ export function EssayPage({ lang, id, html }: { lang: Lang; id: string; html: st
       />
 
       <RefPanels contentKey={essay.id} />
+      <EssayHighlights key={essay.id} slug={slug} lang={essay.data.lang} site={lang} />
 
       <EssayReactions key={slug} slug={slug} lang={lang} />
 

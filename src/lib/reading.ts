@@ -72,6 +72,23 @@ export function progressOf(article: HTMLElement) {
   return Math.min(1, Math.max(0, -r.top / span));
 }
 
+/** Calls `then` once the reader does something themselves on this page
+ *  (wheel, touch, key, pointer) — so a scroll the page makes on its own, like
+ *  the router resetting it or a restored place, is never taken for reading.
+ *  Returns a function that stops listening. */
+export function onReaderIntent(then: () => void) {
+  const events = ["wheel", "touchstart", "keydown", "pointerdown"] as const;
+  const stop = () => {
+    for (const e of events) window.removeEventListener(e, fire);
+  };
+  function fire() {
+    stop();
+    then();
+  }
+  for (const e of events) window.addEventListener(e, fire, { passive: true });
+  return stop;
+}
+
 /** "7 min left" / "فاضل 7 دقايق". */
 export function minutesLeft(lang: Lang, n: number) {
   if (lang === "en") return `${n} min left`;

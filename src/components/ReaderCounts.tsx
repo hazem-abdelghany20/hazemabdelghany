@@ -17,7 +17,7 @@ import {
   type ReactionCounts,
   type ReactionKind,
 } from "@/lib/reader-db";
-import { progressOf } from "@/lib/reading";
+import { onReaderIntent, progressOf } from "@/lib/reading";
 
 const format = new Intl.NumberFormat("en-US");
 /** A read: the page open (and in view) this long, or the article half read. */
@@ -55,11 +55,16 @@ export function EssayReads({ slug, lang }: { slug: string; lang: Lang }) {
       timer = window.setTimeout(count, left);
     };
     const onVisibility = () => (document.visibilityState === "visible" ? start() : pause());
+    // Half read counts only once the reader has scrolled here themselves: a
+    // page turned from deep in the last one starts out scrolled down.
+    let moved = false;
+    const stopIntent = onReaderIntent(() => (moved = true));
     const onScroll = () => {
-      if (article && progressOf(article) >= 0.5) count();
+      if (moved && article && progressOf(article) >= 0.5) count();
     };
     const stop = () => {
       pause();
+      stopIntent();
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("scroll", onScroll);
     };
