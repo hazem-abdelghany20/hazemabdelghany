@@ -13,20 +13,13 @@ import { localePath, type Lang } from "@/lib/i18n";
 import {
   loadProgress,
   minutesLeft,
+  progressOf,
   READ_AT,
   saveProgress,
   takeResume,
   type BookProgress,
 } from "@/lib/reading";
 import { groupParts, seriesDef, type SeriesKey } from "@/lib/series";
-
-/** 0 with the article's top at the top of the screen, 1 with its end at the bottom. */
-function progressOf(article: HTMLElement) {
-  const r = article.getBoundingClientRect();
-  const span = r.height - window.innerHeight;
-  if (span <= 0) return r.bottom <= window.innerHeight ? 1 : 0;
-  return Math.min(1, Math.max(0, -r.top / span));
-}
 
 /** Scroll so the reader is `p` of the way through the article. */
 function scrollToProgress(article: HTMLElement, p: number) {

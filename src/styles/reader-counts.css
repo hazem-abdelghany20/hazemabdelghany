@@ -1,0 +1,91 @@
+/* Reads and reactions on essays (components/ReaderCounts.tsx). */
+
+/* ---- "2,340 reads", on its own line under the date line ----
+   Absolutely placed inside the header's bottom padding, so it takes no room
+   and nothing moves when it arrives. */
+.page-essay .essay-meta {
+  position: relative;
+}
+.essay-reads {
+  position: absolute;
+  top: calc(100% + 6px);
+  inset-inline: 0;
+  font-size: 13px;
+  font-style: italic;
+  text-align: center;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+  pointer-events: none;
+}
+.essay-reads.is-shown {
+  opacity: 1;
+}
+html[dir='rtl'] .essay-reads {
+  font-size: 15px;
+  font-style: normal;
+}
+
+/* ---- the reactions row at the end of an essay ---- */
+.reactions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  max-width: 680px;
+  margin: 56px auto 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .reactions {
+    animation: reactions-in 0.6s ease-out;
+  }
+}
+@keyframes reactions-in {
+  from {
+    opacity: 0;
+  }
+}
+.reaction {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  min-height: 44px;
+  padding: 11px 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    border-color 0.16s ease,
+    color 0.16s ease,
+    background-color 0.16s ease;
+}
+.reaction:hover {
+  border-color: var(--faint);
+  color: var(--ink);
+}
+.reaction:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.reaction[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  color: var(--accent);
+}
+.reaction-count {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--muted);
+}
+.reaction[aria-pressed='true'] .reaction-count {
+  color: var(--accent);
+}
+.reactions[lang='ar'] .reaction {
+  font-size: 17px;
+}

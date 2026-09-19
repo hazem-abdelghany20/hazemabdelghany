@@ -23,6 +23,8 @@ Design: **Warm Editorial** (Newsreader + Amiri, paper tones) in light mode; dark
 | Styles | `src/styles.css` (entry) + `src/styles/*.css` |
 | RSS / sitemap | `src/routes/rss[.]xml.ts`, `src/routes/sitemap[.]xml.ts` |
 | Database client | `src/integrations/supabase/` (Lovable Cloud) |
+| Database changes | `drizzle/migrations/*.sql` — Lovable Cloud applies them only from its chat ("apply the migration in …"), never from a push to `main`; it then regenerates `src/integrations/supabase/types.ts` |
+| Reads & reactions | `src/components/ReaderCounts.tsx` + `src/lib/reader-db.ts`. Per essay, both languages together. Reads show from 100; a read = 15s open or half read, once per device per day. Reactions: *This landed · Made me think · Saving this* / *وصلتني · خلّتني أفكّر · هحفظها*, counts show after reacting or from 10 |
 
 ## Writing an essay
 

@@ -63,6 +63,15 @@ export function takeResume(id: string): boolean {
   }
 }
 
+/** How far through an article the reader is: 0 with its top at the top of
+ *  the screen, 1 with its end at the bottom. */
+export function progressOf(article: HTMLElement) {
+  const r = article.getBoundingClientRect();
+  const span = r.height - window.innerHeight;
+  if (span <= 0) return r.bottom <= window.innerHeight ? 1 : 0;
+  return Math.min(1, Math.max(0, -r.top / span));
+}
+
 /** "7 min left" / "فاضل 7 دقايق". */
 export function minutesLeft(lang: Lang, n: number) {
   if (lang === "en") return `${n} min left`;

@@ -1,10 +1,18 @@
 import { BookReader } from "@/components/BookReader";
 import { EssayRow } from "@/components/EssayRow";
 import { L } from "@/components/L";
+import { EssayReactions, EssayReads } from "@/components/ReaderCounts";
 import { RefPanels } from "@/components/RefPanels";
 import { SeriesBanner } from "@/components/SeriesBanner";
 import { SeriesNav } from "@/components/SeriesNav";
-import { essayPath, publishedEssays, siteEssays, translationOf, type Essay } from "@/lib/essays";
+import {
+  essayPath,
+  essaySlug,
+  publishedEssays,
+  siteEssays,
+  translationOf,
+  type Essay,
+} from "@/lib/essays";
 import { localePath, type Lang } from "@/lib/i18n";
 import { threadLabel, formatDate } from "@/lib/threads";
 
@@ -15,6 +23,8 @@ export function EssayPage({ lang, id, html }: { lang: Lang; id: string; html: st
   const siteAr = lang === "ar";
   const thread = threadLabel(essay.data.thread);
   const translation = translationOf(essay);
+  // Reads and reactions are counted per essay, both languages together.
+  const slug = essaySlug(essay);
 
   // Series context: siblings in reading order, so a part knows where it sits.
   const series = essay.data.series;
@@ -88,6 +98,7 @@ export function EssayPage({ lang, id, html }: { lang: Lang; id: string; html: st
               </a>
             </>
           )}
+          <EssayReads slug={slug} lang={lang} />
         </div>
       </header>
 
@@ -113,6 +124,8 @@ export function EssayPage({ lang, id, html }: { lang: Lang; id: string; html: st
       />
 
       <RefPanels contentKey={essay.id} />
+
+      <EssayReactions key={slug} slug={slug} lang={lang} />
 
       {series && (
         <BookReader essay={essay} parts={siblings} prev={prevPart} next={nextPart} site={lang} />
