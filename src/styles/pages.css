@@ -1298,6 +1298,234 @@
   }
 }
 
+/* ---------- About: the road so far (AboutRoad.tsx) ----------
+   A line that draws itself down the timeline + a running tally beside it.
+   Without data-motion (no JS, reduced motion) this is the finished state:
+   whole line, every dot filled, final numbers. */
+.about-page .road {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 200px;
+  gap: 64px;
+  align-items: start;
+}
+.about-page .timeline {
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
+  padding-inline-start: 40px;
+}
+/* the track, and the drawn part over it */
+.about-page .timeline::before,
+.about-page .timeline-line {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 3px;
+  width: 1px;
+}
+.about-page .timeline::before {
+  background: var(--line);
+}
+.about-page .timeline-line {
+  background: var(--accent);
+  transform-origin: top;
+  transform: scaleY(var(--road-p, 1));
+}
+.about-page .timeline-entry {
+  position: relative;
+}
+/* the year's dot, centred on the line */
+.about-page .timeline-entry::before {
+  content: '';
+  position: absolute;
+  top: 40px;
+  inset-inline-start: -40px;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  background: var(--accent);
+  transition: background-color 0.5s ease-out;
+}
+
+.about-page .tally {
+  grid-column: 2;
+  grid-row: 1;
+  position: sticky;
+  top: 40px;
+}
+.about-page .tally-stats {
+  margin: 0;
+}
+.about-page .tally-stat {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  padding: 16px 0 20px;
+}
+.about-page .tally-stat dd {
+  margin: 0;
+  font-family: var(--font-en);
+  font-size: 38px;
+  line-height: 1;
+  letter-spacing: -0.4px;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--ink);
+}
+.about-page .tally-stat dt {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.about-page.is-ar .tally-stat dt {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.about-page .tally-ventures {
+  margin: 0;
+  padding: 2px 0 0;
+  list-style: none;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--ink-2);
+}
+.about-page.is-ar .tally-ventures {
+  font-size: 17px;
+}
+.about-page .tally [lang='en'] {
+  font-family: var(--font-en);
+  font-size: 15px;
+}
+.about-page .tally-ventures [data-state='ahead'] {
+  display: none;
+}
+/* a venture that closed stays on the list, out of focus */
+.about-page .tally-ventures [data-state='closed'] {
+  filter: blur(2.5px);
+  opacity: 0.55;
+}
+.about-page .thread-number {
+  transition: color 0.16s ease;
+}
+.about-page .thread-entry:hover .thread-number {
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .about-page .road[data-motion='on'] .timeline-entry {
+    transition:
+      opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .about-page .road[data-motion='on'] .timeline-entry:not([data-in]) {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .about-page .road[data-motion='on'] .timeline-entry:not([data-reached])::before {
+    background: var(--bg);
+  }
+  .about-page .road[data-motion='on'] .tally-ventures li {
+    transition:
+      filter 0.8s ease-out,
+      opacity 0.8s ease-out;
+    animation: tally-in 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* The line's tip sits 60% down the screen: the timeline is watched through
+     a zero-height window there (insets 60% from the top, 40% from the bottom). */
+  @supports (animation-timeline: view()) {
+    .about-page .road[data-motion='on'] .timeline {
+      view-timeline: --road block;
+      view-timeline-inset: 60% 40%;
+    }
+    .about-page .road[data-motion='on'] .timeline-line {
+      animation: road-draw linear both;
+      animation-timeline: --road;
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+@keyframes road-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes tally-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* Narrow screens: the tally becomes a slim bar over the timeline, pinned to
+   the top of the screen while you read through the years (only when it moves). */
+@media (max-width: 999px) {
+  .about-page .road {
+    display: block;
+  }
+  .about-page .tally {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+  .about-page .road[data-motion='on'] .tally {
+    position: sticky;
+    top: 0;
+  }
+  .about-page .tally-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .about-page .tally-stat {
+    justify-content: flex-end;
+    gap: 5px;
+    border-top: 0;
+    padding: 16px 0 6px;
+  }
+  .about-page .tally-stat dd {
+    font-size: 27px;
+  }
+  .about-page .tally-stat dt {
+    font-size: 10px;
+    letter-spacing: 1.4px;
+  }
+  .about-page.is-ar .tally-stat dt {
+    font-size: 15px;
+  }
+  .about-page .tally-ventures {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 14px;
+    padding: 2px 0 10px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .about-page.is-ar .tally-ventures {
+    font-size: 15px;
+  }
+  .about-page .tally [lang='en'] {
+    font-size: 13px;
+  }
+}
+@media (max-width: 760px) {
+  .about-page .timeline {
+    padding-inline-start: 24px;
+  }
+  .about-page .timeline-entry::before {
+    inset-inline-start: -24px;
+  }
+}
+
 /* ---------- Not found ---------- */
 .nf {
   display: flex;

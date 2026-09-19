@@ -1,6 +1,6 @@
-import type { CSSProperties } from "react";
 import { Link } from "@tanstack/react-router";
 import { arabic, english } from "@/lib/about";
+import { AboutRoad } from "./AboutRoad";
 
 export function AboutPage({ lang = "en" }: { lang?: "en" | "ar" }) {
   const isAr = lang === "ar";
@@ -70,35 +70,7 @@ export function AboutPage({ lang = "en" }: { lang?: "en" | "ar" }) {
             {c.timelineOther}
           </span>
         </div>
-        <div className="timeline">
-          {c.timeline.map((item) => (
-            <article key={item.year} className="timeline-entry">
-              <div className="timeline-meta">
-                <time dir="ltr">{item.year}</time>
-                {item.mark && (
-                  <span
-                    className="org-mark"
-                    role="img"
-                    aria-label={isAr ? `شعار ${item.mark.label}` : `${item.mark.label} logo`}
-                    style={
-                      {
-                        "--mark": `url('${item.mark.src}')`,
-                        "--mark-width": `${item.mark.width}px`,
-                        "--mark-height": `${item.mark.height}px`,
-                      } as CSSProperties
-                    }
-                  />
-                )}
-              </div>
-              <div className="timeline-copy">
-                <h3>{item.title}</h3>
-                {item.body.map((paragraph, i) => (
-                  <p key={i}>{paragraph}</p>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
+        <AboutRoad c={c} isAr={isAr} />
       </section>
 
       <section className="about-section" aria-labelledby="five-threads">

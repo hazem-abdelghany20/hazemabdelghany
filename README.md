@@ -18,6 +18,7 @@ Design: **Warm Editorial** (Newsreader + Amiri, paper tones) in light mode; dark
 | Threads | `src/lib/threads.ts` → `/threads/<key>/` |
 | Side-reading notes | `src/lib/refs.ts` |
 | About copy | `src/lib/about.ts` |
+| About tally (years · students · ventures beside the timeline) | `road` + `ventures` in `src/lib/about.ts` — a venture that closed gets `until` and blurs out from that year |
 | Styles | `src/styles.css` (entry) + `src/styles/*.css` |
 | RSS / sitemap | `src/routes/rss[.]xml.ts`, `src/routes/sitemap[.]xml.ts` |
 | Database client | `src/integrations/supabase/` (Lovable Cloud) |

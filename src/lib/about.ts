@@ -10,6 +10,32 @@ export const aboutAlternates = [
 
 type Mark = { src: string; label: string; width: number; height: number };
 
+/** The running tally beside "The road so far": where things stood by the end
+ *  of each timeline year (same order as `timeline`). The last row is today,
+ *  so it gets a "+". Numbers are Hazem's (2026-09-19): ~500 students before
+ *  Welmnt, +2,000 with Welmnt, +13,000 with Catalyst. */
+export const road = [
+  { year: 2022, years: 1, students: 500 },
+  { year: 2023, years: 2, students: 500 },
+  { year: 2024, years: 3, students: 2500 },
+  { year: 2025, years: 4, students: 15500 },
+  { year: 2026, years: 4, students: 15500, ongoing: true },
+];
+
+/** Ventures on the tally. One appears in its `from` year; one that closed
+ *  blurs out from its `until` year on. */
+export const ventures: { name: string; nameAr?: string; from: number; until?: number }[] = [
+  { name: "S2S", from: 2022, until: 2023 },
+  { name: "Mental Diet", from: 2022 },
+  { name: "Freelancing", nameAr: "شغل حر", from: 2022 },
+  { name: "Welmnt", from: 2024 },
+  { name: "Catalyst", from: 2025 },
+  { name: "AstraForm", from: 2026 },
+  { name: "Vayn", from: 2026 },
+  { name: "Wellness House", from: 2026 },
+  { name: "Gemini Shipping", from: 2026 },
+];
+
 export type AboutCopy = {
   title: string;
   titleOther: string;
@@ -23,6 +49,7 @@ export type AboutCopy = {
   timelineLabel: string;
   timelineOther: string;
   timeline: { year: string; mark?: Mark; title: string; body: string[] }[];
+  tally: { label: string; years: string; students: string; ventures: string; closed: string };
   threadsLabel: string;
   threadsOther: string;
   threads: { number: string; name: string; secondary: string; href: string; body: string }[];
@@ -116,6 +143,13 @@ export const english: AboutCopy = {
       ],
     },
   ],
+  tally: {
+    label: "Running tally",
+    years: "Years building",
+    students: "Students taught",
+    ventures: "Ventures",
+    closed: "closed",
+  },
   threadsLabel: "Five threads, one life",
   threadsOther: "الخيوط الخمسة",
   threads: [
@@ -248,6 +282,13 @@ export const arabic: AboutCopy = {
       ],
     },
   ],
+  tally: {
+    label: "الحصيلة لحد دلوقتي",
+    years: "سنين بناء",
+    students: "طالب علّمتهم",
+    ventures: "مشاريع",
+    closed: "اتقفل",
+  },
   threadsLabel: "خمس خيوط، حياة واحدة",
   threadsOther: "Five threads, one life",
   threads: [
