@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { EssayPage, essayHead, loadEssay } from "@/components/pages/EssayPage";
+import { EssayPage } from "@/components/pages/EssayPage";
+import { essayHead, loadEssay } from "@/lib/essay-route";
 
 export const Route = createFileRoute("/essays/$id")({
   loader: ({ params }) => loadEssay("en", params.id),
