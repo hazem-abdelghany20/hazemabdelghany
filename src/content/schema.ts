@@ -11,7 +11,11 @@ export const essaySchema = z.object({
   minutes: z.number().optional(),
   description: z.string().optional(),
   heroImage: z.string().optional(),
+  heroImageDark: z.string().optional(),
+  heroWidth: z.number().int().positive().default(1536),
+  heroHeight: z.number().int().positive().default(1024),
   heroAlt: z.string().optional(),
+  heroMode: z.enum(["framed", "adaptive"]).default("framed"),
   draft: z.boolean().default(false),
   // id of this essay's version in the other language, when one exists
   translationOf: z.string().optional(),

@@ -438,6 +438,27 @@
   border-radius: 3px;
   box-shadow: 0 20px 56px color-mix(in srgb, var(--ink) 15%, transparent);
 }
+.page-essay .essay-hero-adaptive img {
+  border-radius: 0;
+  box-shadow: none;
+  /* Let the foreground rubble dissolve into the page in either theme. */
+  mask-image: linear-gradient(to bottom, #000 84%, rgb(0 0 0 / 75%) 90%, transparent 99%);
+}
+.page-essay .essay-hero-themed {
+  display: grid;
+}
+.page-essay .essay-hero-themed img {
+  grid-area: 1 / 1;
+  transition: opacity 0.72s ease;
+}
+.page-essay .essay-hero-light { opacity: 1; }
+.page-essay .essay-hero-dark { opacity: 0; }
+:root[data-theme='dark'] .page-essay .essay-hero-light { opacity: 0; }
+:root[data-theme='dark'] .page-essay .essay-hero-dark { opacity: 1; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .page-essay .essay-hero-light { opacity: 0; }
+  :root:not([data-theme='light']) .page-essay .essay-hero-dark { opacity: 1; }
+}
 .page-essay .read-next {
   max-width: 880px;
   margin: 88px auto 0 auto;

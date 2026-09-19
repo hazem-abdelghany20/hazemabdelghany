@@ -104,15 +104,34 @@ export function EssayPage({ lang, id, html }: { lang: Lang; id: string; html: st
       </header>
 
       {essay.data.heroImage && (
-        <figure className="essay-hero">
+        <figure
+          className={[
+            "essay-hero",
+            essay.data.heroMode === "adaptive" && "essay-hero-adaptive",
+            essay.data.heroImageDark && "essay-hero-themed",
+          ].filter(Boolean).join(" ")}
+        >
           <img
+            className={essay.data.heroImageDark ? "essay-hero-light" : undefined}
             src={essay.data.heroImage}
             alt={essay.data.heroAlt ?? ""}
-            width="1536"
-            height="1024"
+            width={essay.data.heroWidth}
+            height={essay.data.heroHeight}
             loading="eager"
             decoding="async"
           />
+          {essay.data.heroImageDark && (
+            <img
+              className="essay-hero-dark"
+              src={essay.data.heroImageDark}
+              alt=""
+              aria-hidden="true"
+              width={essay.data.heroWidth}
+              height={essay.data.heroHeight}
+              loading="eager"
+              decoding="async"
+            />
+          )}
         </figure>
       )}
 

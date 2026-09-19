@@ -5,8 +5,12 @@ lang: en
 thread: faith
 minutes: 7
 description: "God swears eleven times in a row to tell you one thing: the project is you. What tazkiya is, where it starts, and the four stages of actually changing."
-heroImage: "/images/essays/tazkiya-series/tazkiya-sculptor.webp"
-heroAlt: "A sculptor in a dim workshop chiselling a human figure out of rough stone under a single lamp, stone chips across the floor"
+heroImage: "/images/essays/tazkiya-series/tazkiya-sculptor-light.webp"
+heroImageDark: "/images/essays/tazkiya-series/tazkiya-sculptor-adaptive.webp"
+heroWidth: 1672
+heroHeight: 941
+heroAlt: "A seated sculptor chiselling a human figure from rough stone beneath a single hanging lamp"
+heroMode: adaptive
 translationOf: "tazkiya-ar"
 draft: false
 ---

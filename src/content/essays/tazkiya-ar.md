@@ -5,8 +5,12 @@ lang: ar
 thread: faith
 minutes: 7
 description: "ربنا بيحلف إحدى عشر مرة ورا بعض عشان يقولك حاجة واحدة: المشروع هو إنت. يعني إيه تزكية، بتبدأ منين، والأربع مراحل عشان تتغير بجد."
-heroImage: "/images/essays/tazkiya-series/tazkiya-sculptor.webp"
-heroAlt: "نحّات في ورشة ضلمة بينحت جسم إنسان من حجر خشن تحت لمبة واحدة، وكسر الحجر مالي الأرض"
+heroImage: "/images/essays/tazkiya-series/tazkiya-sculptor-light.webp"
+heroImageDark: "/images/essays/tazkiya-series/tazkiya-sculptor-adaptive.webp"
+heroWidth: 1672
+heroHeight: 941
+heroAlt: "نحّات قاعد بينحت جسم إنسان من حجر خشن تحت لمبة معلّقة واحدة"
+heroMode: adaptive
 translationOf: "tazkiya"
 draft: false
 ---
