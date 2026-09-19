@@ -123,14 +123,20 @@ export function BookReader({
     window.addEventListener("resize", onScroll);
 
     // Arriving from "Continue": put the reader back where they stopped. Run
-    // again shortly after, in case the router's own scroll-to-top lands later.
+    // again shortly after, in case the router's own scroll-to-top lands later,
+    // and whenever late images or fonts change the page's height — until the
+    // reader moves, for at most 3 seconds.
     const timers: number[] = [];
+    let settle: ResizeObserver | undefined;
     if (resumeAt !== null) {
       const restore = () => {
         if (!moved) scrollToProgress(article, resumeAt);
       };
       requestAnimationFrame(() => requestAnimationFrame(restore));
       timers.push(window.setTimeout(restore, 250));
+      settle = new ResizeObserver(restore);
+      settle.observe(document.body);
+      timers.push(window.setTimeout(() => settle?.disconnect(), 3000));
     }
     update();
 
@@ -145,6 +151,7 @@ export function BookReader({
       cancelAnimationFrame(raf);
       timers.forEach((t) => window.clearTimeout(t));
       io?.disconnect();
+      settle?.disconnect();
       for (const t of intents) window.removeEventListener(t, onIntent);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
