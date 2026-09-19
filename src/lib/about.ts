@@ -8,18 +8,21 @@ export const aboutAlternates = [
   { lang: "x-default", href: "/about/" },
 ];
 
-type Mark = { src: string; label: string; width: number; height: number };
+/** An organisation's logo on the timeline. `star` draws it stronger than the
+ *  rest (Catalyst, the centre of 2025 and 2026). */
+type Mark = { src: string; label: string; width: number; height: number; star?: boolean };
 
 /** The running tally beside "The road so far": where things stood by the end
  *  of each timeline year (same order as `timeline`). The last row is today,
- *  so it gets a "+". Numbers are Hazem's (2026-09-19): ~500 students before
- *  Welmnt, +2,000 with Welmnt, +13,000 with Catalyst. */
+ *  so it gets a "+". Students are Hazem's numbers (2026-09-19): ~500 before
+ *  Welmnt (tutoring, S2S), +2,000 with Welmnt, +13,000 with Catalyst, and
+ *  ~5,000 through Mental Diet spread over 2022–2026 (1,000 a year). */
 export const road = [
-  { year: 2022, years: 1, students: 500 },
-  { year: 2023, years: 2, students: 500 },
-  { year: 2024, years: 3, students: 2500 },
-  { year: 2025, years: 4, students: 15500 },
-  { year: 2026, years: 4, students: 15500, ongoing: true },
+  { year: 2022, years: 1, students: 1500 },
+  { year: 2023, years: 2, students: 2500 },
+  { year: 2024, years: 3, students: 5500 },
+  { year: 2025, years: 4, students: 19500 },
+  { year: 2026, years: 4, students: 20500, ongoing: true },
 ];
 
 /** Ventures on the tally. One appears in its `from` year; one that closed
@@ -48,7 +51,8 @@ export type AboutCopy = {
   quote: string;
   timelineLabel: string;
   timelineOther: string;
-  timeline: { year: string; mark?: Mark; title: string; body: string[] }[];
+  /** `marks`: the logos of that year, the first one leading. */
+  timeline: { year: string; marks?: Mark[]; title: string; body: string[] }[];
   tally: { label: string; years: string; students: string; ventures: string; closed: string };
   threadsLabel: string;
   threadsOther: string;
@@ -64,12 +68,25 @@ export type AboutCopy = {
 const marks = {
   ischool: { src: "/work/ischool.png", label: "iSchool", width: 105, height: 30 },
   welmnt: { src: "/work/welmnt.svg", label: "Welmnt", width: 42, height: 40 },
-  catalyst: { src: "/work/catalyst.svg", label: "Catalyst", width: 121, height: 29 },
+  catalyst: { src: "/work/catalyst.svg", label: "Catalyst", width: 138, height: 33, star: true },
   astraform: {
     src: "/work/astraform.png",
     label: "AstraForm Technologies",
-    width: 157,
-    height: 36,
+    width: 118,
+    height: 27,
+  },
+  // white parts of the badge removed, so the one-colour mark shows the ring and lettering
+  pizzaCompany: {
+    src: "/work/the-pizza-company.svg",
+    label: "The Pizza Company",
+    width: 50,
+    height: 40,
+  },
+  wellnessHouse: {
+    src: "/work/wellness-house.png",
+    label: "Wellness House",
+    width: 118,
+    height: 22,
   },
 } satisfies Record<string, Mark>;
 
@@ -104,7 +121,7 @@ export const english: AboutCopy = {
     },
     {
       year: "2023",
-      mark: marks.ischool,
+      marks: [marks.ischool, marks.pizzaCompany],
       title: "From lessons to products",
       body: [
         `I joined iSchool as a software programming instructor, teaching young students how to code. At the same time, I taught mathematics remotely through Continuous Education Academy and continued taking on freelance development work.`,
@@ -114,7 +131,7 @@ export const english: AboutCopy = {
     },
     {
       year: "2024",
-      mark: marks.welmnt,
+      marks: [marks.welmnt],
       title: "Building for the mind",
       body: [
         `I started leading Welmnt, an AI-powered platform focused on student mental health and emotional well-being.`,
@@ -124,7 +141,7 @@ export const english: AboutCopy = {
     },
     {
       year: "2025",
-      mark: marks.catalyst,
+      marks: [marks.catalyst],
       title: "Catalyst",
       body: [
         `I became CEO of Catalyst.`,
@@ -134,7 +151,7 @@ export const english: AboutCopy = {
     },
     {
       year: "2026",
-      mark: marks.astraform,
+      marks: [marks.catalyst, marks.astraform, marks.wellnessHouse],
       title: "Building with leverage",
       body: [
         `I joined AstraForm Technologies as CTO while continuing to lead Catalyst and build software across different industries.`,
@@ -243,7 +260,7 @@ export const arabic: AboutCopy = {
     },
     {
       year: "2023",
-      mark: marks.ischool,
+      marks: [marks.ischool, marks.pizzaCompany],
       title: "من الشرح للمنتجات",
       body: [
         `انضمّيت لـ iSchool كمدرّس برمجة، وكنت بعلّم طلبة صغيرين إزاي يكتبوا كود. وفي نفس الوقت كنت بدرس رياضيات عن بُعد مع Continuous Education Academy، وكملت شغلي الحر في تطوير الويب.`,
@@ -253,7 +270,7 @@ export const arabic: AboutCopy = {
     },
     {
       year: "2024",
-      mark: marks.welmnt,
+      marks: [marks.welmnt],
       title: "بناء يهتم بالعقل",
       body: [
         `بدأت أقود Welmnt، وهي منصة مدعومة بالذكاء الاصطناعي وتركّز على الصحة النفسية والرفاه العاطفي للطلبة.`,
@@ -263,7 +280,7 @@ export const arabic: AboutCopy = {
     },
     {
       year: "2025",
-      mark: marks.catalyst,
+      marks: [marks.catalyst],
       title: "كاتاليست",
       body: [
         `بقيت الرئيس التنفيذي لـ Catalyst.`,
@@ -273,7 +290,7 @@ export const arabic: AboutCopy = {
     },
     {
       year: "2026",
-      mark: marks.astraform,
+      marks: [marks.catalyst, marks.astraform, marks.wellnessHouse],
       title: "بناء بقوة مضاعفة",
       body: [
         `انضمّيت لـ AstraForm Technologies كمدير تقني، مع استمراري في قيادة Catalyst وبناء برمجيات في مجالات مختلفة.`,

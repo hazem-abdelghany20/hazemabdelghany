@@ -171,19 +171,24 @@ export function AboutRoad({ c, isAr }: { c: AboutCopy; isAr: boolean }) {
           <article key={item.year} className="timeline-entry">
             <div className="timeline-meta">
               <time dir="ltr">{item.year}</time>
-              {item.mark && (
-                <span
-                  className="org-mark"
-                  role="img"
-                  aria-label={isAr ? `شعار ${item.mark.label}` : `${item.mark.label} logo`}
-                  style={
-                    {
-                      "--mark": `url('${item.mark.src}')`,
-                      "--mark-width": `${item.mark.width}px`,
-                      "--mark-height": `${item.mark.height}px`,
-                    } as CSSProperties
-                  }
-                />
+              {item.marks && (
+                <div className="timeline-marks">
+                  {item.marks.map((mark) => (
+                    <span
+                      key={mark.label}
+                      className={mark.star ? "org-mark is-star" : "org-mark"}
+                      role="img"
+                      aria-label={isAr ? `شعار ${mark.label}` : `${mark.label} logo`}
+                      style={
+                        {
+                          "--mark": `url('${mark.src}')`,
+                          "--mark-width": `${mark.width}px`,
+                          "--mark-height": `${mark.height}px`,
+                        } as CSSProperties
+                      }
+                    />
+                  ))}
+                </div>
               )}
             </div>
             <div className="timeline-copy">
