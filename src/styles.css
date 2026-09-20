@@ -17,6 +17,7 @@
 @import "./styles/components.css" layer(base);
 @import "./styles/pages.css" layer(base);
 @import "./styles/logs.css" layer(base);
+@import "./styles/log-desk.css" layer(base);
 @import "./styles/refpanel.css" layer(base);
 @import "./styles/reader.css" layer(base);
 @import "./styles/reader-counts.css" layer(base);

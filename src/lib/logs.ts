@@ -88,3 +88,9 @@ export function youtubeId(link: string | undefined): string | undefined {
 /** YouTube's own still for a video. `hqdefault` exists for every video, unlike
  *  maxresdefault, which 404s on anything never uploaded in HD. */
 export const youtubeThumb = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+
+/** Every entry, stubs and drafts included — for the desk at /log-desk/ only.
+ *  Every public surface goes through publishedLogs(); nothing here is on the
+ *  site until it has a note. */
+export const allLogs = (): LogEntry[] =>
+  [...ALL].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());

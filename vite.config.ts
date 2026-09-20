@@ -30,6 +30,8 @@ export default defineConfig({
             { path: "/" },
             { path: "/logs/" },
             { path: "/ar/logs/" },
+            // Hazem's desk: noindex and linked from nowhere, so name it or it never builds.
+            { path: "/log-desk/" },
             { path: "/rss.xml" },
             { path: "/sitemap.xml" },
           ],

@@ -94,10 +94,13 @@ function LangSwitch({ lang }: { lang: Lang }) {
   const missing = useRouterState({
     select: (s) => s.matches.some((m) => m.status === "notFound" || m.globalNotFound),
   });
+  // /log-desk/ is Hazem's own tool and exists in English only; there is no
+  // Arabic twin to switch to, and pointing at one 404s the static build.
+  const single = pathname === "/log-desk/" || pathname === "/log-desk";
   return (
     <L
       className="nav-lang"
-      href={missing ? localePath(other, "/") : switchPath(pathname)}
+      href={missing || single ? localePath(other, "/") : switchPath(pathname)}
       lang={other}
       dir={other === "ar" ? "rtl" : "ltr"}
       hrefLang={other === "ar" ? "ar-EG" : "en"}

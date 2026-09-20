@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+# Hazem's own page, not part of the site.
+Disallow: /log-desk/
 
 Sitemap: https://hazemabdelghany.com/sitemap.xml

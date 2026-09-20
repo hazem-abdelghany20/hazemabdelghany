@@ -26,9 +26,13 @@ type CollectionOptions = {
   schema: ZodTypeAny;
   /** Last-minute fixes to the rendered HTML (old links, mostly). */
   fixHtml?: (html: string) => string;
+  /** Strips fields out of the virtual index before it is written. The index
+   *  ships to every visitor in the JS bundle, so anything unpublished has to
+   *  come out here rather than be filtered at runtime. */
+  redact?: (data: Record<string, unknown>) => Record<string, unknown>;
 };
 
-function collectionPlugin({ name, schema, fixHtml }: CollectionOptions): Plugin {
+function collectionPlugin({ name, schema, fixHtml, redact }: CollectionOptions): Plugin {
   const VIRTUAL_ID = `virtual:${name}`;
   const RESOLVED_ID = "\0" + VIRTUAL_ID;
   let dir = "";
@@ -70,13 +74,14 @@ function collectionPlugin({ name, schema, fixHtml }: CollectionOptions): Plugin 
         const entries = await Promise.all(
           files.map(async (f) => {
             const { data, body } = await parse(path.join(dir, f));
+            const shown = (redact ? redact({ ...data }) : data) as typeof data;
             return {
               id: f.slice(0, -3),
               // `hasBody` lets a list know a file has a page of its own without
               // pulling the body in to find out. A log entry may be a single
               // line of frontmatter and nothing else.
               hasBody: body.length > 0,
-              data: { ...data, date: data.date.toISOString() },
+              data: { ...shown, date: data.date.toISOString() },
             };
           }),
         );
@@ -110,4 +115,12 @@ export const essaysPlugin = () =>
     fixHtml: (html) => html.replace(/href="\/essays\/([a-z0-9-]+)-ar\/"/g, 'href="/ar/essays/$1/"'),
   });
 
-export const logsPlugin = () => collectionPlugin({ name: "logs", schema: logSchema });
+export const logsPlugin = () =>
+  collectionPlugin({
+    name: "logs",
+    schema: logSchema,
+    // A draft entry's note is not published, and the index goes out to every
+    // visitor — so it never leaves the build. The desk at /log-desk/ reads the
+    // unpublished ones back from the database instead.
+    redact: (data) => (data["draft"] ? { ...data, note: undefined } : data),
+  });

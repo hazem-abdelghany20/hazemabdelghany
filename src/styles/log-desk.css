@@ -1,0 +1,333 @@
+/* ---------- The desk  /log-desk/ ----------
+   Hazem's own page, not part of the public site: a working list where the log
+   gets its scores and its lines. Same palette as everything else, but denser
+   and plainer — this is operated, not read. */
+
+.page-desk {
+  max-width: 880px;
+  margin: 0 auto;
+}
+.desk-head {
+  padding: 72px 0 0;
+}
+.desk-head-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.desk-title {
+  font-size: 38px;
+  font-weight: 400;
+  margin: 0;
+}
+.desk-tally {
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.desk-tally b {
+  color: var(--accent);
+  font-weight: 500;
+}
+.desk-bar {
+  height: 2px;
+  background: var(--line);
+  margin-top: 14px;
+  overflow: hidden;
+}
+.desk-bar i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.35s ease;
+}
+.desk-lede {
+  max-width: 64ch;
+  margin: 14px 0 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ---------- the lock ---------- */
+.desk-gate {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 32px 0 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: var(--fig-surface);
+}
+.desk-gate label {
+  font-size: 12px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.desk-gate input {
+  flex: 1 1 220px;
+  min-width: 0;
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 15px;
+}
+.desk-gate input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+.desk-gate button {
+  padding: 8px 18px;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  background: var(--accent);
+  color: var(--bg);
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.desk-warn {
+  font-size: 13px;
+  color: var(--accent);
+}
+
+.desk-notice {
+  margin: 24px 0 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-inline-start: 2px solid var(--accent);
+  background: var(--fig-surface);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.desk-notice code {
+  font-size: 13px;
+}
+
+/* ---------- tools ---------- */
+.desk-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 30px 0 4px;
+}
+.desk-filters {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.desk-chip,
+.desk-copy {
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+.desk-chip:hover,
+.desk-copy:hover:not(:disabled) {
+  color: var(--ink);
+  border-color: var(--ink-2);
+}
+.desk-chip[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+.desk-chip b {
+  font-weight: 400;
+  opacity: 0.7;
+  margin-inline-start: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.desk-copy:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---------- rows ---------- */
+.desk-rows {
+  display: flex;
+  flex-direction: column;
+}
+.desk-row {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 18px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+.desk-row:first-child {
+  border-top: 1px solid var(--line);
+}
+.desk-thumb {
+  display: block;
+  width: 150px;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--fig-surface);
+}
+.desk-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.desk-thumb-none {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.desk-row-title {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.3;
+  margin: 0 0 5px;
+}
+.desk-row-title a {
+  color: var(--ink);
+}
+.desk-row-title a:hover {
+  color: var(--accent);
+}
+.desk-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0 0 13px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.desk-meta time {
+  font-variant-numeric: tabular-nums;
+}
+.desk-dot {
+  color: var(--line);
+}
+.desk-flag {
+  font-size: 10.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 1px 6px;
+}
+
+.desk-scores {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 11px;
+}
+.desk-scores-label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-inline-end: 5px;
+}
+.desk-score {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+.desk-score:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+.desk-score[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+
+.desk-note {
+  width: 100%;
+  min-height: 54px;
+  resize: vertical;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 17px;
+  line-height: 1.55;
+}
+.desk-note::placeholder {
+  color: var(--faint);
+  font-style: italic;
+}
+.desk-note:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+  border-color: var(--accent);
+}
+.desk-state {
+  margin: 7px 0 0;
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.desk-live {
+  color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .desk-head {
+    padding-top: 52px;
+  }
+  .desk-title {
+    font-size: 30px;
+  }
+  .desk-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .desk-thumb {
+    width: 100%;
+  }
+  .desk-tools {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
