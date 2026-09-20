@@ -74,6 +74,45 @@ export type Database = {
         }
         Relationships: []
       }
+      log_desk_key: {
+        Row: {
+          id: boolean
+          key_sha256: string
+          set_at: string
+        }
+        Insert: {
+          id?: boolean
+          key_sha256: string
+          set_at?: string
+        }
+        Update: {
+          id?: boolean
+          key_sha256?: string
+          set_at?: string
+        }
+        Relationships: []
+      }
+      log_reviews: {
+        Row: {
+          note: string
+          rating: number | null
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          note?: string
+          rating?: number | null
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          note?: string
+          rating?: number | null
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -84,6 +123,26 @@ export type Database = {
         Returns: undefined
       }
       is_essay_slug: { Args: { p_slug: string }; Returns: boolean }
+      log_desk_load: {
+        Args: { p_key: string }
+        Returns: {
+          note: string
+          rating: number
+          slug: string
+          updated_at: string
+        }[]
+      }
+      log_desk_ok: { Args: { p_key: string }; Returns: boolean }
+      log_desk_save: {
+        Args: {
+          p_key: string
+          p_note: string
+          p_rating: number
+          p_slug: string
+        }
+        Returns: undefined
+      }
+      log_desk_set_key: { Args: { p_key: string }; Returns: undefined }
       most_highlighted: {
         Args: { p_lang: string; p_slug: string }
         Returns: {
