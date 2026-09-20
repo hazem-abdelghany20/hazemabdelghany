@@ -73,3 +73,18 @@ export async function logHtml(id: string): Promise<string | undefined> {
   const load = bodies[`/src/content/logs/${id}.md`];
   return load ? await load() : undefined;
 }
+
+/** The video id inside a YouTube URL, for the thumbnail. Handles the two forms
+ *  the site actually stores (`watch?v=` and `youtu.be/`); anything else — a
+ *  Vimeo link, a blog post — returns undefined and the entry shows no image. */
+export function youtubeId(link: string | undefined): string | undefined {
+  if (!link) return undefined;
+  const m =
+    /^https?:\/\/(?:www\.)?youtube\.com\/watch\?(?:.*&)?v=([\w-]{11})(?:&|$)/.exec(link) ??
+    /^https?:\/\/youtu\.be\/([\w-]{11})(?:\?|$)/.exec(link);
+  return m?.[1];
+}
+
+/** YouTube's own still for a video. `hqdefault` exists for every video, unlike
+ *  maxresdefault, which 404s on anything never uploaded in HD. */
+export const youtubeThumb = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;

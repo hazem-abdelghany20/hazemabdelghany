@@ -1,5 +1,5 @@
 import { L } from "@/components/L";
-import { kindLabel, logPath, type LogEntry } from "@/lib/logs";
+import { kindLabel, logPath, youtubeId, youtubeThumb, type LogEntry } from "@/lib/logs";
 import { fwd, type Lang } from "@/lib/i18n";
 import { formatDay } from "@/lib/threads";
 
@@ -10,6 +10,8 @@ export function LogEntryCard({ entry, lang }: { entry: LogEntry; lang: Lang }) {
   const siteAr = lang === "ar";
   const kind = kindLabel(entry.data.kind);
   const foreign = entry.data.lang !== lang;
+  // A watched thing shows its still. Only YouTube for now — see youtubeId().
+  const video = youtubeId(entry.data.link);
 
   return (
     <article className="log-entry" dir={isAr ? "rtl" : "ltr"} lang={isAr ? "ar" : "en"}>
@@ -41,23 +43,46 @@ export function LogEntryCard({ entry, lang }: { entry: LogEntry; lang: Lang }) {
         )}
       </div>
 
-      <h2 className="log-title">
-        {entry.data.link ? (
-          <a href={entry.data.link} target="_blank" rel="noopener noreferrer">
-            {entry.data.title}
+      <div className="log-entry-body">
+        {video && (
+          <a
+            className="log-thumb"
+            href={entry.data.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            tabIndex={-1}
+            aria-hidden="true"
+          >
+            <img
+              src={youtubeThumb(video)}
+              alt=""
+              width={480}
+              height={360}
+              loading="lazy"
+              decoding="async"
+            />
           </a>
-        ) : (
-          entry.data.title
         )}
-      </h2>
+        <div className="log-entry-text">
+          <h2 className="log-title">
+            {entry.data.link ? (
+              <a href={entry.data.link} target="_blank" rel="noopener noreferrer">
+                {entry.data.title}
+              </a>
+            ) : (
+              entry.data.title
+            )}
+          </h2>
 
-      <p className="log-note">{entry.data.note}</p>
+          <p className="log-note">{entry.data.note}</p>
 
-      {entry.hasBody && (
-        <L className="log-more" href={logPath(entry, lang)}>
-          {siteAr ? `الملاحظات ${fwd(lang)}` : "The notes →"}
-        </L>
-      )}
+          {entry.hasBody && (
+            <L className="log-more" href={logPath(entry, lang)}>
+              {siteAr ? `الملاحظات ${fwd(lang)}` : "The notes →"}
+            </L>
+          )}
+        </div>
+      </div>
     </article>
   );
 }
