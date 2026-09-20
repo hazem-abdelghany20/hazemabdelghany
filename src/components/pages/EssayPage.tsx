@@ -136,7 +136,7 @@ export function EssayPage({ lang, id, html }: { lang: Lang; id: string; html: st
       )}
 
       <article
-        key={essay.id}
+        key={`article:${essay.id}`}
         className={isAr ? "prose prose-ar" : "prose"}
         dir={isAr ? "rtl" : undefined}
         lang={isAr ? "ar" : "en"}
@@ -144,9 +144,9 @@ export function EssayPage({ lang, id, html }: { lang: Lang; id: string; html: st
       />
 
       <RefPanels contentKey={essay.id} />
-      <EssayHighlights key={essay.id} slug={slug} lang={essay.data.lang} site={lang} />
+      <EssayHighlights key={`highlights:${essay.id}`} slug={slug} lang={essay.data.lang} site={lang} />
 
-      <EssayReactions key={slug} slug={slug} lang={lang} />
+      <EssayReactions key={`reactions:${slug}`} slug={slug} lang={lang} />
 
       {series && (
         <BookReader essay={essay} parts={siblings} prev={prevPart} next={nextPart} site={lang} />
