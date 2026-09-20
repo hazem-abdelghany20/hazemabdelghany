@@ -13,7 +13,11 @@ partLabel: "Part III · Chapter 14"
 
 This is the chapter I most need you to hear precisely, because the book's central claim — effort is yours, output isn't — has a counterfeit version, and the counterfeit ruins lives. The counterfeit says: *outcomes don't matter, results are fate, just do your best and never look at the scoreboard.* Every underachiever on earth eventually finds his way to that sentence and lives inside it, using detachment as anesthesia. So let me draw the line with full force before Part IV makes the true claim: **detachment from outcome is not detachment from feedback.** The knight who shrugs at outcomes entirely does not learn which strikes land. He dies humble.
 
-The instrument for holding this line comes from professional poker, of all places. <button class="ref" data-ref="thinking-in-bets">Annie Duke</button> calls the cardinal error **resulting**: judging the quality of a decision by the quality of its outcome. Poker forces the lesson because the game is honest about luck — you can play a hand perfectly and lose it, play it terribly and win. If you grade your play by the pot, you will systematically learn the wrong lessons: repeating lucky mistakes, abandoning sound strategy after variance bites. Pros survive by keeping two ledgers — decision quality and outcome — and refusing to let the second grade the first. Life deals more luck than poker and hides it better. Almost everyone you know is resulting, every day: the reckless friend whose bet paid, now sure he's a genius; the careful one whose good plan met a bad market, now sure he's a fraud. Both are reading noise as verdict.
+<button class="ref" data-ref="thinking-in-bets">Annie Duke</button> calls the cardinal error **resulting**: judging the quality of a decision by the quality of its outcome, even though the decision and the outcome are not the same object.
+
+A launch can follow sound research, sensible pricing, and disciplined execution, then meet a sudden market shift and fail. Another can be rushed and badly reasoned, then succeed because a temporary condition carries it. If you learn from the outcome alone, you punish the sound process and repeat the weak one. Keep two questions separate: Was this a good decision given what was knowable at the time? What does the new result teach me for the next decision?
+
+One outcome neither clears a poor decision nor condemns a good one. It does add evidence that the next decision must use.
 
 So here is the discipline, and it is the practical heart of this book. **Keep two ledgers, on two clocks.**
 

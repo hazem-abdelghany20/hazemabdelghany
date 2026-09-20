@@ -50,7 +50,7 @@ export function EssayPage({ lang, id, html }: { lang: Lang; id: string; html: st
   const readNext = series && (prevPart || nextPart) ? [] : pool.slice(0, 2);
 
   return (
-    <div className="page-essay">
+    <div key={`essay-page:${essay.id}`} className="page-essay">
       <header className="essay-head">
         {series && essay.data.partLabel && (
           <SeriesBanner
@@ -109,7 +109,9 @@ export function EssayPage({ lang, id, html }: { lang: Lang; id: string; html: st
             "essay-hero",
             essay.data.heroMode === "adaptive" && "essay-hero-adaptive",
             essay.data.heroImageDark && "essay-hero-themed",
-          ].filter(Boolean).join(" ")}
+          ]
+            .filter(Boolean)
+            .join(" ")}
         >
           <img
             className={essay.data.heroImageDark ? "essay-hero-light" : undefined}
@@ -144,7 +146,12 @@ export function EssayPage({ lang, id, html }: { lang: Lang; id: string; html: st
       />
 
       <RefPanels contentKey={essay.id} />
-      <EssayHighlights key={`highlights:${essay.id}`} slug={slug} lang={essay.data.lang} site={lang} />
+      <EssayHighlights
+        key={`highlights:${essay.id}`}
+        slug={slug}
+        lang={essay.data.lang}
+        site={lang}
+      />
 
       <EssayReactions key={`reactions:${slug}`} slug={slug} lang={lang} />
 

@@ -293,10 +293,10 @@ export const REFS: Record<string, RefDef> = {
     title: "Thinking in Bets",
     meta: "Annie Duke · 2018",
     tagline:
-      "Written by a professional poker player: judge the decision, not the result — they are different objects.",
+      "Judge the decision by what was knowable at the time, then use the result as new evidence.",
     body: [
-      "Duke spent twenty years as a professional poker player after leaving a doctorate in cognitive psychology, which makes her unusually well equipped to write about deciding under uncertainty.",
-      "Her central term is <strong>resulting</strong>: the near-universal error of grading a decision by how it turned out. In any domain with luck in it, a good decision can lose and a bad one can win, and a person who grades on outcomes is systematically trained by noise. The fix is keeping a record of the decision at the time it was made — what you knew, what you expected, what odds you gave it — so the quality of the call can be judged separately from the roll of the dice.",
+      "Duke's subject is decision-making under uncertainty: how to learn from outcomes without pretending every outcome was fully under your control.",
+      "Her central term is <strong>resulting</strong>: the error of grading a decision only by how it turned out. Her practical answer is a decision journal that records what you knew, what you expected, and which assumptions carried the choice. When the result arrives, you can update those assumptions without rewriting the quality of the original decision.",
     ],
   },
 
