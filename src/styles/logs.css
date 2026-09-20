@@ -1,0 +1,242 @@
+/* ---------- The Log  /logs/ + /ar/logs/ ----------
+   A feed of things read and watched. Each entry is a hairline-separated block:
+   what it is, what I said about it, and a number out of ten. Entries with notes
+   link to their own page (/logs/<id>/), which reuses .prose.
+   Everything here is direction-agnostic (inline-start/end), because an Arabic
+   comment sits RTL inside an English page and the other way round. */
+
+.page-logs .page-head {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  padding: 88px 0 20px 0;
+}
+.page-logs .page-title {
+  font-size: 44px;
+  font-weight: 400;
+}
+.page-logs .page-title-ar {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.page-logs .page-lede {
+  max-width: 62ch;
+  margin: 0 0 34px 0;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ---------- filter ---------- */
+.log-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+.log-filter {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 6px 13px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+.log-filter:hover {
+  color: var(--ink);
+  border-color: var(--ink-2);
+}
+.log-filter[aria-pressed='true'] {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.log-filter-count {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+}
+
+/* ---------- the feed ---------- */
+.log-feed {
+  display: flex;
+  flex-direction: column;
+}
+.log-entry {
+  padding: 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+.log-entry:first-child {
+  border-top: 1px solid var(--line);
+}
+.log-entry-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+.log-by {
+  font-style: normal;
+  color: var(--ink-2);
+}
+.log-day {
+  font-variant-numeric: tabular-nums;
+}
+.log-flag {
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 1px 7px;
+}
+/* The number sits at the far edge of the line, whichever edge that is. */
+.log-rating {
+  margin-inline-start: auto;
+  font-size: 22px;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.log-rating-of {
+  font-size: 13px;
+  color: var(--faint);
+}
+
+.log-title {
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 1.35;
+  margin: 0 0 8px 0;
+  color: var(--ink);
+}
+.log-title[lang='ar'],
+[lang='ar'] .log-title {
+  font-size: 25px;
+}
+.log-title a {
+  color: var(--ink);
+  transition: color 0.15s ease;
+}
+.log-title a:hover {
+  color: var(--accent);
+}
+
+.log-note {
+  max-width: 68ch;
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+.log-more {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.log-more:hover {
+  color: var(--ink);
+}
+
+/* ---------- one entry's notes  /logs/<id>/ ---------- */
+.page-log {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.page-log .log-head {
+  padding: 80px 0 28px 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 40px;
+}
+.log-page-title {
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0 0 14px 0;
+}
+.log-page-title[lang='ar'] {
+  font-size: 40px;
+}
+.log-page-note {
+  font-size: 20px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  font-style: italic;
+  border-inline-start: 2px solid var(--accent);
+  padding-inline-start: 18px;
+  margin: 0 0 18px 0;
+}
+.log-page-note[lang='ar'] {
+  font-style: normal;
+}
+.log-page-links {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.log-back {
+  display: inline-block;
+  margin-top: 48px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.page-log .read-next {
+  margin-top: 72px;
+}
+.page-log .section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 6px;
+}
+
+@media (max-width: 640px) {
+  .page-logs .page-head {
+    padding-top: 56px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .page-logs .page-title {
+    font-size: 34px;
+  }
+  .page-logs .page-title-ar {
+    font-size: 26px;
+  }
+  .log-entry-head {
+    gap: 10px;
+  }
+  .log-rating {
+    font-size: 19px;
+  }
+  .log-title {
+    font-size: 21px;
+  }
+  .log-note {
+    font-size: 17px;
+  }
+  .log-page-title {
+    font-size: 30px;
+  }
+  .log-page-note {
+    font-size: 18px;
+  }
+}

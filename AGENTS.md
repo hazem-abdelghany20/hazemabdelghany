@@ -13,6 +13,10 @@
 
 A personal essay site, ported 1:1 from an Astro site. Read `README.md` first.
 
+- **Two markdown collections**, not database rows: `src/content/essays/` (essays and book parts)
+  and `src/content/logs/` (one entry per thing read or watched — body optional, see `README.md`).
+  Both are rendered at build time by the same plugin in `essays-plugin.ts`. `.gitignore` deliberately
+  ignores `/logs` at the root only — a bare `logs` rule swallows both of the log folders.
 - **Essays are markdown files**, not database rows: `src/content/essays/<id>.md`, rendered at build time by `essays-plugin.ts`. The database is for things readers do (signups, comments, reactions, views), not for the essays themselves.
 - **Every URL ends in `/`** (`trailingSlash: "always"` in `src/router.tsx`). Typed links use the slashed form: `<Link to="/essays/$id/" params={{ id }}>`.
 - **Two languages.** A page's language comes from its loader data (`lang`) or `staticData.lang`; `__root.tsx` sets `<html lang dir>` from it. Arabic pages are RTL and use Amiri.

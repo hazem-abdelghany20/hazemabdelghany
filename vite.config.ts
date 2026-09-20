@@ -5,7 +5,7 @@
 //     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
-import { essaysPlugin } from "./essays-plugin";
+import { essaysPlugin, logsPlugin } from "./essays-plugin";
 
 // `bun run build:static` — the GitHub Pages build (.github/workflows/deploy.yml).
 // Every page is prerendered to plain HTML in dist/client; no server runs.
@@ -13,8 +13,8 @@ import { essaysPlugin } from "./essays-plugin";
 const STATIC = process.env["STATIC_EXPORT"] === "1";
 
 export default defineConfig({
-  // Renders src/content/essays/*.md at build time — see essays-plugin.ts.
-  plugins: [essaysPlugin()],
+  // Renders src/content/{essays,logs}/*.md at build time — see essays-plugin.ts.
+  plugins: [essaysPlugin(), logsPlugin()],
   ...(STATIC ? { nitro: false as const } : {}),
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
@@ -23,8 +23,16 @@ export default defineConfig({
     ...(STATIC
       ? {
           // Start at the home page and follow every internal link; the feed and
-          // sitemap aren't linked as pages, so name them.
-          pages: [{ path: "/" }, { path: "/rss.xml" }, { path: "/sitemap.xml" }],
+          // sitemap aren't linked as pages, so name them. The log pages are named
+          // too: the nav hides their link while the log is empty, but the sitemap
+          // lists them either way, so they have to exist.
+          pages: [
+            { path: "/" },
+            { path: "/logs/" },
+            { path: "/ar/logs/" },
+            { path: "/rss.xml" },
+            { path: "/sitemap.xml" },
+          ],
           prerender: { enabled: true, crawlLinks: true, failOnError: true },
         }
       : {}),

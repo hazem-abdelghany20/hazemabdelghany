@@ -2,10 +2,13 @@ import { useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { L } from "@/components/L";
 import { localePath, otherLang, switchPath, type Lang } from "@/lib/i18n";
+import { publishedLogs } from "@/lib/logs";
 
 export function Nav({ lang = "en" }: { lang?: Lang }) {
   const isAr = lang === "ar";
   const to = (path: string) => localePath(lang, path);
+  // The log only appears once there is something in it — no link to an empty page.
+  const hasLog = publishedLogs().length > 0;
   return (
     <nav className="nav">
       <L href={to("/")} className="nav-name">
@@ -30,6 +33,14 @@ export function Nav({ lang = "en" }: { lang?: Lang }) {
                 Articles
               </span>
             </L>
+            {hasLog && (
+              <L href={to("/logs/")}>
+                {"السجل "}
+                <span className="en" dir="ltr" lang="en">
+                  Log
+                </span>
+              </L>
+            )}
             <L href={to("/about/")}>
               {"عنّي "}
               <span className="en" dir="ltr" lang="en">
@@ -51,6 +62,14 @@ export function Nav({ lang = "en" }: { lang?: Lang }) {
                 مقالات
               </span>
             </L>
+            {hasLog && (
+              <L href={to("/logs/")}>
+                {"Log "}
+                <span className="ar" dir="rtl" lang="ar">
+                  السجل
+                </span>
+              </L>
+            )}
             <L href={to("/about/")}>
               {"About "}
               <span className="ar" dir="rtl" lang="ar">

@@ -1,8 +1,13 @@
-/* Essays are markdown files in src/content/essays/<id>.md. This plugin turns
-   them into two things the app imports:
+/* Markdown collections. Two of them live in src/content/:
 
-   - `virtual:essays` — every essay's frontmatter (no bodies), for the lists.
-   - each `.md` file — its body rendered to HTML, loaded per essay page.
+   - `essays/` — the essays and book parts.
+   - `logs/`   — one entry per thing read or watched (body optional).
+
+   Each collection turns into two things the app imports:
+
+   - a virtual module (`virtual:essays`, `virtual:logs`) — every file's
+     frontmatter, no bodies, for the lists.
+   - each `.md` file — its body rendered to HTML, loaded per page.
 
    Rendering uses @astrojs/markdown-remark, the exact processor the site was
    built with before (GFM, smart quotes, heading ids, raw HTML passthrough),
@@ -12,26 +17,34 @@ import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { createMarkdownProcessor, parseFrontmatter } from "@astrojs/markdown-remark";
 import type { Plugin, ViteDevServer } from "vite";
-import { essaySchema } from "./src/content/schema";
+import type { ZodTypeAny } from "zod";
+import { essaySchema, logSchema } from "./src/content/schema";
 
-const VIRTUAL_ID = "virtual:essays";
-const RESOLVED_ID = "\0" + VIRTUAL_ID;
+type CollectionOptions = {
+  /** Folder under src/content/ and the name after "virtual:". */
+  name: string;
+  schema: ZodTypeAny;
+  /** Last-minute fixes to the rendered HTML (old links, mostly). */
+  fixHtml?: (html: string) => string;
+};
 
-export function essaysPlugin(): Plugin {
+function collectionPlugin({ name, schema, fixHtml }: CollectionOptions): Plugin {
+  const VIRTUAL_ID = `virtual:${name}`;
+  const RESOLVED_ID = "\0" + VIRTUAL_ID;
   let dir = "";
   let processor: Awaited<ReturnType<typeof createMarkdownProcessor>> | undefined;
-  const isEssay = (file: string) => file.startsWith(dir + path.sep) && file.endsWith(".md");
+  const isMember = (file: string) => file.startsWith(dir + path.sep) && file.endsWith(".md");
 
   async function parse(file: string) {
     const raw = await readFile(file, "utf8");
     const { frontmatter, content } = parseFrontmatter(raw);
-    const result = essaySchema.safeParse(frontmatter);
+    const result = schema.safeParse(frontmatter);
     if (!result.success) {
       throw new Error(
         `Bad frontmatter in ${path.relative(process.cwd(), file)}:\n${result.error.message}`,
       );
     }
-    return { data: result.data, body: content.trim() };
+    return { data: result.data as { date: Date }, body: content.trim() };
   }
 
   function invalidateIndex(server: ViteDevServer) {
@@ -43,10 +56,10 @@ export function essaysPlugin(): Plugin {
   }
 
   return {
-    name: "hazem:essays",
+    name: `hazem:${name}`,
     enforce: "pre",
     configResolved(config) {
-      dir = path.join(config.root, "src", "content", "essays");
+      dir = path.join(config.root, "src", "content", name);
     },
     resolveId(id) {
       return id === VIRTUAL_ID ? RESOLVED_ID : undefined;
@@ -54,32 +67,47 @@ export function essaysPlugin(): Plugin {
     async load(id) {
       if (id === RESOLVED_ID) {
         const files = (await readdir(dir)).filter((f) => f.endsWith(".md")).sort();
-        const essays = await Promise.all(
+        const entries = await Promise.all(
           files.map(async (f) => {
-            const { data } = await parse(path.join(dir, f));
-            return { id: f.slice(0, -3), data: { ...data, date: data.date.toISOString() } };
+            const { data, body } = await parse(path.join(dir, f));
+            return {
+              id: f.slice(0, -3),
+              // `hasBody` lets a list know a file has a page of its own without
+              // pulling the body in to find out. A log entry may be a single
+              // line of frontmatter and nothing else.
+              hasBody: body.length > 0,
+              data: { ...data, date: data.date.toISOString() },
+            };
           }),
         );
-        return `export default ${JSON.stringify(essays)};`;
+        return `export default ${JSON.stringify(entries)};`;
       }
       const file = id.split("?")[0]!;
-      if (isEssay(file)) {
+      if (isMember(file)) {
         this.addWatchFile(file);
         const { data, body } = await parse(file);
         processor ??= await createMarkdownProcessor();
         const { code } = await processor.render(body, { frontmatter: data });
-        // Arabic essays moved from /essays/<slug>-ar/ to /ar/essays/<slug>/;
-        // point in-essay links at the new address instead of the redirect.
-        const html = code.replace(/href="\/essays\/([a-z0-9-]+)-ar\/"/g, 'href="/ar/essays/$1/"');
-        return `export default ${JSON.stringify(html)};`;
+        return `export default ${JSON.stringify(fixHtml ? fixHtml(code) : code)};`;
       }
       return undefined;
     },
     configureServer(server) {
       server.watcher.add(dir);
       server.watcher.on("all", (_event, file) => {
-        if (isEssay(file)) invalidateIndex(server);
+        if (isMember(file)) invalidateIndex(server);
       });
     },
   };
 }
+
+export const essaysPlugin = () =>
+  collectionPlugin({
+    name: "essays",
+    schema: essaySchema,
+    // Arabic essays moved from /essays/<slug>-ar/ to /ar/essays/<slug>/;
+    // point in-essay links at the new address instead of the redirect.
+    fixHtml: (html) => html.replace(/href="\/essays\/([a-z0-9-]+)-ar\/"/g, 'href="/ar/essays/$1/"'),
+  });
+
+export const logsPlugin = () => collectionPlugin({ name: "logs", schema: logSchema });

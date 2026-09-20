@@ -20,10 +20,14 @@ import { Route as ArAboutRouteImport } from './routes/ar/about'
 import { Route as BooksIndexRouteImport } from './routes/books/index'
 import { Route as EssaysIndexRouteImport } from './routes/essays/index'
 import { Route as EssaysIdRouteImport } from './routes/essays/$id'
+import { Route as LogsIndexRouteImport } from './routes/logs/index'
+import { Route as LogsIdRouteImport } from './routes/logs/$id'
 import { Route as ThreadsThreadRouteImport } from './routes/threads/$thread'
 import { Route as ArBooksIndexRouteImport } from './routes/ar/books/index'
 import { Route as ArEssaysIndexRouteImport } from './routes/ar/essays/index'
 import { Route as ArEssaysIdRouteImport } from './routes/ar/essays/$id'
+import { Route as ArLogsIndexRouteImport } from './routes/ar/logs/index'
+import { Route as ArLogsIdRouteImport } from './routes/ar/logs/$id'
 import { Route as ArThreadsThreadRouteImport } from './routes/ar/threads/$thread'
 
 const IndexRoute = IndexRouteImport.update({
@@ -81,6 +85,16 @@ const EssaysIdRoute = EssaysIdRouteImport.update({
   path: '/essays/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LogsIndexRoute = LogsIndexRouteImport.update({
+  id: '/logs/',
+  path: '/logs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LogsIdRoute = LogsIdRouteImport.update({
+  id: '/logs/$id',
+  path: '/logs/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ThreadsThreadRoute = ThreadsThreadRouteImport.update({
   id: '/threads/$thread',
   path: '/threads/$thread',
@@ -101,6 +115,16 @@ const ArEssaysIdRoute = ArEssaysIdRouteImport.update({
   path: '/ar/essays/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArLogsIndexRoute = ArLogsIndexRouteImport.update({
+  id: '/ar/logs/',
+  path: '/ar/logs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArLogsIdRoute = ArLogsIdRouteImport.update({
+  id: '/ar/logs/$id',
+  path: '/ar/logs/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ArThreadsThreadRoute = ArThreadsThreadRouteImport.update({
   id: '/ar/threads/$thread',
   path: '/ar/threads/$thread',
@@ -116,14 +140,18 @@ export interface FileRoutesByFullPath {
   '/ar/$series': typeof ArSeriesRoute
   '/ar/about': typeof ArAboutRoute
   '/essays/$id': typeof EssaysIdRoute
+  '/logs/$id': typeof LogsIdRoute
   '/threads/$thread': typeof ThreadsThreadRoute
   '/ar/': typeof ArIndexRoute
   '/books/': typeof BooksIndexRoute
   '/essays/': typeof EssaysIndexRoute
+  '/logs/': typeof LogsIndexRoute
   '/ar/essays/$id': typeof ArEssaysIdRoute
+  '/ar/logs/$id': typeof ArLogsIdRoute
   '/ar/threads/$thread': typeof ArThreadsThreadRoute
   '/ar/books/': typeof ArBooksIndexRoute
   '/ar/essays/': typeof ArEssaysIndexRoute
+  '/ar/logs/': typeof ArLogsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -134,14 +162,18 @@ export interface FileRoutesByTo {
   '/ar/$series': typeof ArSeriesRoute
   '/ar/about': typeof ArAboutRoute
   '/essays/$id': typeof EssaysIdRoute
+  '/logs/$id': typeof LogsIdRoute
   '/threads/$thread': typeof ThreadsThreadRoute
   '/ar': typeof ArIndexRoute
   '/books': typeof BooksIndexRoute
   '/essays': typeof EssaysIndexRoute
+  '/logs': typeof LogsIndexRoute
   '/ar/essays/$id': typeof ArEssaysIdRoute
+  '/ar/logs/$id': typeof ArLogsIdRoute
   '/ar/threads/$thread': typeof ArThreadsThreadRoute
   '/ar/books': typeof ArBooksIndexRoute
   '/ar/essays': typeof ArEssaysIndexRoute
+  '/ar/logs': typeof ArLogsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -153,14 +185,18 @@ export interface FileRoutesById {
   '/ar/$series': typeof ArSeriesRoute
   '/ar/about': typeof ArAboutRoute
   '/essays/$id': typeof EssaysIdRoute
+  '/logs/$id': typeof LogsIdRoute
   '/threads/$thread': typeof ThreadsThreadRoute
   '/ar/': typeof ArIndexRoute
   '/books/': typeof BooksIndexRoute
   '/essays/': typeof EssaysIndexRoute
+  '/logs/': typeof LogsIndexRoute
   '/ar/essays/$id': typeof ArEssaysIdRoute
+  '/ar/logs/$id': typeof ArLogsIdRoute
   '/ar/threads/$thread': typeof ArThreadsThreadRoute
   '/ar/books/': typeof ArBooksIndexRoute
   '/ar/essays/': typeof ArEssaysIndexRoute
+  '/ar/logs/': typeof ArLogsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -173,14 +209,18 @@ export interface FileRouteTypes {
     | '/ar/$series'
     | '/ar/about'
     | '/essays/$id'
+    | '/logs/$id'
     | '/threads/$thread'
     | '/ar/'
     | '/books/'
     | '/essays/'
+    | '/logs/'
     | '/ar/essays/$id'
+    | '/ar/logs/$id'
     | '/ar/threads/$thread'
     | '/ar/books/'
     | '/ar/essays/'
+    | '/ar/logs/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -191,14 +231,18 @@ export interface FileRouteTypes {
     | '/ar/$series'
     | '/ar/about'
     | '/essays/$id'
+    | '/logs/$id'
     | '/threads/$thread'
     | '/ar'
     | '/books'
     | '/essays'
+    | '/logs'
     | '/ar/essays/$id'
+    | '/ar/logs/$id'
     | '/ar/threads/$thread'
     | '/ar/books'
     | '/ar/essays'
+    | '/ar/logs'
   id:
     | '__root__'
     | '/'
@@ -209,14 +253,18 @@ export interface FileRouteTypes {
     | '/ar/$series'
     | '/ar/about'
     | '/essays/$id'
+    | '/logs/$id'
     | '/threads/$thread'
     | '/ar/'
     | '/books/'
     | '/essays/'
+    | '/logs/'
     | '/ar/essays/$id'
+    | '/ar/logs/$id'
     | '/ar/threads/$thread'
     | '/ar/books/'
     | '/ar/essays/'
+    | '/ar/logs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -228,14 +276,18 @@ export interface RootRouteChildren {
   ArSeriesRoute: typeof ArSeriesRoute
   ArAboutRoute: typeof ArAboutRoute
   EssaysIdRoute: typeof EssaysIdRoute
+  LogsIdRoute: typeof LogsIdRoute
   ThreadsThreadRoute: typeof ThreadsThreadRoute
   ArIndexRoute: typeof ArIndexRoute
   BooksIndexRoute: typeof BooksIndexRoute
   EssaysIndexRoute: typeof EssaysIndexRoute
+  LogsIndexRoute: typeof LogsIndexRoute
   ArEssaysIdRoute: typeof ArEssaysIdRoute
+  ArLogsIdRoute: typeof ArLogsIdRoute
   ArThreadsThreadRoute: typeof ArThreadsThreadRoute
   ArBooksIndexRoute: typeof ArBooksIndexRoute
   ArEssaysIndexRoute: typeof ArEssaysIndexRoute
+  ArLogsIndexRoute: typeof ArLogsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -317,6 +369,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EssaysIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/logs/': {
+      id: '/logs/'
+      path: '/logs'
+      fullPath: '/logs/'
+      preLoaderRoute: typeof LogsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/logs/$id': {
+      id: '/logs/$id'
+      path: '/logs/$id'
+      fullPath: '/logs/$id'
+      preLoaderRoute: typeof LogsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/threads/$thread': {
       id: '/threads/$thread'
       path: '/threads/$thread'
@@ -345,6 +411,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArEssaysIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ar/logs/': {
+      id: '/ar/logs/'
+      path: '/ar/logs'
+      fullPath: '/ar/logs/'
+      preLoaderRoute: typeof ArLogsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ar/logs/$id': {
+      id: '/ar/logs/$id'
+      path: '/ar/logs/$id'
+      fullPath: '/ar/logs/$id'
+      preLoaderRoute: typeof ArLogsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ar/threads/$thread': {
       id: '/ar/threads/$thread'
       path: '/ar/threads/$thread'
@@ -364,14 +444,18 @@ const rootRouteChildren: RootRouteChildren = {
   ArSeriesRoute: ArSeriesRoute,
   ArAboutRoute: ArAboutRoute,
   EssaysIdRoute: EssaysIdRoute,
+  LogsIdRoute: LogsIdRoute,
   ThreadsThreadRoute: ThreadsThreadRoute,
   ArIndexRoute: ArIndexRoute,
   BooksIndexRoute: BooksIndexRoute,
   EssaysIndexRoute: EssaysIndexRoute,
+  LogsIndexRoute: LogsIndexRoute,
   ArEssaysIdRoute: ArEssaysIdRoute,
+  ArLogsIdRoute: ArLogsIdRoute,
   ArThreadsThreadRoute: ArThreadsThreadRoute,
   ArBooksIndexRoute: ArBooksIndexRoute,
   ArEssaysIndexRoute: ArEssaysIndexRoute,
+  ArLogsIndexRoute: ArLogsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

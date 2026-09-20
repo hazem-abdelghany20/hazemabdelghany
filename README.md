@@ -11,12 +11,14 @@ Design: **Warm Editorial** (Newsreader + Amiri, paper tones) in light mode; dark
 | What | Where |
 | --- | --- |
 | Essays (markdown) | `src/content/essays/<id>.md` → `/essays/<id>/` |
-| Frontmatter rules | `src/content/schema.ts` (checked at build) |
-| Markdown → HTML | `essays-plugin.ts` (build time) |
+| Log entries (markdown) | `src/content/logs/<id>.md` → the feed at `/logs/`, and `/logs/<id>/` when the file has a body |
+| Frontmatter rules | `src/content/schema.ts` — `essaySchema` and `logSchema`, both checked at build |
+| Markdown → HTML | `essays-plugin.ts` (build time) — one generic collection plugin, used for `essays/` and `logs/` |
 | Pages | `src/routes/` (file-based, TanStack Router) |
 | Books / series | `src/lib/series.ts` → `/<slug>/` |
 | Book reading aids (progress line, contents drawer, ←/→, Continue, read ticks) | `src/components/BookReader.tsx` + `ContinueReading.tsx`; per-device state in localStorage `reading:<series>:<lang>` via `src/lib/reading.ts` (a part counts as read at 90%) |
 | Threads | `src/lib/threads.ts` → `/threads/<key>/` |
+| The Log | `src/lib/logs.ts` + `src/components/LogEntryCard.tsx`, `pages/LogsPage.tsx`, `pages/LogPage.tsx`; styles in `src/styles/logs.css`. The nav link only appears once at least one entry is published |
 | Side-reading notes | `src/lib/refs.ts` |
 | About copy | `src/lib/about.ts` |
 | About tally (years · students · ventures beside the timeline) | `road` + `ventures` in `src/lib/about.ts` — a venture that closed gets `until` and blurs out from that year |
@@ -46,6 +48,35 @@ heroImage: /images/essays/x.webp   # optional
 ```
 
 Body is markdown (raw HTML allowed). `> quote` renders as the accent pull-quote; backticked terms inside Arabic prose render as inline Latin technical terms; `##` for section headings. A future `date` stays hidden until that day.
+
+## Writing a log entry
+
+One entry per thing read or watched. Create `src/content/logs/<slug>.md`:
+
+```yaml
+---
+title: "Flow: The Psychology of Optimal Experience"   # the thing's own title
+by: "Mihaly Csikszentmihalyi"   # optional — author, channel, speaker
+kind: book          # book | video | course | podcast | paper | article | tool
+link: "https://…"   # optional — opens in a new tab
+date: 2026-08-30    # when it was logged, not when it was published
+lang: en            # the language of the COMMENT, not of the thing
+note: "One honest sentence."   # the entry itself, in the feed
+rating: 8           # optional, out of ten — leave it out rather than invent one
+finished: true      # false = stopped partway, and the entry says so
+draft: true         # true hides it everywhere
+translationOf: flow # optional — links the AR/EN versions to each other
+---
+```
+
+**The body is optional, and that is the whole design.** No body → the entry is
+one line in the feed at `/logs/` and has no page. A body → the same line, plus
+`/logs/<slug>/` with the notes under it, and a "The notes →" link in the feed.
+Write a body only when there is more than a line to say.
+
+The feed filters itself by kind, but only once more than one kind is in it. The
+nav link to the log stays hidden while every entry is a draft, so the section can
+be built before there is anything to show.
 
 ## Commands
 

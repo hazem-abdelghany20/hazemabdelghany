@@ -1,5 +1,6 @@
-# Logs
-logs
+# Logs — a log directory at the root only. A bare `logs` also swallowed
+# src/content/logs and src/routes/logs, which are the site's log section.
+/logs
 *.log
 npm-debug.log*
 yarn-debug.log*

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { essayPath, publishedEssays } from "@/lib/essays";
+import { logPath, publishedLogs } from "@/lib/logs";
 import { localePath, type Lang } from "@/lib/i18n";
 import { THREADS } from "@/lib/threads";
 import { SERIES, seriesHref } from "@/lib/series";
@@ -14,6 +15,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           { loc: localePath(lang, "/"), pri: "1.0" },
           { loc: localePath(lang, "/books/"), pri: "0.9" },
           { loc: localePath(lang, "/essays/"), pri: "0.9" },
+          { loc: localePath(lang, "/logs/"), pri: "0.8" },
           { loc: localePath(lang, "/about/"), pri: "0.7" },
           ...Object.values(SERIES).map((s) => ({
             loc: localePath(lang, seriesHref(s.key)),
@@ -29,6 +31,14 @@ export const Route = createFileRoute("/sitemap.xml")({
             pri: "0.8",
             lastmod: e.data.date.toISOString().slice(0, 10),
           })),
+          // Only log entries with notes have a page; a bare feed line has none.
+          ...publishedLogs()
+            .filter((e) => e.hasBody)
+            .map((e) => ({
+              loc: logPath(e, e.data.lang),
+              pri: "0.6",
+              lastmod: e.data.date.toISOString().slice(0, 10),
+            })),
         ];
 
         const xml = `<?xml version="1.0" encoding="UTF-8"?>

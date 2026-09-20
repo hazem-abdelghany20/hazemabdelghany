@@ -30,3 +30,39 @@ export const essaySchema = z.object({
 });
 
 export type EssayFrontmatter = z.infer<typeof essaySchema>;
+
+/** Frontmatter of a log entry in src/content/logs/<id>.md — one thing read or
+ *  watched, with what I thought of it. Two shapes share this schema:
+ *
+ *  - a **feed entry**: frontmatter only, no body. `note` is the whole comment
+ *    and the entry has no page of its own.
+ *  - **notes in public**: the same frontmatter plus a body, which becomes
+ *    /logs/<id>/ — the margin notes, not a review.
+ *
+ *  Checked at build time by essays-plugin.ts, same as an essay. */
+export const logSchema = z.object({
+  // The thing itself — its own title, not a title I gave it.
+  title: z.string(),
+  // Who made it: author, channel, speaker. Optional — some things have no one.
+  by: z.string().optional(),
+  kind: z.enum(["book", "video", "course", "podcast", "paper", "article", "tool"]),
+  // Where to find it. External, so it opens in a new tab.
+  link: z.string().url().optional(),
+  // When I logged it, not when it was published.
+  date: z.coerce.date(),
+  // Language of MY comment, not of the resource.
+  lang: z.enum(["ar", "en"]),
+  // The comment. In a feed with no body this is the entire entry, so it has to
+  // earn its place: one honest sentence, not a summary.
+  note: z.string(),
+  // Out of ten. Optional — not everything deserves a number, and a missing one
+  // is more honest than a made-up one.
+  rating: z.number().min(1).max(10).optional(),
+  // false = I stopped partway. Worth saying; dropping a book is a verdict.
+  finished: z.boolean().default(true),
+  draft: z.boolean().default(false),
+  // id of this entry's version in the other language, when one exists
+  translationOf: z.string().optional(),
+});
+
+export type LogFrontmatter = z.infer<typeof logSchema>;

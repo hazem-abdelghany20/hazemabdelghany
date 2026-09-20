@@ -73,3 +73,7 @@ const MONTHS_AR = [
 ];
 export const formatDate = (d: Date, lang: Lang = "en") =>
   `${(lang === "ar" ? MONTHS_AR : MONTHS)[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+
+/** "12 September 2026" / "12 سبتمبر 2026" — for the log, where the day matters. */
+export const formatDay = (d: Date, lang: Lang = "en") =>
+  `${d.getUTCDate()} ${(lang === "ar" ? MONTHS_AR : MONTHS)[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
