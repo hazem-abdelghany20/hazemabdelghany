@@ -61,13 +61,18 @@ kind: book          # book | video | course | podcast | paper | article | tool
 link: "https://…"   # optional — opens in a new tab
 date: 2026-08-30    # when it was logged, not when it was published
 lang: en            # the language of the COMMENT, not of the thing
-note: "One honest sentence."   # the entry itself, in the feed
+note: "One honest sentence."   # the entry itself — omit it and the entry is a stub
 rating: 8           # optional, out of ten — leave it out rather than invent one
 finished: true      # false = stopped partway, and the entry says so
 draft: true         # true hides it everywhere
 translationOf: flow # optional — links the AR/EN versions to each other
 ---
 ```
+
+**An entry with no `note` is a stub and never publishes.** File something the day
+you watched it, leave the note out, and it waits in the folder until there is
+something to say. Writing the note is what puts it on the site — there is no
+second switch to remember. (`draft: true` still hides an entry that *has* a note.)
 
 **The body is optional, and that is the whole design.** No body → the entry is
 one line in the feed at `/logs/` and has no page. A body → the same line, plus

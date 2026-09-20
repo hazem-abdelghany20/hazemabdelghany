@@ -28,10 +28,14 @@ export const LOG_KINDS: { key: LogKind; en: string; ar: string; enOne: string; a
 export const kindLabel = (key: LogKind) => LOG_KINDS.find((k) => k.key === key)!;
 
 /** The single definition of "published" — used by the list, the entry pages and
- *  the sitemap, so a draft can never leak through one of them. */
+ *  the sitemap, so a draft can never leak through one of them.
+ *
+ *  An entry with no `note` is a stub: filed, but nothing said about it yet. The
+ *  comment IS the entry, so a stub is not published. Writing the note is what
+ *  puts it on the site — there is no second switch to remember. */
 export function publishedLogs(): LogEntry[] {
   const now = new Date();
-  return ALL.filter((e) => !e.data.draft && e.data.date <= now).sort(
+  return ALL.filter((e) => !e.data.draft && !!e.data.note?.trim() && e.data.date <= now).sort(
     (a, b) => b.data.date.getTime() - a.data.date.getTime(),
   );
 }

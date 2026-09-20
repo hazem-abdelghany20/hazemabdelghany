@@ -54,7 +54,12 @@ export const logSchema = z.object({
   lang: z.enum(["ar", "en"]),
   // The comment. In a feed with no body this is the entire entry, so it has to
   // earn its place: one honest sentence, not a summary.
-  note: z.string(),
+  //
+  // Optional, because a stub is useful: an entry can be filed the day it was
+  // read or watched and sit there until there is something to say about it. An
+  // entry with no note never publishes — see publishedLogs() in src/lib/logs.ts.
+  // Writing the note is what puts it on the site.
+  note: z.string().optional(),
   // Out of ten. Optional — not everything deserves a number, and a missing one
   // is more honest than a made-up one.
   rating: z.number().min(1).max(10).optional(),

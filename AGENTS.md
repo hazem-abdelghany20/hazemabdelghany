@@ -14,7 +14,8 @@
 A personal essay site, ported 1:1 from an Astro site. Read `README.md` first.
 
 - **Two markdown collections**, not database rows: `src/content/essays/` (essays and book parts)
-  and `src/content/logs/` (one entry per thing read or watched — body optional, see `README.md`).
+  and `src/content/logs/` (one entry per thing read or watched — body optional, and an entry with
+  no `note` is a stub that never publishes, see `README.md`).
   Both are rendered at build time by the same plugin in `essays-plugin.ts`. `.gitignore` deliberately
   ignores `/logs` at the root only — a bare `logs` rule swallows both of the log folders.
 - **Essays are markdown files**, not database rows: `src/content/essays/<id>.md`, rendered at build time by `essays-plugin.ts`. The database is for things readers do (signups, comments, reactions, views), not for the essays themselves.
