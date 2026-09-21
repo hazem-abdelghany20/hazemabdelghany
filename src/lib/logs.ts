@@ -28,14 +28,11 @@ export const LOG_KINDS: { key: LogKind; en: string; ar: string; enOne: string; a
 export const kindLabel = (key: LogKind) => LOG_KINDS.find((k) => k.key === key)!;
 
 /** The single definition of "published" — used by the list, the entry pages and
- *  the sitemap, so a draft can never leak through one of them.
- *
- *  An entry with no `note` is a stub: filed, but nothing said about it yet. The
- *  comment IS the entry, so a stub is not published. Writing the note is what
- *  puts it on the site — there is no second switch to remember. */
+ *  the sitemap, so a draft can never leak through one of them. A note is
+ *  optional: the log starts as the plain list, with comments added over time. */
 export function publishedLogs(): LogEntry[] {
   const now = new Date();
-  return ALL.filter((e) => !e.data.draft && !!e.data.note?.trim() && e.data.date <= now).sort(
+  return ALL.filter((e) => !e.data.draft && e.data.date <= now).sort(
     (a, b) => b.data.date.getTime() - a.data.date.getTime(),
   );
 }
@@ -89,8 +86,6 @@ export function youtubeId(link: string | undefined): string | undefined {
  *  maxresdefault, which 404s on anything never uploaded in HD. */
 export const youtubeThumb = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
-/** Every entry, stubs and drafts included — for the desk at /log-desk/ only.
- *  Every public surface goes through publishedLogs(); nothing here is on the
- *  site until it has a note. */
+/** Every entry, including drafts, for the desk at /log-desk/ only. */
 export const allLogs = (): LogEntry[] =>
   [...ALL].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());

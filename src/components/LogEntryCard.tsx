@@ -3,8 +3,7 @@ import { kindLabel, logPath, youtubeId, youtubeThumb, type LogEntry } from "@/li
 import { fwd, type Lang } from "@/lib/i18n";
 import { formatDay } from "@/lib/threads";
 
-/** One entry in the log. The comment is the entry — an entry with notes under
- *  it also links to its own page, but the line has to stand without it. */
+/** One entry in the log. Comments and longer notes appear only when present. */
 export function LogEntryCard({ entry, lang }: { entry: LogEntry; lang: Lang }) {
   const isAr = entry.data.lang === "ar";
   const siteAr = lang === "ar";
@@ -74,7 +73,7 @@ export function LogEntryCard({ entry, lang }: { entry: LogEntry; lang: Lang }) {
             )}
           </h2>
 
-          <p className="log-note">{entry.data.note}</p>
+          {entry.data.note?.trim() && <p className="log-note">{entry.data.note}</p>}
 
           {entry.hasBody && (
             <L className="log-more" href={logPath(entry, lang)}>

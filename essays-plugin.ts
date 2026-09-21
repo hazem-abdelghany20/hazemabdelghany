@@ -120,7 +120,6 @@ export const logsPlugin = () =>
     name: "logs",
     schema: logSchema,
     // A draft entry's note is not published, and the index goes out to every
-    // visitor — so it never leaves the build. The desk at /log-desk/ reads the
-    // unpublished ones back from the database instead.
+    // visitor — so it never leaves the build.
     redact: (data) => (data["draft"] ? { ...data, note: undefined } : data),
   });
