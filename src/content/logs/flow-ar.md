@@ -1,5 +1,5 @@
 ---
-title: "Flow — التدفّق"
+title: "Flow، التدفّق"
 by: "ميهاي تشيكسنتميهاي"
 kind: book
 link: "https://www.goodreads.com/book/show/66354.Flow"
