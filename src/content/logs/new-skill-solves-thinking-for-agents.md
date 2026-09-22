@@ -5,7 +5,7 @@ kind: video
 link: "https://www.youtube.com/watch?v=m6IXL_YGqBQ"
 date: 2026-07-23
 lang: en
-# note: waiting on Hazem — writing it publishes the entry
+# note: waiting on Hazem, writing it publishes the entry
 # rating:
 finished: true
 draft: false

@@ -25,21 +25,21 @@ That is the first and firmest finding, and it survived every attempt to break it
 
 ## Ownership × Leverage × Time
 
-Three terms, and they multiply rather than add — which is the important part. Anything multiplied by zero is zero, so a missing term cannot be compensated for by heroic effort on the other two. Most people who work extremely hard and stay poor are missing one of these entirely.
+Three terms, and they multiply rather than add, which is the important part. Anything multiplied by zero is zero, so a missing term cannot be compensated for by heroic effort on the other two. Most people who work extremely hard and stay poor are missing one of these entirely.
 
 <figure class="fig">
 <svg viewBox="0 0 680 300" role="img" aria-label="Ownership times Leverage times Time. Three panels, each with its diagnostic test. Below, three failure rows showing that a zero in any one term makes the product zero.">
   <g>
     <rect x="0" y="0" width="196" height="132" fill="var(--fig-surface)" stroke="var(--grid)"/>
-    <text x="16" y="28" class="fig-label" style="fill:var(--c1)">01 — Ownership</text>
+    <text x="16" y="28" class="fig-label" style="fill:var(--c1)">01, Ownership</text>
     <text x="16" y="60" class="fig-name" style="font-size:17px">A claim on something</text>
     <text x="16" y="82" class="fig-name" style="font-size:17px">whose value can rise.</text>
-    <text x="16" y="112" class="fig-note">Stop working — does it pay?</text>
+    <text x="16" y="112" class="fig-note">Stop working, does it pay?</text>
   </g>
   <text x="212" y="74" text-anchor="middle" style="font-size:24px;fill:var(--muted);font-family:var(--font-en)">×</text>
   <g>
     <rect x="228" y="0" width="196" height="132" fill="var(--fig-surface)" stroke="var(--grid)"/>
-    <text x="244" y="28" class="fig-label" style="fill:var(--c2)">02 — Leverage</text>
+    <text x="244" y="28" class="fig-label" style="fill:var(--c2)">02, Leverage</text>
     <text x="244" y="60" class="fig-name" style="font-size:17px">The multiplier on</text>
     <text x="244" y="82" class="fig-name" style="font-size:17px">your judgement.</text>
     <text x="244" y="112" class="fig-note">Six kinds. You get one.</text>
@@ -47,8 +47,8 @@ Three terms, and they multiply rather than add — which is the important part. 
   <text x="440" y="74" text-anchor="middle" style="font-size:24px;fill:var(--muted);font-family:var(--font-en)">×</text>
   <g>
     <rect x="456" y="0" width="196" height="132" fill="var(--fig-surface)" stroke="var(--grid)"/>
-    <text x="472" y="28" class="fig-label" style="fill:var(--c3)">03 — Time</text>
-    <text x="472" y="60" class="fig-name" style="font-size:17px">Not effort —</text>
+    <text x="472" y="28" class="fig-label" style="fill:var(--c3)">03, Time</text>
+    <text x="472" y="60" class="fig-name" style="font-size:17px">Not effort,</text>
     <text x="472" y="82" class="fig-name" style="font-size:17px">uninterrupted duration.</text>
     <text x="472" y="112" class="fig-note">Years without liquidation.</text>
   </g>
@@ -82,20 +82,20 @@ Three terms, and they multiply rather than add — which is the important part. 
     <text x="508" y="280" class="fig-value" style="font-weight:600">0</text>
   </g>
 </svg>
-<figcaption>The formula is worth memorising because it is diagnostic. When a plan is not working, one of the three terms is missing — and it is usually obvious which.</figcaption>
+<figcaption>The formula is worth memorising because it is diagnostic. When a plan is not working, one of the three terms is missing, and it is usually obvious which.</figcaption>
 </figure>
 
 **01 · Ownership.** A claim on something whose value can rise. Equity in a company, a brand, a property, a book of contracts, a piece of code that sells while you sleep. The test is simple and unforgiving: *if you stopped working tomorrow, would this keep producing?* A salary fails. A consulting practice built entirely on your own hours fails. A percentage of something does not.
 
-**02 · Leverage.** The multiplier on your judgement — the reason one good decision can be worth a thousand rather than one. There are six kinds in common use, and they are not interchangeable. The central practical claim of this book is that you get to be world-class at *one* of them.
+**02 · Leverage.** The multiplier on your judgement, the reason one good decision can be worth a thousand rather than one. There are six kinds in common use, and they are not interchangeable. The central practical claim of this book is that you get to be world-class at *one* of them.
 
-**03 · Time.** Not effort — *duration*. Uninterrupted years during which the first two terms are allowed to compound without being liquidated, devalued, confiscated, divorced, litigated or spent. This is the term nobody markets, because it cannot be sold as a technique, and it is the one that quietly dominates the arithmetic.
+**03 · Time.** Not effort, *duration*. Uninterrupted years during which the first two terms are allowed to compound without being liquidated, devalued, confiscated, divorced, litigated or spent. This is the term nobody markets, because it cannot be sold as a technique, and it is the one that quietly dominates the arithmetic.
 
 The reason the formula is worth memorising is diagnostic. When a plan is not working, one of these three is missing, and it is usually obvious which. A freelancer with excellent skills and no equity is missing the first term. A founder with equity in something that cannot grow beyond their own hours is missing the second. Someone who builds a real asset and sells it every three years to fund their life is missing the third.
 
 ## The six leverages
 
-Leverage is anything that lets one decision affect many outcomes. Over the ten case studies, six distinct kinds appear. They differ in what they cost, who has to permit them, and — critically — in who can actually reach them from a standing start.
+Leverage is anything that lets one decision affect many outcomes. Over the ten case studies, six distinct kinds appear. They differ in what they cost, who has to permit them, and, critically, in who can actually reach them from a standing start.
 
 <figure class="fig fig-wide">
 <svg viewBox="0 0 900 440" role="img" aria-label="The six leverages compared on three questions: does someone have to permit it, does it need capital up front, and can you start it from nothing today. Code and Media are the only two that need neither permission nor capital. Capital and Position are gated on both.">
@@ -109,7 +109,7 @@ Leverage is anything that lets one decision affect many outcomes. Over the ten c
     <text x="0" y="60" class="fig-name">Labour</text>
     <text x="0" y="80" class="fig-note">Other people working for you</text>
     <text x="330" y="66" text-anchor="middle" class="fig-value" style="fill:var(--muted)">No</text>
-    <text x="560" y="66" text-anchor="middle" class="fig-value" style="fill:var(--c1);font-weight:600">Yes — payroll</text>
+    <text x="560" y="66" text-anchor="middle" class="fig-value" style="fill:var(--c1);font-weight:600">Yes, payroll</text>
     <text x="800" y="66" text-anchor="middle" class="fig-value" style="fill:var(--muted)">Partly</text>
     <line x1="0" y1="94" x2="900" y2="94" class="fig-axis"/>
   </g>
@@ -155,23 +155,23 @@ Leverage is anything that lets one decision affect many outcomes. Over the ten c
   </g>
 </svg>
 <div class="fig-legend">
-  <span><i style="background:var(--c2)"></i>Permissionless — you can begin this afternoon</span>
-  <span><i style="background:var(--c1)"></i>Gated — someone else decides</span>
+  <span><i style="background:var(--c2)"></i>Permissionless, you can begin this afternoon</span>
+  <span><i style="background:var(--c1)"></i>Gated, someone else decides</span>
 </div>
-<figcaption>Only two of the six are open on both counts, and they are the two everyone starts with — which is also why they are the most crowded. Position is the one Western wealth literature barely mentions, and frequently the dominant engine in emerging markets.</figcaption>
+<figcaption>Only two of the six are open on both counts, and they are the two everyone starts with, which is also why they are the most crowded. Position is the one Western wealth literature barely mentions, and frequently the dominant engine in emerging markets.</figcaption>
 </figure>
 
 **i · Labour.** Other people working for you. The oldest form and the worst return: humans are expensive, they need managing, and you cannot double them overnight. Most small businesses are labour-levered and it is the main reason they stay small. Useful as a stage, rarely as a destination.
 
-**ii · Capital.** Money working for you — the highest-return leverage in existence and the hardest to reach, because someone has to hand it to you first. Four of the ten made their fortune primarily this way, which tells you both how powerful it is and how unavailable it is to a beginner. Nobody gives capital to someone with no track record.
+**ii · Capital.** Money working for you, the highest-return leverage in existence and the hardest to reach, because someone has to hand it to you first. Four of the ten made their fortune primarily this way, which tells you both how powerful it is and how unavailable it is to a beginner. Nobody gives capital to someone with no track record.
 
-**iii · Code.** Software that runs without you and costs nothing to copy. Needs no permission, no capital, and no gatekeeper — you can begin this afternoon. It does require years of skill you cannot fake, and the fact that it is permissionless means everyone else can start this afternoon too.
+**iii · Code.** Software that runs without you and costs nothing to copy. Needs no permission, no capital, and no gatekeeper, you can begin this afternoon. It does require years of skill you cannot fake, and the fact that it is permissionless means everyone else can start this afternoon too.
 
-**iv · Media.** Attention that replicates at zero cost. Also permissionless. The trap is that attention alone is not an asset — it is only worth something when it is attached to something you own, and the difference between renting your audience to other people and owning what it buys is worth roughly a billion dollars in one of the cases here.
+**iv · Media.** Attention that replicates at zero cost. Also permissionless. The trap is that attention alone is not an asset, it is only worth something when it is attached to something you own, and the difference between renting your audience to other people and owning what it buys is worth roughly a billion dollars in one of the cases here.
 
 **v · Brand.** Owning what a name *means*, so you can charge more than the product costs to make. The slowest to build and the most durable once built. Two of the ten ran primarily on this. It is also the one leverage that price can test cheaply, this week, at any scale.
 
-**vi · Position.** Being the only party legally or practically allowed to do something — a licence, a regulatory approval, a concession, a relationship no outsider can replicate. Enormously profitable and almost never discussed in Western wealth literature, because it is unromantic and looks like an accident of geography. In emerging markets it is frequently the dominant engine.
+**vi · Position.** Being the only party legally or practically allowed to do something, a licence, a regulatory approval, a concession, a relationship no outsider can replicate. Enormously profitable and almost never discussed in Western wealth literature, because it is unromantic and looks like an accident of geography. In emerging markets it is frequently the dominant engine.
 
 ## The rule that matters most
 
@@ -220,9 +220,9 @@ Leverage is anything that lets one decision affect many outcomes. Over the ten c
  <text x="16" y="342" class="fig-note">none</text>
  <text x="210" y="329" class="fig-note">Not one of the ten. A stage, not a destination.</text>
  <line x1="0" y1="348" x2="900" y2="348" class="fig-axis"/>
- <text x="0" y="378" class="fig-note">Arrows mark a conversion — the leverage that built the fortune is not always the one that holds it.</text>
+ <text x="0" y="378" class="fig-note">Arrows mark a conversion, the leverage that built the fortune is not always the one that holds it.</text>
 </svg>
 <figcaption>Labour is the row worth staring at. It is the leverage almost every small business runs on, and it built none of these ten.</figcaption>
 </figure>
 
-Several of them *used* other leverages as inputs — but the thing they were the best in the world at was always one thing. If you are currently trying to be excellent at three, that is not ambition. It is the most common way capable people stay unwealthy, because a multiplier spread across three domains is world-class in none.
+Several of them *used* other leverages as inputs, but the thing they were the best in the world at was always one thing. If you are currently trying to be excellent at three, that is not ambition. It is the most common way capable people stay unwealthy, because a multiplier spread across three domains is world-class in none.

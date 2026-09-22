@@ -17,15 +17,15 @@ Before I tell you what the seventh thing is, let me tell you what it is not. **F
 
 You cannot command flow to arrive at 10:00. But you can decide to sit down at 10:00 and build the conditions that make it more likely: one clear task, no escape hatch, feedback you can read, and a challenge near the edge of your ability. You cannot order sleep either, but you can darken the room. Conditions are not control. They still matter.
 
-Start with focus, because focus is a skill you can train. People wait for it like weather — the right morning, the right mood, the right café — and then wonder why the <button class="ref" data-ref="deep-work">deep work</button> never starts. Nobody waits to feel like squatting heavy. You load the bar, make the rep, recover, and the capacity grows. Attention works by the same broad rule.
+Start with focus, because focus is a skill you can train. People wait for it like weather, the right morning, the right mood, the right café, and then wonder why the <button class="ref" data-ref="deep-work">deep work</button> never starts. Nobody waits to feel like squatting heavy. You load the bar, make the rep, recover, and the capacity grows. Attention works by the same broad rule.
 
-Every time a hard task creates discomfort and you reach for the phone, you complete a training rep — only in the wrong direction. The brain learns: difficulty means escape. Repeat that enough and the reach becomes automatic. This is not proof that your attention is broken. It is proof that neuroplasticity worked. The distracted mind has been trained, which means it can be trained again.
+Every time a hard task creates discomfort and you reach for the phone, you complete a training rep, only in the wrong direction. The brain learns: difficulty means escape. Repeat that enough and the reach becomes automatic. This is not proof that your attention is broken. It is proof that neuroplasticity worked. The distracted mind has been trained, which means it can be trained again.
 
 The counter-drill has three parts.
 
 **One thing at a time, on a clock.** A quick switch is not free. Part of the mind remains attached to the thing you just left, so depth has to rebuild after every glance. Use one task, one visible timer, one finish line. Twenty-five clean minutes is a better first rep than a fake three-hour block.
 
-**Make escape expensive.** Willpower is a poor security system. Distance is better. Put the phone in another room — not face down, not in the pocket. When the twitch comes, twenty steps create enough friction for the thinking mind to catch up.
+**Make escape expensive.** Willpower is a poor security system. Distance is better. Put the phone in another room, not face down, not in the pocket. When the twitch comes, twenty steps create enough friction for the thinking mind to catch up.
 
 **Train in the gaps.** The reaching habit is built in queues, elevators, red lights, and every small patch of boredom. Leave some of those patches empty. If you cannot stay with a red light, a ninety-minute block has almost no chance.
 
@@ -43,7 +43,7 @@ That is flow.
 
 Every session at the edge expands the edge. Skill grows, so you can meet a larger challenge, which grows the skill again. After enough cycles, the compound return is not just a better résumé. It is a larger capacity to meet life.
 
-This is also the first useful introduction to a distinction we will return to later: the **circle of concern** and the **circle of influence**, made famous in *The 7 Habits of Highly Effective People*. The circle of concern contains everything that matters to you but is not fully yours — the market, other people's judgment, timing, luck, the final result. The circle of influence contains the next action, the quality of this attempt, the boundary you set, the hour you protect. Flow does not solve the outer circle. It temporarily collects your attention inside the inner one. Every session at the edge expands not only the skill, but often the part of the situation you can influence next time.
+This is also the first useful introduction to a distinction we will return to later: the **circle of concern** and the **circle of influence**, made famous in *The 7 Habits of Highly Effective People*. The circle of concern contains everything that matters to you but is not fully yours, the market, other people's judgment, timing, luck, the final result. The circle of influence contains the next action, the quality of this attempt, the boundary you set, the hour you protect. Flow does not solve the outer circle. It temporarily collects your attention inside the inner one. Every session at the edge expands not only the skill, but often the part of the situation you can influence next time.
 
 That is why flow belongs in this book. During it, you are entirely inside the effort and temporarily free from the scoreboard. Not because you won a philosophical argument, but because the mind has no spare attention for one. For those ninety minutes, effort stops being only the price of a later reward. The doing becomes worth doing while it is happening.
 
@@ -57,8 +57,8 @@ The armory is complete. The next part is the drill: how to use these tools throu
 
 ---
 
-*No knight was made in a battle. He was made in the yard — the same swings, the same drills, ten thousand mornings of them, until the sword stopped being a decision and became a reflex. The battle only revealed what the yard had already decided.*
+*No knight was made in a battle. He was made in the yard, the same swings, the same drills, ten thousand mornings of them, until the sword stopped being a decision and became a reflex. The battle only revealed what the yard had already decided.*
 
-*Your yard is the day. Not the year — you cannot train a year. Not the goal — a goal trains nothing. The day is the largest unit of life you can actually rehearse, and the smallest one that contains everything: work, prayer, people, food, failure, repair.*
+*Your yard is the day. Not the year, you cannot train a year. Not the goal, a goal trains nothing. The day is the largest unit of life you can actually rehearse, and the smallest one that contains everything: work, prayer, people, food, failure, repair.*
 
 *Control here is still high. You are still holding the pen. Use it while it is yours.*
