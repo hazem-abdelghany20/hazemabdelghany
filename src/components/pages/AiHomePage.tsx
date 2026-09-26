@@ -199,9 +199,9 @@ export function AiHomePage({ lang }: { lang: Lang }) {
           ) : (
             <p>
               I’m Hazem, from Cairo. I run <b>Catalyst</b>: AI courses for people, AI training for
-              companies, and software built AI-first. I don’t write code by hand anymore. I write the
-              spec, agents build it, I review it. Everything on this side gets tested on my own work
-              before it gets written up.
+              companies, and software built AI-first. I don’t write code by hand anymore. I write
+              the spec, agents build it, I review it. Everything on this side gets tested on my own
+              work before it gets written up.
             </p>
           )}
           <L href={localePath(lang, "/about/")} className="t-more">

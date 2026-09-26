@@ -203,9 +203,15 @@ function frame(g: Grid, theme: Theme, cols: number, rows: number, aspect: number
   for (let r = 1; r < rows - 1; r++)
     for (let c = 1; c < cols - 1; c++) {
       const gx =
-        p(r - 1, c + 1) + 2 * p(r, c + 1) + p(r + 1, c + 1) - (p(r - 1, c - 1) + 2 * p(r, c - 1) + p(r + 1, c - 1));
+        p(r - 1, c + 1) +
+        2 * p(r, c + 1) +
+        p(r + 1, c + 1) -
+        (p(r - 1, c - 1) + 2 * p(r, c - 1) + p(r + 1, c - 1));
       const gy =
-        (p(r + 1, c - 1) + 2 * p(r + 1, c) + p(r + 1, c + 1) - (p(r - 1, c - 1) + 2 * p(r - 1, c) + p(r - 1, c + 1))) *
+        (p(r + 1, c - 1) +
+          2 * p(r + 1, c) +
+          p(r + 1, c + 1) -
+          (p(r - 1, c - 1) + 2 * p(r - 1, c) + p(r - 1, c + 1))) *
         aspect;
       const i = r * cols + c;
       mag[i] = Math.sqrt(gx * gx + gy * gy);
@@ -369,13 +375,16 @@ export function createAscii(canvas: HTMLCanvasElement, onDims: (text: string) =>
     revealRaf = requestAnimationFrame(step);
     // if frames stall (background tab), finish the print anyway
     clearTimeout(revealSafety);
-    revealSafety = window.setTimeout(() => {
-      if (revealRows >= 0) {
-        cancelAnimationFrame(revealRaf);
-        revealRows = -1;
-        blit();
-      }
-    }, delay + duration + 600);
+    revealSafety = window.setTimeout(
+      () => {
+        if (revealRows >= 0) {
+          cancelAnimationFrame(revealRaf);
+          revealRows = -1;
+          blit();
+        }
+      },
+      delay + duration + 600,
+    );
   }
 
   /** First paint: print in on a direct load, appear whole after a swipe. */

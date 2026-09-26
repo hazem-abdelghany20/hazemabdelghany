@@ -27,7 +27,10 @@ export function AiArticlePage({ lang, id, html }: { lang: Lang; id: string; html
     root.querySelectorAll("pre").forEach((pre) => {
       if (pre.querySelector(".t-code-bar")) return;
       const code = pre.querySelector("code");
-      const lang = (code?.className.match(/language-(\S+)/)?.[1] ?? "text").replace("plaintext", "text");
+      const lang = (code?.className.match(/language-(\S+)/)?.[1] ?? "text").replace(
+        "plaintext",
+        "text",
+      );
       const bar = document.createElement("div");
       bar.className = "t-code-bar";
       const name = document.createElement("span");
@@ -133,7 +136,9 @@ export function AiArticlePage({ lang, id, html }: { lang: Lang; id: string; html
             />
             {data.video.instagram && (
               <figcaption>
-                <span lang={isAr ? "ar" : "en"}>{isAr ? "اتنشر الأول على" : "First posted on"}</span>
+                <span lang={isAr ? "ar" : "en"}>
+                  {isAr ? "اتنشر الأول على" : "First posted on"}
+                </span>
                 <a href={data.video.instagram} target="_blank" rel="noopener noreferrer" dir="ltr">
                   Instagram ↗
                 </a>
