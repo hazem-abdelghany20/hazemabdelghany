@@ -13,8 +13,12 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { NotFound } from "@/components/NotFound";
+import { AiNav } from "@/components/ai/AiNav";
+import { AiFooter } from "@/components/ai/AiFooter";
 import { SITE } from "@/lib/seo";
+import { useSide } from "@/lib/side";
 import { usePageLang } from "@/lib/use-page-lang";
+import { useSideGestures } from "@/lib/use-side-gestures";
 
 declare module "@tanstack/react-router" {
   interface StaticDataRouteOption {
@@ -47,6 +51,8 @@ const THEME_INIT = `(function () {
   }
   var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   document.documentElement.dataset.theme = theme;
+  // "." flips between the human and AI sides unless it was switched off.
+  try { if (localStorage.getItem('side-key') === 'off') document.documentElement.dataset.sideKey = 'off'; } catch (e) {}
 })();`;
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
@@ -102,6 +108,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap",
       },
+      // The AI side's type. The human side uses Martian Mono too: the "AI"
+      // half of its side switch previews the other side.
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Martian+Mono:wdth,wght@75..112.5,300..700&display=swap",
+      },
     ],
     scripts: [{ children: THEME_INIT }],
   }),
@@ -113,14 +125,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   const lang = usePageLang();
+  const side = useSide();
+  const ai = side === "ai";
   return (
-    // data-theme is stamped by THEME_INIT before React hydrates
-    <html lang={lang} dir={lang === "ar" ? "rtl" : "ltr"} suppressHydrationWarning>
+    // data-theme is stamped by THEME_INIT before React hydrates; data-side
+    // comes from the path (/ai/…), so the prerendered HTML already has it.
+    <html lang={lang} dir={lang === "ar" ? "rtl" : "ltr"} data-side={side} suppressHydrationWarning>
       <head>
         <HeadContent />
         {/* two theme-colors share a name, which head() would dedupe to one */}
-        <meta name="theme-color" content="#f7f1e7" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)" />
+        <meta
+          name="theme-color"
+          content={ai ? "#f1efe8" : "#f7f1e7"}
+          media="(prefers-color-scheme: light)"
+        />
+        <meta
+          name="theme-color"
+          content={ai ? "#0a0d16" : "#0b1020"}
+          media="(prefers-color-scheme: dark)"
+        />
       </head>
       <body>
         {children}
@@ -133,19 +156,46 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const lang = usePageLang();
+  const side = useSide();
+  useSideGestures(side, lang);
+  const skip = lang === "ar" ? "روح للمحتوى" : "Skip to content";
 
   return (
     <QueryClientProvider client={queryClient}>
-      <a className="skip-link" href="#main">
-        {lang === "ar" ? "روح للمحتوى" : "Skip to content"}
-      </a>
-      <div className="wrap">
-        <Nav lang={lang} />
-        <main id="main">
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-        </main>
-        <Footer lang={lang} />
+      {side === "ai" ? (
+        // The AI side: everything under /ai/ and /ar/ai/ (styles/ai.css).
+        <div className="side side-ai">
+          <a className="t-skip" href="#main">
+            {skip}
+          </a>
+          <div className="t-wrap">
+            <AiNav lang={lang} />
+            <main id="main" className="t-main">
+              <Outlet />
+            </main>
+            <AiFooter lang={lang} />
+          </div>
+        </div>
+      ) : (
+        <div className="side side-human">
+          <a className="skip-link" href="#main">
+            {skip}
+          </a>
+          <div className="wrap">
+            <Nav lang={lang} />
+            <main id="main">
+              {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+              <Outlet />
+            </main>
+            <Footer lang={lang} />
+          </div>
+        </div>
+      )}
+      {/* The swipe's leading edge; only shown during a side switch. */}
+      <div className="t-seam" aria-hidden="true">
+        <i className="t-seam-wash" />
+        <pre className="t-seam-glyphs" />
+        <i className="t-seam-edge" />
       </div>
     </QueryClientProvider>
   );

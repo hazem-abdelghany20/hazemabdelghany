@@ -1,6 +1,7 @@
 import { useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { L } from "@/components/L";
+import { SideSwitch } from "@/components/SideSwitch";
 import { localePath, otherLang, switchPath, type Lang } from "@/lib/i18n";
 import { publishedLogs } from "@/lib/logs";
 
@@ -81,13 +82,14 @@ export function Nav({ lang = "en" }: { lang?: Lang }) {
         <LangSwitch lang={lang} />
         <ThemeToggle isAr={isAr} />
       </div>
+      <SideSwitch side="human" lang={lang} />
     </nav>
   );
 }
 
 /** EN ⇄ عربي: the same page in the other language. The choice is remembered,
  *  so the home page opens in it next time (see THEME_INIT in __root.tsx). */
-function LangSwitch({ lang }: { lang: Lang }) {
+export function LangSwitch({ lang, className = "nav-lang" }: { lang: Lang; className?: string }) {
   const other = otherLang(lang);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   // A missing page is missing in both languages — go to the other home instead.
@@ -99,7 +101,7 @@ function LangSwitch({ lang }: { lang: Lang }) {
   const single = pathname === "/log-desk/" || pathname === "/log-desk";
   return (
     <L
-      className="nav-lang"
+      className={className}
       href={missing || single ? localePath(other, "/") : switchPath(pathname)}
       lang={other}
       dir={other === "ar" ? "rtl" : "ltr"}
@@ -117,7 +119,13 @@ function LangSwitch({ lang }: { lang: Lang }) {
   );
 }
 
-function ThemeToggle({ isAr }: { isAr: boolean }) {
+export function ThemeToggle({
+  isAr,
+  className = "theme-toggle",
+}: {
+  isAr: boolean;
+  className?: string;
+}) {
   // The real theme is stamped on <html> before hydration (see __root.tsx);
   // the server can't know it, so read it once mounted.
   const [dark, setDark] = useState(false);
@@ -128,7 +136,7 @@ function ThemeToggle({ isAr }: { isAr: boolean }) {
 
   return (
     <button
-      className="theme-toggle"
+      className={className}
       id="theme-toggle"
       aria-label={dark ? labelLight : labelDark}
       aria-pressed={dark}

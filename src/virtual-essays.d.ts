@@ -9,6 +9,17 @@ declare module "virtual:essays" {
   export default essays;
 }
 
+declare module "virtual:ai" {
+  import type { AiFrontmatter } from "@/content/schema";
+  /** Every AI-side piece's frontmatter, dates as ISO strings. Built by essays-plugin.ts. */
+  const ai: {
+    id: string;
+    hasBody: boolean;
+    data: Omit<AiFrontmatter, "date"> & { date: string };
+  }[];
+  export default ai;
+}
+
 declare module "virtual:logs" {
   import type { LogFrontmatter } from "@/content/schema";
   /** Every log entry's frontmatter, dates as ISO strings. `hasBody` is true when

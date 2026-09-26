@@ -66,3 +66,29 @@ export const logSchema = z.object({
 });
 
 export type LogFrontmatter = z.infer<typeof logSchema>;
+
+/** Frontmatter of a piece on the AI side, in src/content/ai/<id>.md → /ai/writing/<slug>/.
+ *  Most pieces start life as a short video; `video` plays it at the top of the
+ *  page, self-hosted from public/media/ai/, with a link back to the original post. */
+export const aiSchema = z.object({
+  title: z.string(),
+  date: z.coerce.date(),
+  lang: z.enum(["ar", "en"]),
+  topic: z.enum(["definitions", "context", "agents", "tools", "opinions"]),
+  minutes: z.number().optional(),
+  description: z.string().optional(),
+  video: z
+    .object({
+      src: z.string(),
+      poster: z.string(),
+      // The original post, linked from the page as the source.
+      instagram: z.string().url().optional(),
+      seconds: z.number().int().positive().optional(),
+    })
+    .optional(),
+  draft: z.boolean().default(false),
+  // id of this piece's version in the other language, when one exists
+  translationOf: z.string().optional(),
+});
+
+export type AiFrontmatter = z.infer<typeof aiSchema>;

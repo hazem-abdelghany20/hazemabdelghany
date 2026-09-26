@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { aiPath, publishedAi } from "@/lib/ai";
 import { essayPath, publishedEssays } from "@/lib/essays";
 import { logPath, publishedLogs } from "@/lib/logs";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -17,6 +18,8 @@ export const Route = createFileRoute("/sitemap.xml")({
           { loc: localePath(lang, "/essays/"), pri: "0.9" },
           { loc: localePath(lang, "/logs/"), pri: "0.8" },
           { loc: localePath(lang, "/about/"), pri: "0.7" },
+          { loc: localePath(lang, "/ai/"), pri: "0.9" },
+          { loc: localePath(lang, "/ai/writing/"), pri: "0.8" },
           ...Object.values(SERIES).map((s) => ({
             loc: localePath(lang, seriesHref(s.key)),
             pri: "0.9",
@@ -28,6 +31,11 @@ export const Route = createFileRoute("/sitemap.xml")({
           ...pages("ar"),
           ...publishedEssays().map((e) => ({
             loc: essayPath(e, e.data.lang),
+            pri: "0.8",
+            lastmod: e.data.date.toISOString().slice(0, 10),
+          })),
+          ...publishedAi().map((e) => ({
+            loc: aiPath(e, e.data.lang),
             pri: "0.8",
             lastmod: e.data.date.toISOString().slice(0, 10),
           })),

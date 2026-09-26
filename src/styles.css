@@ -22,6 +22,7 @@
 @import "./styles/reader.css" layer(base);
 @import "./styles/reader-counts.css" layer(base);
 @import "./styles/bilingual.css" layer(base);
+@import "./styles/ai.css" layer(base);
 
 @source "../src";
 /* essays are prose — their words would only generate junk utilities */

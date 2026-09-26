@@ -18,7 +18,7 @@ import path from "node:path";
 import { createMarkdownProcessor, parseFrontmatter } from "@astrojs/markdown-remark";
 import type { Plugin, ViteDevServer } from "vite";
 import type { ZodTypeAny } from "zod";
-import { essaySchema, logSchema } from "./src/content/schema";
+import { aiSchema, essaySchema, logSchema } from "./src/content/schema";
 
 type CollectionOptions = {
   /** Folder under src/content/ and the name after "virtual:". */
@@ -30,9 +30,11 @@ type CollectionOptions = {
    *  ships to every visitor in the JS bundle, so anything unpublished has to
    *  come out here rather than be filtered at runtime. */
   redact?: (data: Record<string, unknown>) => Record<string, unknown>;
+  /** Options for the markdown processor, when a collection needs its own. */
+  markdown?: Parameters<typeof createMarkdownProcessor>[0];
 };
 
-function collectionPlugin({ name, schema, fixHtml, redact }: CollectionOptions): Plugin {
+function collectionPlugin({ name, schema, fixHtml, redact, markdown }: CollectionOptions): Plugin {
   const VIRTUAL_ID = `virtual:${name}`;
   const RESOLVED_ID = "\0" + VIRTUAL_ID;
   let dir = "";
@@ -91,7 +93,7 @@ function collectionPlugin({ name, schema, fixHtml, redact }: CollectionOptions):
       if (isMember(file)) {
         this.addWatchFile(file);
         const { data, body } = await parse(file);
-        processor ??= await createMarkdownProcessor();
+        processor ??= await createMarkdownProcessor(markdown);
         const { code } = await processor.render(body, { frontmatter: data });
         return `export default ${JSON.stringify(fixHtml ? fixHtml(code) : code)};`;
       }
@@ -122,4 +124,14 @@ export const logsPlugin = () =>
     // A draft entry's note is not published, and the index goes out to every
     // visitor — so it never leaves the build.
     redact: (data) => (data["draft"] ? { ...data, note: undefined } : data),
+  });
+
+/** The AI side's writing: src/content/ai/<id>.md → /ai/writing/<slug>/. */
+export const aiPlugin = () =>
+  collectionPlugin({
+    name: "ai",
+    schema: aiSchema,
+    // Code blocks here are prompts to copy, styled by the AI side itself.
+    // Shiki's inline colours would fight both of its themes.
+    markdown: { syntaxHighlight: false },
   });

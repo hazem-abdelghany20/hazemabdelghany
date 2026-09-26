@@ -5,7 +5,7 @@
 //     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
-import { essaysPlugin, logsPlugin } from "./essays-plugin";
+import { aiPlugin, essaysPlugin, logsPlugin } from "./essays-plugin";
 
 // `bun run build:static` — the GitHub Pages build (.github/workflows/deploy.yml).
 // Every page is prerendered to plain HTML in dist/client; no server runs.
@@ -13,8 +13,8 @@ import { essaysPlugin, logsPlugin } from "./essays-plugin";
 const STATIC = process.env["STATIC_EXPORT"] === "1";
 
 export default defineConfig({
-  // Renders src/content/{essays,logs}/*.md at build time — see essays-plugin.ts.
-  plugins: [essaysPlugin(), logsPlugin()],
+  // Renders src/content/{essays,logs,ai}/*.md at build time — see essays-plugin.ts.
+  plugins: [essaysPlugin(), logsPlugin(), aiPlugin()],
   ...(STATIC ? { nitro: false as const } : {}),
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
@@ -28,6 +28,9 @@ export default defineConfig({
           // lists them either way, so they have to exist.
           pages: [
             { path: "/" },
+            // The AI side: reached through the side switch, named to be sure.
+            { path: "/ai/" },
+            { path: "/ar/ai/" },
             { path: "/logs/" },
             { path: "/ar/logs/" },
             // Hazem's desk: noindex and linked from nowhere, so name it or it never builds.
