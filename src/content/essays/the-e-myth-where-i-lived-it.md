@@ -11,7 +11,7 @@ heroAlt: "The cover of The E-Myth Revisited by Michael E. Gerber: a large grey l
 draft: false
 ---
 
-I haven't finished *The E-Myth Revisited* yet, but I've read enough to have a verdict. The strange part is how much of it I had already lived. I recognised my own life in it, and it gave me names for the mistakes.
+I finished *The E-Myth Revisited*, and I have a verdict. The strange part is how much of it I had already lived. I recognised my own life in it, and it gave me names for the mistakes.
 
 ## The life cycle, and where I was in it
 
