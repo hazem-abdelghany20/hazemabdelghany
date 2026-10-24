@@ -24,7 +24,7 @@ export const essaySchema = z.object({
   // `part` orders it; `partLabel` is what the reader is shown ("Part Three",
   // "Part Two · Engine 04"). The label is spelled out rather than derived,
   // because the book's own numbering is not a straight sequence.
-  series: z.enum(["bedrock-and-weather", "riding-out"]).optional(),
+  series: z.enum(["bedrock-and-weather", "riding-out", "istiqama"]).optional(),
   part: z.number().optional(),
   partLabel: z.string().optional(),
 });

@@ -1,6 +1,6 @@
 import type { Essay } from "./essays";
 
-export type SeriesKey = "bedrock-and-weather" | "riding-out";
+export type SeriesKey = "bedrock-and-weather" | "riding-out" | "istiqama";
 
 export type SeriesSection = {
   number: string;
@@ -248,6 +248,43 @@ export const SERIES: Record<SeriesKey, SeriesDef> = {
         body: [
           "إنت معمول من مادة بتتغيّر. مش موهبة — في ناس عندها أكتر — لكن خاصية، متوزعة على الكل. ده المكان الوحيد في الكتاب كله اللي الدنيا فيه عادلة: نفس الأدوات، ونفس القابلية للتدريب، متوزعة على أي حد.",
           "عادلة في اللي داخل. ظالمة في اللي طالع. عيش في اللي داخل.",
+        ],
+      },
+    ],
+  },
+  istiqama: {
+    key: "istiqama",
+    slug: "istiqama",
+    title: "The Book of Steadfastness",
+    titleParts: ["The Book of", "Steadfastness", ""],
+    ar: "كتاب الاستقامة",
+    category: "The Study Book",
+    categoryAr: "كتاب دراسة",
+    cover: "/images/books/kitab-al-istiqama.svg",
+    subtitle: "A month with the people who kept going once nobody was watching",
+    blurb:
+      "One concept, one month. The Quran and al-Sha'rawi's reading of it, the Prophet ﷺ and the Rightly Guided Caliphs, and then founders, athletes and Stoic emperors — all read for the same question: how do great people stay on the line after the enthusiasm runs out?",
+    parts: 18,
+    facts: ["Four weeks", "Islam, history, business, philosophy", "Written in Egyptian Arabic"],
+    front: [
+      {
+        heading: "How it works",
+        body: [
+          "Each week zooms out first — an idea, an era — then zooms in on two or three people who lived it, full story included, and ends with the patterns that repeat.",
+        ],
+      },
+    ],
+    titlePartsAr: ["كتاب", "الاستقامة", ""],
+    subtitleAr: "شهر مع الناس اللي فضلوا ماشيين لما محدش كان باصص",
+    blurbAr:
+      "مفهوم واحد، وشهر واحد. القرآن وقراءة الشعراوي ليه، والنبي ﷺ والخلفاء الراشدين، وبعدين مؤسسين ورياضيين وأباطرة رواقيين. كلهم بنقراهم عشان سؤال واحد: إزاي العظماء بيفضلوا على الخط بعد ما الحماس يخلص؟",
+    factsAr: ["أربع أسابيع", "إسلام وتاريخ وبيزنس وفلسفة", "بالمصري"],
+    frontAr: [
+      {
+        heading: "الكتاب ماشي إزاي",
+        body: [
+          "كل أسبوع بيبعد الأول، فكرة أو حقبة، وبعدين بيقرّب على اتنين أو تلاتة عاشوها، بحكايتهم كاملة، ويقفل بالأنماط اللي بتتكرر.",
+          "أنا بكتبه وأنا بقراه. كل جزء هنا اتكتب عشان أنا محتاجه، وكل مصدر مكتوب في آخره.",
         ],
       },
     ],
