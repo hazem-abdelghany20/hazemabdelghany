@@ -260,7 +260,7 @@ export const SERIES: Record<SeriesKey, SeriesDef> = {
     ar: "كتاب الاستقامة",
     category: "The Study Book",
     categoryAr: "كتاب دراسة",
-    cover: "/images/books/kitab-al-istiqama.svg",
+    cover: "/images/books/kitab-al-istiqama.webp",
     subtitle: "A month with the people who kept going once nobody was watching",
     blurb:
       "One concept, one month. The Quran and al-Sha'rawi's reading of it, the Prophet ﷺ and the Rightly Guided Caliphs, and then founders, athletes and Stoic emperors — all read for the same question: how do great people stay on the line after the enthusiasm runs out?",
