@@ -669,3 +669,27 @@ html.vt-fade::view-transition-new(root) { animation-duration: 200ms; }
 }
 /* On an Arabic page the language button says "English". */
 .t-lang[lang="en"] { font-family: var(--t-font-mono); font-size: 13px; font-weight: 500; }
+
+/* ---------- Free guides (/free/) ------------------------------------------- */
+/* The guides behind the reels' comment keywords; their words come from Reach. */
+.t-free .t-art-head { max-width: 760px; }
+.t-free-text { white-space: pre-line; }
+.t-free-body { max-width: 720px; padding-top: 36px; border-top: 1px solid var(--t-line); }
+.t-free-item { margin: 0 0 18px; }
+.t-free-step { margin: 0 0 10px; }
+.t-prose .t-free-link {
+  display: flex; flex-direction: column; gap: 4px; margin: 0 0 10px; padding: 14px 16px;
+  border: 1px solid var(--t-line); background: var(--t-surface); color: var(--t-ink); text-decoration: none;
+}
+.side-ai .t-prose .t-free-link:hover { border-color: var(--t-accent); color: var(--t-ink); }
+.t-free-link small { font: 12px/1.4 var(--t-font-mono); color: var(--t-accent); }
+.t-free-item pre { margin: 0 0 22px; }
+.t-free-outro { margin-top: 28px; color: var(--t-muted); }
+.t-free-list { list-style: none; margin: 0; padding: 0; max-width: 820px; }
+.t-free-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  padding: 18px 0; border-top: 1px solid var(--t-line); color: var(--t-ink);
+}
+.t-free-title { font-family: var(--t-font-ar); font-size: 18px; font-weight: 500; }
+.t-free-slug { font: 12px/1.4 var(--t-font-mono); color: var(--t-muted); white-space: nowrap; }
+.side-ai .t-free-row:hover .t-free-title { color: var(--t-accent); }

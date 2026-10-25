@@ -35,6 +35,8 @@ export default defineConfig({
             { path: "/ar/logs/" },
             // Hazem's desk: noindex and linked from nowhere, so name it or it never builds.
             { path: "/log-desk/" },
+            // The free guides behind the reels' keywords: linked from DMs, not from the nav.
+            { path: "/free/" },
             { path: "/rss.xml" },
             { path: "/sitemap.xml" },
           ],

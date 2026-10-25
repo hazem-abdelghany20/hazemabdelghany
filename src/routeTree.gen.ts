@@ -22,6 +22,8 @@ import { Route as ArAboutRouteImport } from './routes/ar/about'
 import { Route as BooksIndexRouteImport } from './routes/books/index'
 import { Route as EssaysIndexRouteImport } from './routes/essays/index'
 import { Route as EssaysIdRouteImport } from './routes/essays/$id'
+import { Route as FreeIndexRouteImport } from './routes/free/index'
+import { Route as FreeSlugRouteImport } from './routes/free/$slug'
 import { Route as LogsIndexRouteImport } from './routes/logs/index'
 import { Route as LogsIdRouteImport } from './routes/logs/$id'
 import { Route as ThreadsThreadRouteImport } from './routes/threads/$thread'
@@ -100,6 +102,16 @@ const EssaysIndexRoute = EssaysIndexRouteImport.update({
 const EssaysIdRoute = EssaysIdRouteImport.update({
   id: '/essays/$id',
   path: '/essays/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FreeIndexRoute = FreeIndexRouteImport.update({
+  id: '/free/',
+  path: '/free/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FreeSlugRoute = FreeSlugRouteImport.update({
+  id: '/free/$slug',
+  path: '/free/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LogsIndexRoute = LogsIndexRouteImport.update({
@@ -183,12 +195,14 @@ export interface FileRoutesByFullPath {
   '/ar/$series': typeof ArSeriesRoute
   '/ar/about': typeof ArAboutRoute
   '/essays/$id': typeof EssaysIdRoute
+  '/free/$slug': typeof FreeSlugRoute
   '/logs/$id': typeof LogsIdRoute
   '/threads/$thread': typeof ThreadsThreadRoute
   '/ai/': typeof AiIndexRoute
   '/ar/': typeof ArIndexRoute
   '/books/': typeof BooksIndexRoute
   '/essays/': typeof EssaysIndexRoute
+  '/free/': typeof FreeIndexRoute
   '/logs/': typeof LogsIndexRoute
   '/ai/writing/$id': typeof AiWritingIdRoute
   '/ar/essays/$id': typeof ArEssaysIdRoute
@@ -212,12 +226,14 @@ export interface FileRoutesByTo {
   '/ar/$series': typeof ArSeriesRoute
   '/ar/about': typeof ArAboutRoute
   '/essays/$id': typeof EssaysIdRoute
+  '/free/$slug': typeof FreeSlugRoute
   '/logs/$id': typeof LogsIdRoute
   '/threads/$thread': typeof ThreadsThreadRoute
   '/ai': typeof AiIndexRoute
   '/ar': typeof ArIndexRoute
   '/books': typeof BooksIndexRoute
   '/essays': typeof EssaysIndexRoute
+  '/free': typeof FreeIndexRoute
   '/logs': typeof LogsIndexRoute
   '/ai/writing/$id': typeof AiWritingIdRoute
   '/ar/essays/$id': typeof ArEssaysIdRoute
@@ -242,12 +258,14 @@ export interface FileRoutesById {
   '/ar/$series': typeof ArSeriesRoute
   '/ar/about': typeof ArAboutRoute
   '/essays/$id': typeof EssaysIdRoute
+  '/free/$slug': typeof FreeSlugRoute
   '/logs/$id': typeof LogsIdRoute
   '/threads/$thread': typeof ThreadsThreadRoute
   '/ai/': typeof AiIndexRoute
   '/ar/': typeof ArIndexRoute
   '/books/': typeof BooksIndexRoute
   '/essays/': typeof EssaysIndexRoute
+  '/free/': typeof FreeIndexRoute
   '/logs/': typeof LogsIndexRoute
   '/ai/writing/$id': typeof AiWritingIdRoute
   '/ar/essays/$id': typeof ArEssaysIdRoute
@@ -273,12 +291,14 @@ export interface FileRouteTypes {
     | '/ar/$series'
     | '/ar/about'
     | '/essays/$id'
+    | '/free/$slug'
     | '/logs/$id'
     | '/threads/$thread'
     | '/ai/'
     | '/ar/'
     | '/books/'
     | '/essays/'
+    | '/free/'
     | '/logs/'
     | '/ai/writing/$id'
     | '/ar/essays/$id'
@@ -302,12 +322,14 @@ export interface FileRouteTypes {
     | '/ar/$series'
     | '/ar/about'
     | '/essays/$id'
+    | '/free/$slug'
     | '/logs/$id'
     | '/threads/$thread'
     | '/ai'
     | '/ar'
     | '/books'
     | '/essays'
+    | '/free'
     | '/logs'
     | '/ai/writing/$id'
     | '/ar/essays/$id'
@@ -331,12 +353,14 @@ export interface FileRouteTypes {
     | '/ar/$series'
     | '/ar/about'
     | '/essays/$id'
+    | '/free/$slug'
     | '/logs/$id'
     | '/threads/$thread'
     | '/ai/'
     | '/ar/'
     | '/books/'
     | '/essays/'
+    | '/free/'
     | '/logs/'
     | '/ai/writing/$id'
     | '/ar/essays/$id'
@@ -361,12 +385,14 @@ export interface RootRouteChildren {
   ArSeriesRoute: typeof ArSeriesRoute
   ArAboutRoute: typeof ArAboutRoute
   EssaysIdRoute: typeof EssaysIdRoute
+  FreeSlugRoute: typeof FreeSlugRoute
   LogsIdRoute: typeof LogsIdRoute
   ThreadsThreadRoute: typeof ThreadsThreadRoute
   AiIndexRoute: typeof AiIndexRoute
   ArIndexRoute: typeof ArIndexRoute
   BooksIndexRoute: typeof BooksIndexRoute
   EssaysIndexRoute: typeof EssaysIndexRoute
+  FreeIndexRoute: typeof FreeIndexRoute
   LogsIndexRoute: typeof LogsIndexRoute
   AiWritingIdRoute: typeof AiWritingIdRoute
   ArEssaysIdRoute: typeof ArEssaysIdRoute
@@ -472,6 +498,20 @@ declare module '@tanstack/react-router' {
       path: '/essays/$id'
       fullPath: '/essays/$id'
       preLoaderRoute: typeof EssaysIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/free/': {
+      id: '/free/'
+      path: '/free'
+      fullPath: '/free/'
+      preLoaderRoute: typeof FreeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/free/$slug': {
+      id: '/free/$slug'
+      path: '/free/$slug'
+      fullPath: '/free/$slug'
+      preLoaderRoute: typeof FreeSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/logs/': {
@@ -585,12 +625,14 @@ const rootRouteChildren: RootRouteChildren = {
   ArSeriesRoute: ArSeriesRoute,
   ArAboutRoute: ArAboutRoute,
   EssaysIdRoute: EssaysIdRoute,
+  FreeSlugRoute: FreeSlugRoute,
   LogsIdRoute: LogsIdRoute,
   ThreadsThreadRoute: ThreadsThreadRoute,
   AiIndexRoute: AiIndexRoute,
   ArIndexRoute: ArIndexRoute,
   BooksIndexRoute: BooksIndexRoute,
   EssaysIndexRoute: EssaysIndexRoute,
+  FreeIndexRoute: FreeIndexRoute,
   LogsIndexRoute: LogsIndexRoute,
   AiWritingIdRoute: AiWritingIdRoute,
   ArEssaysIdRoute: ArEssaysIdRoute,

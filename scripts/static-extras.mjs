@@ -28,6 +28,13 @@ const THEME_TOGGLE = `<script>
   });
 </script>`;
 
+// A guide published in Reach after the last deploy has no page here yet: send
+// /free/<slug>/ to the same guide on the suite instead of a dead end.
+const FREE_FALLBACK = `<script>
+  var free = location.pathname.match(/^\\/free\\/([a-z0-9-]+)\\/?$/);
+  if (free) location.replace('https://main.d1vc49w8rftw7h.amplifyapp.com/hazem/' + free[1]);
+</script>`;
+
 const { default: server } = await import(path.resolve("dist/server/server.js"));
 const res = await server.fetch(new Request("http://localhost/this-page-does-not-exist/"), {}, {});
 if (res.status !== 404) throw new Error(`expected the 404 page, got ${res.status}`);
@@ -35,7 +42,7 @@ const notFound = (await res.text())
   .replace(/<link rel="modulepreload"[^>]*>/g, "")
   .replace(/<script type="module"[^>]*><\/script>/g, "")
   .replace(/<script class="\$tsr"[^>]*>[\s\S]*?<\/script>/g, "")
-  .replace("</body>", `${THEME_TOGGLE}</body>`);
+  .replace("</body>", `${FREE_FALLBACK}${THEME_TOGGLE}</body>`);
 if (/type="module"|\$tsr/.test(notFound)) throw new Error("404.html still carries the app bundle");
 await writeFile(path.join(OUT, "404.html"), notFound);
 

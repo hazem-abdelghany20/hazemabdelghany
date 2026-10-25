@@ -96,9 +96,10 @@ export function LangSwitch({ lang, className = "nav-lang" }: { lang: Lang; class
   const missing = useRouterState({
     select: (s) => s.matches.some((m) => m.status === "notFound" || m.globalNotFound),
   });
-  // /log-desk/ is Hazem's own tool and exists in English only; there is no
-  // Arabic twin to switch to, and pointing at one 404s the static build.
-  const single = pathname === "/log-desk/" || pathname === "/log-desk";
+  // /log-desk/ is Hazem's own tool and exists in English only, and the free
+  // guides (/free/) in Arabic only; there is no twin to switch to, and
+  // pointing at one 404s the static build.
+  const single = pathname === "/log-desk/" || pathname === "/log-desk" || /^\/free(\/|$)/.test(pathname);
   return (
     <L
       className={className}
