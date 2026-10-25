@@ -13,6 +13,19 @@ import {
 const IG = "https://www.instagram.com/hazem_abdelghany/";
 const domain = (u: string) => u.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
 
+/** Guide text with every @handle as a link to that Instagram account (opens the app on a phone). */
+function withHandles(text: string) {
+  return text.split(/(@[A-Za-z0-9_.]*[A-Za-z0-9_])/).map((part, i) =>
+    part.startsWith("@") ? (
+      <a key={i} href={`https://www.instagram.com/${part.slice(1)}/`} target="_blank" rel="noopener" dir="ltr">
+        {part}
+      </a>
+    ) : (
+      part
+    ),
+  );
+}
+
 /** /free/ — every guide a reel promised, newest first. Arabic, on the AI side. */
 export function FreeIndexPage({ initial }: { initial: FreeListing[] | null }) {
   const [list, setList] = useState(initial ?? []);
@@ -107,7 +120,7 @@ export function FreeKitPage({ slug, initial }: { slug: string; initial: FreeKit 
         </h1>
         {kit.intro && (
           <p className="t-art-lede t-free-text" lang="ar">
-            {kit.intro}
+            {withHandles(kit.intro)}
           </p>
         )}
       </header>
@@ -152,7 +165,7 @@ export function FreeKitPage({ slug, initial }: { slug: string; initial: FreeKit 
             )}
           </div>
         ))}
-        {kit.outro && <p className="t-free-outro t-free-text">{kit.outro}</p>}
+        {kit.outro && <p className="t-free-outro t-free-text">{withHandles(kit.outro)}</p>}
       </div>
       <div className="t-art-end">
         <L href="/free/">→ كل الـguides</L>
