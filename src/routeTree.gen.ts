@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SeriesRouteImport } from './routes/$series'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as LinksRouteImport } from './routes/links'
 import { Route as LogDeskRouteImport } from './routes/log-desk'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -52,6 +53,11 @@ const SeriesRoute = SeriesRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LinksRoute = LinksRouteImport.update({
+  id: '/links',
+  path: '/links',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LogDeskRoute = LogDeskRouteImport.update({
@@ -189,6 +195,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$series': typeof SeriesRoute
   '/about': typeof AboutRoute
+  '/links': typeof LinksRoute
   '/log-desk': typeof LogDeskRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -220,6 +227,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$series': typeof SeriesRoute
   '/about': typeof AboutRoute
+  '/links': typeof LinksRoute
   '/log-desk': typeof LogDeskRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -252,6 +260,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$series': typeof SeriesRoute
   '/about': typeof AboutRoute
+  '/links': typeof LinksRoute
   '/log-desk': typeof LogDeskRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -285,6 +294,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$series'
     | '/about'
+    | '/links'
     | '/log-desk'
     | '/rss.xml'
     | '/sitemap.xml'
@@ -316,6 +326,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$series'
     | '/about'
+    | '/links'
     | '/log-desk'
     | '/rss.xml'
     | '/sitemap.xml'
@@ -347,6 +358,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$series'
     | '/about'
+    | '/links'
     | '/log-desk'
     | '/rss.xml'
     | '/sitemap.xml'
@@ -379,6 +391,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SeriesRoute: typeof SeriesRoute
   AboutRoute: typeof AboutRoute
+  LinksRoute: typeof LinksRoute
   LogDeskRoute: typeof LogDeskRoute
   RssDotxmlRoute: typeof RssDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -428,6 +441,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/links': {
+      id: '/links'
+      path: '/links'
+      fullPath: '/links'
+      preLoaderRoute: typeof LinksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/log-desk': {
@@ -619,6 +639,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SeriesRoute: SeriesRoute,
   AboutRoute: AboutRoute,
+  LinksRoute: LinksRoute,
   LogDeskRoute: LogDeskRoute,
   RssDotxmlRoute: RssDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,

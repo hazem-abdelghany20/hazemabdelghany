@@ -5,6 +5,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useRouterState,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -159,10 +160,16 @@ function RootComponent() {
   const side = useSide();
   useSideGestures(side, lang);
   const skip = lang === "ar" ? "روح للمحتوى" : "Skip to content";
+  // /links/ is the Instagram bio page: just the page, no site nav or footer.
+  const bare = useRouterState({ select: (s) => /^\/links(\/|$)/.test(s.location.pathname) });
 
   return (
     <QueryClientProvider client={queryClient}>
-      {side === "ai" ? (
+      {bare ? (
+        <main id="main" className="side side-human">
+          <Outlet />
+        </main>
+      ) : side === "ai" ? (
         // The AI side: everything under /ai/ and /ar/ai/ (styles/ai.css).
         <div className="side side-ai">
           <a className="t-skip" href="#main">

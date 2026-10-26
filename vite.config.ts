@@ -37,6 +37,8 @@ export default defineConfig({
             { path: "/log-desk/" },
             // The free guides behind the reels' keywords: linked from DMs, not from the nav.
             { path: "/free/" },
+            // The Instagram bio page: linked from the bio, not from the nav.
+            { path: "/links/" },
             { path: "/rss.xml" },
             { path: "/sitemap.xml" },
           ],
