@@ -1,131 +1,276 @@
 /* /links/ — the Instagram bio page (src/components/pages/LinksPage.tsx).
-   Phone-first, one narrow column, the human side's palette (light + Nocturne). */
+   Its own look, taken from Hazem's portrait: a teal wall, golden light coming
+   through the blinds, cream type. Alexandria (by Mohamed Gaber, Egypt) for
+   both scripts. One theme in light and dark: it's a page people open from
+   Instagram, not part of the reading site. */
 
 .lk {
+  --lk-wall: #16353a;
+  --lk-wall-2: #1d454b;
+  --lk-wall-3: #255259;
+  --lk-light: #f3b23f;
+  --lk-light-2: #ffd27a;
+  --lk-cream: #fff4dd;
+  --lk-dim: #a8c4c0;
+  --lk-ink: #1b1710;
+  --lk-font: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
+
   min-height: 100dvh;
+  background: var(--lk-wall);
+  color: var(--lk-cream);
+  font-family: var(--lk-font);
+  font-size: 16px;
+  line-height: 1.5;
+}
+/* Over-scroll on a phone shows the body: keep it the wall, not the site's paper. */
+body:has(.lk) { background: #16353a; }
+.lk a { color: inherit; text-decoration: none; }
+/* The site sets a typeface per [lang]; this page uses one face for both scripts. */
+.lk [lang], .lk small, .lk code { font-family: var(--lk-font); }
+.lk :focus-visible { outline: 3px solid var(--lk-light-2); outline-offset: 3px; border-radius: 12px; }
+.lk-screen { max-width: 460px; margin: 0 auto; }
+
+/* ---------- Landing ---------- */
+.lk-hero { position: relative; margin: 0; aspect-ratio: 1 / 1.05; overflow: hidden; }
+.lk-hero img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 30%; display: block; }
+/* The photo runs into the wall colour, so the name sits on the same wall. */
+.lk-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 -2px;
+  background: linear-gradient(to bottom, transparent 45%, rgba(22, 53, 58, .75) 78%, var(--lk-wall) 98%);
+}
+.lk-id { position: relative; margin-top: -92px; padding: 0 20px; }
+.lk-name { margin: 0; font-size: 44px; line-height: 1.1; font-weight: 800; letter-spacing: -.01em; }
+.lk-name-en { margin: 4px 0 0; color: var(--lk-dim); font-size: 15px; font-weight: 400; text-align: right; }
+.lk-tagline { margin: 2px 0 0; color: var(--lk-light); font-size: 15px; font-weight: 600; text-align: right; }
+
+.lk-actions { display: flex; flex-direction: column; gap: 12px; padding: 22px 16px 40px; }
+
+/* The one loud thing: the guides, with the real reel covers. */
+.lk-guides-card {
+  position: relative;
   display: flex;
-  justify-content: center;
-  padding: 28px 16px 48px;
-  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 132px;
+  padding: 18px 18px 18px 8px;
+  border-radius: 20px;
+  background: var(--lk-light);
+  color: var(--lk-ink);
+  overflow: hidden;
 }
-.lk-screen { width: 100%; max-width: 420px; }
-
-.lk-avatar {
-  display: block;
-  width: 96px;
-  height: 96px;
-  margin: 8px auto 12px;
-  border-radius: 50%;
+.lk-guides-text b { display: block; font-size: 24px; font-weight: 800; line-height: 1.2; }
+.lk-guides-text small { display: block; margin-top: 4px; font-size: 14px; opacity: .78; }
+.lk-fan { position: relative; flex: none; width: 128px; height: 112px; }
+.lk-fan img {
+  position: absolute;
+  top: 0;
+  left: calc(var(--i) * 30px);
+  width: 64px;
+  height: 112px;
   object-fit: cover;
-  border: 1px solid var(--line);
+  border-radius: 10px;
+  border: 2px solid var(--lk-cream);
+  transform: rotate(calc((var(--i) - 1) * 9deg)) translateY(calc(var(--i) * 2px));
+  box-shadow: 0 6px 14px rgba(27, 23, 16, .28);
+  animation: lk-fan .7s cubic-bezier(.2, .8, .2, 1) both;
+  animation-delay: calc(var(--i) * 70ms + 150ms);
 }
-.lk-name { margin: 0; text-align: center; font-size: 24px; font-weight: 500; line-height: 1.25; }
-.lk-name span { display: block; }
-.lk-name-ar { font-family: var(--font-ar); font-size: 19px; color: var(--ink-2); }
-.lk-tag { margin: 6px 0 22px; text-align: center; color: var(--muted); font-style: italic; }
+/* Transform only: if the animation never runs, the covers are still there. */
+@keyframes lk-fan {
+  from { transform: rotate(0deg) translate(calc(var(--i) * -30px + 30px), 6px); }
+}
 
-.lk-buttons { display: flex; flex-direction: column; gap: 12px; }
-.lk-btn {
+.lk-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: var(--lk-wall-2);
+  border: 1px solid var(--lk-wall-3);
+}
+.lk-row b { display: block; font-size: 18px; font-weight: 700; }
+.lk-row small { display: block; color: var(--lk-dim); font-size: 13px; }
+.lk-chip {
+  flex: none;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1.5px solid var(--lk-light);
+  color: var(--lk-light);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.lk-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.lk-tile {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2px;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 88px;
   padding: 14px 16px;
-  border: 1px solid var(--ink);
-  border-radius: 12px;
-  background: var(--fig-surface);
-  color: var(--ink);
-  text-decoration: none;
-  font-size: 18px;
-  line-height: 1.3;
-  transition: transform .12s ease, background .12s ease;
+  border-radius: 18px;
+  background: var(--lk-wall-2);
+  border: 1px solid var(--lk-wall-3);
 }
-.lk-btn small { font-family: var(--font-ar); font-size: 15px; color: var(--muted); }
-.lk-btn:hover { transform: translateY(-1px); }
-.lk-btn:active { transform: translateY(0); }
-.lk-btn-main { background: var(--accent); border-color: var(--accent); color: var(--bg); }
-.lk-btn-main small { color: var(--bg); opacity: .85; }
+.lk-tile b { font-size: 17px; font-weight: 700; }
+.lk-tile small { color: var(--lk-dim); font-size: 13px; }
+.lk-tile-icons { display: flex; gap: 8px; color: var(--lk-dim); }
 
+.lk-guides-card, .lk-row, .lk-tile { transition: transform .15s ease; }
+.lk-guides-card:active, .lk-row:active, .lk-tile:active { transform: scale(.98); }
+
+/* ---------- Sub-screens ---------- */
+.lk-sub { padding: 14px 16px 48px; }
+.lk-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
 .lk-back {
-  display: inline-block;
-  margin-bottom: 14px;
-  font-family: var(--font-ar);
-  color: var(--accent);
-  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px 8px 14px;
+  border-radius: 999px;
+  background: var(--lk-wall-2);
+  font-size: 15px;
+  font-weight: 600;
 }
-.lk-title { margin: 0 0 6px; font-family: var(--font-ar); font-size: 26px; font-weight: 700; }
-.lk-sub { margin: 0 0 16px; font-family: var(--font-ar); color: var(--ink-2); }
+.lk-bar-face { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--lk-light); }
+.lk-h { margin: 0; font-size: 32px; font-weight: 800; line-height: 1.2; }
+.lk-lede { margin: 6px 0 20px; color: var(--lk-dim); font-size: 15px; }
 
-.lk-socials { list-style: none; margin: 8px 0 0; padding: 0; }
+/* Guides: the reels as they look on Instagram, two across. */
+.lk-reels { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.lk-reel { display: block; }
+.lk-reel img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: 50% 30%;
+  border-radius: 14px;
+  background: var(--lk-wall-2);
+}
+.lk-reel span {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+.lk-all {
+  display: block;
+  margin-top: 22px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1.5px solid var(--lk-wall-3);
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Socials */
+.lk-socials { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .lk-socials a {
   display: flex;
-  align-items: baseline;
-  gap: 12px;
-  padding: 14px 4px;
-  border-bottom: 1px solid var(--line);
-  color: var(--ink);
-  text-decoration: none;
-  font-size: 18px;
-}
-.lk-socials small { margin-inline-start: auto; color: var(--muted); font-size: 14px; }
-
-.lk-guides { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-.lk-guide {
-  display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--fig-surface);
-  color: var(--ink);
-  text-decoration: none;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: var(--lk-wall-2);
 }
-.lk-guide img { flex: none; width: 64px; height: 96px; object-fit: cover; border-radius: 8px; background: var(--line); }
-.lk-guide b { display: block; font-family: var(--font-ar); font-size: 17px; line-height: 1.45; font-weight: 700; }
-.lk-guide small { font-family: var(--font-ar); color: var(--accent); font-size: 14px; }
-.lk-more { display: block; margin-top: 16px; text-align: center; font-family: var(--font-ar); color: var(--accent); }
+.lk-social-mark {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--lk-cream);
+  color: var(--lk-wall);
+}
+.lk-social-name { font-size: 17px; font-weight: 700; }
+.lk-socials small { margin-inline-start: auto; color: var(--lk-dim); font-size: 13px; }
 
-.lk-price { margin: 4px 0 18px; }
-.lk-price b { display: block; font-size: 30px; font-weight: 600; }
-.lk-price small { font-family: var(--font-ar); color: var(--muted); font-size: 15px; }
-.lk-step { margin: 20px 0 10px; font-family: var(--font-ar); font-size: 18px; font-weight: 700; }
-.lk-step small { font-weight: 400; color: var(--muted); font-size: 14px; }
+/* Book */
+.lk-price { display: flex; align-items: center; gap: 14px; margin: 14px 0 26px; }
+.lk-price b { font-size: 56px; font-weight: 800; line-height: 1; color: var(--lk-light); letter-spacing: -.02em; }
+.lk-price span { color: var(--lk-dim); font-size: 14px; line-height: 1.5; }
 
-.lk-days { display: flex; flex-direction: column; gap: 10px; }
-.lk-day-name { display: block; margin-bottom: 6px; font-family: var(--font-ar); color: var(--ink-2); }
-.lk-times { display: flex; flex-wrap: wrap; gap: 8px; }
+.lk-steps { list-style: none; margin: 0; padding: 0; counter-reset: lk-step; display: flex; flex-direction: column; gap: 26px; }
+.lk-steps > li { counter-increment: lk-step; transition: opacity .2s ease; }
+.lk-steps h2 { display: flex; align-items: baseline; gap: 10px; margin: 0 0 12px; font-size: 19px; font-weight: 700; }
+.lk-steps h2::before {
+  content: counter(lk-step);
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--lk-light);
+  color: var(--lk-ink);
+  font-size: 14px;
+  font-weight: 800;
+}
+.lk-steps h2 small { color: var(--lk-dim); font-size: 13px; font-weight: 400; }
+.lk-step-off { opacity: .45; }
+
+.lk-days { display: flex; flex-direction: column; gap: 14px; }
+.lk-day-name { display: block; margin-bottom: 8px; color: var(--lk-dim); font-size: 14px; }
+.lk-times { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .lk-time {
-  padding: 8px 14px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--fig-surface);
-  color: var(--ink);
+  padding: 10px 6px;
+  border-radius: 12px;
+  border: 1.5px solid var(--lk-wall-3);
+  background: var(--lk-wall-2);
+  color: var(--lk-cream);
   font: inherit;
-  font-family: var(--font-ar);
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
 }
-.lk-time[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.lk-time[aria-pressed="true"] { background: var(--lk-light); border-color: var(--lk-light); color: var(--lk-ink); }
 
 .lk-pay {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
-  border: 1px dashed var(--accent);
-  border-radius: 10px;
+  padding: 12px 12px 12px 14px;
+  border-radius: 14px;
+  background: var(--lk-cream);
+  color: var(--lk-ink);
 }
-.lk-pay code { flex: 1; font-size: 16px; overflow-wrap: anywhere; }
-.lk-copy {
-  padding: 6px 12px;
-  border: 1px solid var(--ink);
-  border-radius: 8px;
-  background: var(--bg);
-  color: var(--ink);
+.lk-pay code { flex: 1; font-family: var(--lk-font); font-size: 16px; font-weight: 600; overflow-wrap: anywhere; }
+.lk-pay button {
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--lk-wall);
+  color: var(--lk-cream);
   font: inherit;
-  font-family: var(--font-ar);
   font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
 }
-.lk-note { margin: 10px 0 0; text-align: center; font-family: var(--font-ar); color: var(--muted); font-size: 14px; }
+.lk-pay button:disabled { cursor: default; }
+.lk-wa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--lk-light);
+  color: var(--lk-ink);
+}
+.lk-wa b { font-size: 18px; font-weight: 800; }
+.lk-wa small { font-size: 13px; opacity: .8; }
+.lk-hint { margin: 10px 0 0; color: var(--lk-dim); font-size: 13px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lk-fan img { animation: none; }
+}
