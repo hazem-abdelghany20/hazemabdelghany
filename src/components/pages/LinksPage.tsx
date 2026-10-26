@@ -77,7 +77,7 @@ function Home() {
   return (
     <section className="lk-screen lk-home">
       <figure className="lk-hero">
-        <img src="/images/links/hero-launch.jpg" alt="Hazem Abdelghany" width={960} height={750} />
+        <img src="/images/links/hero-launch.jpg" alt="Hazem Abdelghany" width={960} height={766} />
       </figure>
       <header className="lk-id">
         <h1 className="lk-name">حازم عبدالغني</h1>
