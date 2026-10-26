@@ -12,7 +12,7 @@ const price = SESSION.priceEgp.toLocaleString("en");
 const cover = (reel: string) => `/images/links/${reel}.jpg`;
 
 /** /links/ — the Instagram bio page. Each screen is a #hash, so the phone's back button works.
-    Look: the light through the blinds in Hazem's portrait — a teal wall, golden light, cream type. */
+    Look: Hazem's Catalyst-launch shoot (June 2026) — a navy studio, blue light, with golden accents and cream type. */
 export function LinksPage() {
   const [view, setView] = useState<View>("home");
 
@@ -63,7 +63,7 @@ function Screen({ title, sub, children }: { title: string; sub?: string; childre
           </svg>
           رجوع
         </a>
-        <img className="lk-bar-face" src="/images/links/hazem.jpg" alt="" width={36} height={36} />
+        <img className="lk-bar-face" src="/images/links/hazem-launch.jpg" alt="" width={36} height={36} />
       </header>
       <h1 className="lk-h">{title}</h1>
       {sub && <p className="lk-lede">{sub}</p>}
@@ -77,7 +77,7 @@ function Home() {
   return (
     <section className="lk-screen lk-home">
       <figure className="lk-hero">
-        <img src="/images/links/portrait.jpg" alt="Hazem Abdelghany" width={720} height={720} />
+        <img src="/images/links/hero-launch.jpg" alt="Hazem Abdelghany" width={960} height={750} />
       </figure>
       <header className="lk-id">
         <h1 className="lk-name">حازم عبدالغني</h1>

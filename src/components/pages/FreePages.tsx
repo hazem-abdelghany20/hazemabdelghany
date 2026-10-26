@@ -47,7 +47,7 @@ function Frame({ back, children }: { back: { href: string; label: string }; chil
             {back.label}
           </L>
           <L href="/links/" aria-label="حازم عبدالغني">
-            <img className="lk-bar-face" src="/images/links/hazem.jpg" alt="" width={36} height={36} />
+            <img className="lk-bar-face" src="/images/links/hazem-launch.jpg" alt="" width={36} height={36} />
           </L>
         </header>
         {children}

@@ -1,17 +1,17 @@
 /* /links/ — the Instagram bio page (src/components/pages/LinksPage.tsx).
-   Its own look, taken from Hazem's portrait: a teal wall, golden light coming
-   through the blinds, cream type. Alexandria (by Mohamed Gaber, Egypt) for
+   Its own look, taken from the photo at the top (Hazem at the Catalyst launch
+   shoot, June 2026): the navy studio and its blue light, a golden accent, cream type. Alexandria (by Mohamed Gaber, Egypt) for
    both scripts. One theme in light and dark: it's a page people open from
    Instagram, not part of the reading site. */
 
 .lk {
-  --lk-wall: #16353a;
-  --lk-wall-2: #1d454b;
-  --lk-wall-3: #255259;
+  --lk-wall: #0b0e1f;
+  --lk-wall-2: #141a33;
+  --lk-wall-3: #232c52;
   --lk-light: #f3b23f;
   --lk-light-2: #ffd27a;
   --lk-cream: #fff4dd;
-  --lk-dim: #a8c4c0;
+  --lk-dim: #a9b2d4;
   --lk-ink: #1b1710;
   --lk-font: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
 
@@ -23,7 +23,7 @@
   line-height: 1.5;
 }
 /* Over-scroll on a phone shows the body: keep it the wall, not the site's paper. */
-body:has(.lk) { background: #16353a; }
+body:has(.lk) { background: #0b0e1f; }
 .lk a { color: inherit; text-decoration: none; }
 /* The site sets a typeface per [lang]; this page uses one face for both scripts. */
 .lk [lang], .lk small, .lk code { font-family: var(--lk-font); }
@@ -31,16 +31,16 @@ body:has(.lk) { background: #16353a; }
 .lk-screen { max-width: 460px; margin: 0 auto; }
 
 /* ---------- Landing ---------- */
-.lk-hero { position: relative; margin: 0; aspect-ratio: 1 / 1.05; overflow: hidden; }
-.lk-hero img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 30%; display: block; }
+.lk-hero { position: relative; margin: 0; aspect-ratio: 960 / 750; overflow: hidden; }
+.lk-hero img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; }
 /* The photo runs into the wall colour, so the name sits on the same wall. */
 .lk-hero::after {
   content: "";
   position: absolute;
   inset: 0 0 -2px;
-  background: linear-gradient(to bottom, transparent 45%, rgba(22, 53, 58, .75) 78%, var(--lk-wall) 98%);
+  background: linear-gradient(to bottom, transparent 50%, rgba(11, 14, 31, .7) 80%, var(--lk-wall) 98%);
 }
-.lk-id { position: relative; margin-top: -92px; padding: 0 20px; }
+.lk-id { position: relative; margin-top: -26px; padding: 0 20px; } /* the name sits under the face, on the fade */
 .lk-name { margin: 0; font-size: 44px; line-height: 1.1; font-weight: 800; letter-spacing: -.01em; }
 .lk-name-en { margin: 4px 0 0; color: var(--lk-dim); font-size: 15px; font-weight: 400; text-align: right; }
 .lk-tagline { margin: 2px 0 0; color: var(--lk-light); font-size: 15px; font-weight: 600; text-align: right; }
