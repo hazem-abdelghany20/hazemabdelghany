@@ -160,8 +160,8 @@ function RootComponent() {
   const side = useSide();
   useSideGestures(side, lang);
   const skip = lang === "ar" ? "روح للمحتوى" : "Skip to content";
-  // /links/ is the Instagram bio page: just the page, no site nav or footer.
-  const bare = useRouterState({ select: (s) => /^\/links(\/|$)/.test(s.location.pathname) });
+  // /links/ (the Instagram bio page) and the free guides it opens: just the page, no site nav or footer.
+  const bare = useRouterState({ select: (s) => /^\/(links|free)(\/|$)/.test(s.location.pathname) });
 
   return (
     <QueryClientProvider client={queryClient}>

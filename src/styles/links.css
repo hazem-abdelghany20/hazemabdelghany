@@ -274,3 +274,94 @@ body:has(.lk) { background: #16353a; }
 @media (prefers-reduced-motion: reduce) {
   .lk-fan img { animation: none; }
 }
+
+/* ---------- /free/ and /free/<slug>/ — the guides, in the same frame ---------- */
+.fr-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.fr-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  border-radius: 16px;
+  background: var(--lk-wall-2);
+  border: 1px solid var(--lk-wall-3);
+}
+.fr-row img { flex: none; width: 52px; height: 72px; object-fit: cover; object-position: 50% 30%; border-radius: 10px; }
+.fr-row-mark {
+  flex: none;
+  width: 52px;
+  height: 72px;
+  border-radius: 10px;
+  /* No reel cover yet: a strip of the golden light instead. */
+  background: repeating-linear-gradient(160deg, var(--lk-light) 0 7px, var(--lk-wall-3) 7px 13px);
+}
+.fr-row b { font-size: 17px; font-weight: 700; line-height: 1.45; }
+.fr-inline { color: var(--lk-light); text-decoration: underline; text-underline-offset: 3px; }
+
+.fr-head { display: flex; align-items: center; gap: 14px; }
+.fr-cover { flex: none; width: 72px; height: 128px; object-fit: cover; border-radius: 12px; border: 2px solid var(--lk-cream); }
+.fr-head .lk-h { font-size: 28px; }
+.fr-intro { margin: 16px 0 0; color: var(--lk-dim); font-size: 16px; line-height: 1.7; white-space: pre-line; }
+.fr-intro a, .fr-outro a { color: var(--lk-light); }
+
+.fr-body { display: flex; flex-direction: column; gap: 14px; margin-top: 26px; }
+.fr-section {
+  margin: 18px 0 2px;
+  padding-top: 18px;
+  border-top: 1px solid var(--lk-wall-3);
+  color: var(--lk-light);
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+.fr-body > .fr-section:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.fr-step { margin: 0; font-size: 16px; line-height: 1.75; white-space: pre-line; }
+.fr-link {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--lk-wall-2);
+  border: 1px solid var(--lk-wall-3);
+}
+.fr-link span { font-size: 16px; font-weight: 600; line-height: 1.6; }
+.fr-link small { color: var(--lk-light); font-size: 13px; text-align: start; }
+
+/* A prompt to copy: a cream slip, like the InstaPay box on /links/. */
+.fr-prompt {
+  position: relative;
+  margin-top: 10px;
+  padding: 14px 14px 52px;
+  border-radius: 14px;
+  background: var(--lk-cream);
+  color: var(--lk-ink);
+}
+.fr-prompt pre {
+  margin: 0;
+  font-family: var(--lk-font);
+  font-size: 15px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.fr-prompt button {
+  position: absolute;
+  inset-inline-end: 10px;
+  bottom: 10px;
+  padding: 7px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--lk-wall);
+  color: var(--lk-cream);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.fr-prompt button[data-done] { background: var(--lk-light); color: var(--lk-ink); }
+
+.fr-outro { margin: 28px 0 0; padding: 16px; border-radius: 14px; border: 1.5px dashed var(--lk-wall-3); font-size: 16px; line-height: 1.7; white-space: pre-line; }
+.fr-end { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 8px; }
+.fr-end .lk-all { width: 100%; box-sizing: border-box; }
+.fr-ig { color: var(--lk-dim); font-size: 14px; }

@@ -4,12 +4,12 @@ import { localePath, type Lang } from "./i18n";
 /* The site has two sides. The human side is everything that was here first:
    essays, books, the log. The AI side lives under /ai/ (and /ar/ai/). The
    switch in the nav swipes between them; a page's side comes from its path.
-   The free guides (/free/) sit on the AI side too. */
+   The free guides (/free/) left the AI side on 26 Oct: they share /links/'s own look. */
 
 export type Side = "human" | "ai";
 
 export const sideOf = (pathname: string): Side =>
-  /^(\/ar)?\/ai(\/|$)/.test(pathname) || /^\/free(\/|$)/.test(pathname) ? "ai" : "human";
+  /^(\/ar)?\/ai(\/|$)/.test(pathname) ? "ai" : "human";
 
 export function useSide(): Side {
   return useRouterState({ select: (s) => sideOf(s.location.pathname) });

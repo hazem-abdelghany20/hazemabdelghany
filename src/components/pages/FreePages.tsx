@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { L } from "@/components/L";
 import {
   fetchFreeKit,
@@ -9,9 +9,17 @@ import {
   type FreeKit,
   type FreeListing,
 } from "@/lib/free";
+import { GUIDE_REELS } from "@/lib/links";
 
 const IG = "https://www.instagram.com/hazem_abdelghany/";
 const domain = (u: string) => u.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+/** The cover of the newest reel that sends people to this guide, if one is on /links/. */
+const coverOf = (slug: string) => {
+  const r = GUIDE_REELS.find((g) => g.guide === slug);
+  return r ? `/images/links/${r.reel}.jpg` : null;
+};
+/** Kit items whose label starts with ① ② ③ … are the guide's section headings. */
+const isSection = (it: FreeItem) => !it.url && !it.note && /^[①-⑳]/.test(it.label);
 
 /** Guide text with every @handle as a link to that Instagram account (opens the app on a phone). */
 function withHandles(text: string) {
@@ -26,7 +34,29 @@ function withHandles(text: string) {
   );
 }
 
-/** /free/ — every guide a reel promised, newest first. Arabic, on the AI side. */
+/** Same frame as /links/: the teal wall, a back pill, and Hazem's face linking to his bio page. */
+function Frame({ back, children }: { back: { href: string; label: string }; children: ReactNode }) {
+  return (
+    <div className="lk">
+      <section className="lk-screen lk-sub">
+        <header className="lk-bar">
+          <L href={back.href} className="lk-back">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 6l6 6-6 6" />
+            </svg>
+            {back.label}
+          </L>
+          <L href="/links/" aria-label="حازم عبدالغني">
+            <img className="lk-bar-face" src="/images/links/hazem.jpg" alt="" width={36} height={36} />
+          </L>
+        </header>
+        {children}
+      </section>
+    </div>
+  );
+}
+
+/** /free/ — every guide a reel promised, newest first. */
 export function FreeIndexPage({ initial }: { initial: FreeListing[] | null }) {
   const [list, setList] = useState(initial ?? []);
   // The build froze the list; pick up guides published since.
@@ -35,40 +65,27 @@ export function FreeIndexPage({ initial }: { initial: FreeListing[] | null }) {
   }, []);
 
   return (
-    <section className="t-article t-free">
-      <header className="t-art-head">
-        <p className="t-mark" dir="ltr">
-          <span className="t-ps1" aria-hidden="true">
-            ${" "}
-          </span>
-          ls <span className="t-flag">free/</span>
-        </p>
-        <h1 className="t-art-title" lang="ar" dir="rtl">
-          الـguides اللي ببلاش
-        </h1>
-        <p className="t-art-lede" lang="ar">
-          كل guide وعدت بيه في فيديو، هنا. الـprompts جاهزة تنسخها.
-        </p>
-      </header>
+    <Frame back={{ href: "/links/", label: "صفحتي" }}>
+      <h1 className="lk-h">الـguides ببلاش</h1>
+      <p className="lk-lede">كل guide وعدت بيه في فيديو، هنا. الـprompts جاهزة تنسخها.</p>
       {list.length ? (
-        <ul className="t-free-list">
-          {list.map((k) => (
-            <li key={k.slug}>
-              <L href={`/free/${k.slug}/`} className="t-free-row">
-                <span className="t-free-title" lang="ar">
-                  {k.title}
-                </span>
-                <span className="t-free-slug" dir="ltr">
-                  /{k.slug}
-                </span>
-              </L>
-            </li>
-          ))}
+        <ul className="fr-list">
+          {list.map((k) => {
+            const c = coverOf(k.slug);
+            return (
+              <li key={k.slug}>
+                <L href={`/free/${k.slug}/`} className="fr-row">
+                  {c ? <img src={c} alt="" width={52} height={92} loading="lazy" /> : <span className="fr-row-mark" aria-hidden="true" />}
+                  <b>{k.title}</b>
+                </L>
+              </li>
+            );
+          })}
         </ul>
       ) : (
-        <p className="t-empty">…</p>
+        <p className="lk-lede">…</p>
       )}
-    </section>
+    </Frame>
   );
 }
 
@@ -83,18 +100,16 @@ export function FreeKitPage({ slug, initial }: { slug: string; initial: FreeKit 
     void fetchFreeKit(slug).then((k) => k && setKit(k));
   }, [slug]);
 
+  const back = { href: "/free/", label: "كل الـguides" };
+
   if (!kit) {
     return (
-      <section className="t-article t-free">
-        <header className="t-art-head">
-          <h1 className="t-art-title" lang="ar" dir="rtl">
-            الـguide ده مش هنا لسه
-          </h1>
-          <p className="t-art-lede" lang="ar">
-            <a href={suitePage(slug)}>افتحه من هنا</a> ، أو شوف <L href="/free/">كل الـguides</L>.
-          </p>
-        </header>
-      </section>
+      <Frame back={back}>
+        <h1 className="lk-h">الـguide ده مش هنا لسه</h1>
+        <p className="lk-lede">
+          <a href={suitePage(slug)} className="fr-inline">افتحه من هنا</a>، أو شوف <L href="/free/" className="fr-inline">كل الـguides</L>.
+        </p>
+      </Frame>
     );
   }
 
@@ -105,74 +120,54 @@ export function FreeKitPage({ slug, initial }: { slug: string; initial: FreeKit 
     });
     trackFree(slug, "click", it.id);
   };
+  const cover = coverOf(kit.slug);
 
   return (
-    <article className="t-article t-free">
-      <header className="t-art-head">
-        <p className="t-mark" dir="ltr">
-          <span className="t-ps1" aria-hidden="true">
-            ${" "}
-          </span>
-          cat <span className="t-flag">free/{kit.slug}.md</span>
-        </p>
-        <h1 className="t-art-title" lang="ar" dir="rtl">
-          {kit.title}
-        </h1>
-        {kit.intro && (
-          <p className="t-art-lede t-free-text" lang="ar">
-            {withHandles(kit.intro)}
-          </p>
-        )}
+    <Frame back={back}>
+      <header className="fr-head">
+        {cover && <img className="fr-cover" src={cover} alt="" width={72} height={128} />}
+        <h1 className="lk-h">{kit.title}</h1>
       </header>
-      <div className="t-prose t-free-body" lang="ar">
-        {kit.items.map((it) => (
-          <div key={it.id} className="t-free-item">
-            {/^https?:\/\//i.test(it.url) ? (
-              <a
-                className="t-free-link"
-                href={it.url}
-                target="_blank"
-                rel="noopener"
-                dir="rtl"
-                onClick={() => trackFree(slug, "click", it.id)}
-              >
-                <span>{it.label}</span>
-                <small dir="ltr">{domain(it.url)}</small>
-              </a>
-            ) : (
-              <p className="t-free-step t-free-text" dir="rtl">
-                {it.label}
-              </p>
-            )}
-            {it.note && (
-              <pre>
-                <div className="t-code-bar">
-                  <span>
-                    <span className="t-ps1">$</span>
-                    {/^(npx|npm|\/)\S*/.test(it.note) && !it.note.includes("\n") ? "terminal" : "try-it.txt"}
-                  </span>
-                  <button
-                    type="button"
-                    className="t-copy"
-                    data-done={copied === it.id ? "" : undefined}
-                    onClick={() => copy(it)}
-                  >
+      {kit.intro && <p className="fr-intro">{withHandles(kit.intro)}</p>}
+
+      <div className="fr-body">
+        {kit.items.map((it) =>
+          isSection(it) ? (
+            <h2 key={it.id} className="fr-section">
+              {it.label}
+            </h2>
+          ) : (
+            <div key={it.id} className="fr-item">
+              {/^https?:\/\//i.test(it.url) ? (
+                <a className="fr-link" href={it.url} target="_blank" rel="noopener" onClick={() => trackFree(slug, "click", it.id)}>
+                  <span>{it.label}</span>
+                  <small dir="ltr">{domain(it.url)}</small>
+                </a>
+              ) : (
+                <p className="fr-step">{it.label}</p>
+              )}
+              {it.note && (
+                <div className="fr-prompt">
+                  <pre dir="auto">{it.note}</pre>
+                  <button type="button" data-done={copied === it.id ? "" : undefined} onClick={() => copy(it)}>
                     {copied === it.id ? "اتنسخ" : "انسخ"}
                   </button>
                 </div>
-                <code>{it.note}</code>
-              </pre>
-            )}
-          </div>
-        ))}
-        {kit.outro && <p className="t-free-outro t-free-text">{withHandles(kit.outro)}</p>}
+              )}
+            </div>
+          ),
+        )}
       </div>
-      <div className="t-art-end">
-        <L href="/free/">→ كل الـguides</L>
-        <a href={IG} dir="ltr">
+
+      {kit.outro && <p className="fr-outro">{withHandles(kit.outro)}</p>}
+      <nav className="fr-end">
+        <L href="/free/" className="lk-all">
+          كل الـguides
+        </L>
+        <a href={IG} className="fr-ig" dir="ltr" target="_blank" rel="noopener">
           @hazem_abdelghany
         </a>
-      </div>
-    </article>
+      </nav>
+    </Frame>
   );
 }
