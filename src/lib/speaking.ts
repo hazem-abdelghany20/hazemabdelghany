@@ -40,6 +40,15 @@ const LINKS = {
   enpactWin: "https://www.instagram.com/p/C6HO6JdIOvx/",
   schoolsExpo: "https://www.instagram.com/p/C7hWlsCIAN9/",
   schoolsExpoWelmnt: "https://www.instagram.com/reel/C7ywn_jIXZP/",
+  cbcEpisode: "https://www.youtube.com/watch?v=KuQUyIGYZ_I",
+  haus: {
+    competition: "https://www.instagram.com/p/C6MY7j6svdN/",
+    workshop: "https://www.instagram.com/p/DAJZyNjNq6e/",
+    demoDay: "https://www.instagram.com/p/DAQ9z3fo0ay/",
+    interview: "https://www.instagram.com/reel/DAa0G3QSgqn/",
+  },
+  almal:
+    "https://almalnews.com/1953376/%D8%B4%D8%B1%D9%83%D8%A9-Welmnt-%D9%84%D8%AF%D8%B9%D9%85-%D8%A7%D9%84%D8%B5%D8%AD%D8%A9-%D8%A7%D9%84%D9%86%D9%81%D8%B3%D9%8A%D8%A9-%D9%84%D9%84%D8%B7%D9%84%D8%A7%D8%A8-%D8%AA%D8%AA%D9%88%D9%82%D8%B9/",
 };
 
 type Link = { label: string; href: string };
@@ -75,7 +84,7 @@ export type SpeakingCopy = {
   stageOther: string;
   tiktok: { name: string; line: string; links: Link[] };
   pitch: { name: string; line: string; caption: string; links: Link[] };
-  welmnt: { name: string; line: string; captions: [string, string, string] };
+  welmnt: { name: string; line: string; captions: [string, string, string]; links: Link[] };
 
   roomLabel: string;
   roomOther: string;
@@ -135,7 +144,7 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       {
         n: "4",
         what: "pitch competitions",
-        detail: "Won three, including enpact × Startup Haus and Startup Power.",
+        detail: "Won three, including CiviConnectors by enpact and Startup Power.",
       },
       { n: "2", what: "TV appearances", detail: "Asharq Bloomberg and CBC Sofra." },
     ],
@@ -177,11 +186,19 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       },
       {
         when: "Sep 2024",
-        where: "CiviConnectors, by enpact",
-        what: "Presented Welmnt at a health-tech workshop",
-        links: [{ label: "Welmnt", href: LINKS.enpactWorkshop }],
+        where: "CiviConnectors Demo Day, Startup Haus Cairo",
+        what: "Pitched Welmnt to the room and a panel of experts",
+        links: [{ label: "Startup Haus", href: LINKS.haus.demoDay }],
       },
-      { when: "Sep 2024", where: "Pitch stage, Cairo", what: "Pitched Welmnt to a full room" },
+      {
+        when: "Sep 2024",
+        where: "Diabetes awareness workshop, CiviConnectors by enpact",
+        what: "Presented Welmnt",
+        links: [
+          { label: "Startup Haus", href: LINKS.haus.workshop },
+          { label: "Welmnt", href: LINKS.enpactWorkshop },
+        ],
+      },
       {
         when: "May 2024",
         where: "Schools Expo, Mall of Arabia",
@@ -193,15 +210,21 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       },
       {
         when: "Apr 2024",
-        where: "enpact × Startup Haus, health-tech competition",
-        what: "Pitched and won",
-        links: [{ label: "Welmnt", href: LINKS.enpactWin }],
+        where: "CiviConnectors idea competition, enpact × Startup Haus",
+        what: "Pitched and won: one of 6 teams picked from 12",
+        links: [
+          { label: "Startup Haus", href: LINKS.haus.competition },
+          { label: "Welmnt", href: LINKS.enpactWin },
+        ],
       },
       {
         when: "Nov 2023",
         where: "CBC Sofra, «الأكيل»",
         what: "TV interview, as a restaurant brand's CMO",
-        links: [{ label: "Instagram", href: LINKS.cbcPost }],
+        links: [
+          { label: "Full episode", href: LINKS.cbcEpisode },
+          { label: "Instagram", href: LINKS.cbcPost },
+        ],
       },
     ],
     occasionsNote: "Plus more pitch competitions and 50+ trainings.",
@@ -217,9 +240,9 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     },
     cbc: {
       name: "CBC Sofra",
-      show: "«الأكيل» · Nov 2023",
+      show: "«الأكيل» with Mourad Makram · Nov 2023",
       line: "Building a food brand's marketing, as its CMO.",
-      link: { label: "See the post", href: LINKS.cbcPost },
+      link: { label: "Watch the episode", href: LINKS.cbcEpisode },
     },
 
     stageLabel: "On stage",
@@ -243,8 +266,13 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     },
     welmnt: {
       name: "Pitching Welmnt",
-      line: "Four pitch competitions in two years, three of them won. This one was a full room in Cairo.",
+      line: "Four pitch competitions in two years, three of them won. This is the CiviConnectors Demo Day at Startup Haus Cairo, September 2024.",
       captions: ["Why it matters", "The number that opens the pitch", "The room"],
+      links: [
+        { label: "Demo Day", href: LINKS.haus.demoDay },
+        { label: "Startup Haus interview", href: LINKS.haus.interview },
+        { label: "Al Mal on Welmnt", href: LINKS.almal },
+      ],
     },
 
     roomLabel: "In the training room",
@@ -315,7 +343,7 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       {
         n: "4",
         what: "مسابقات pitch",
-        detail: "كسبت 3، منهم enpact × Startup Haus وStartup Power.",
+        detail: "كسبت 3، منهم CiviConnectors من enpact وStartup Power.",
       },
       { n: "2", what: "لقاءات تلفزيونية", detail: "الشرق Bloomberg وCBC سفرة." },
     ],
@@ -357,14 +385,18 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       },
       {
         when: "سبتمبر 2024",
-        where: "CiviConnectors من enpact",
-        what: "قدّمت Welmnt في ورشة health-tech",
-        links: [{ label: "Welmnt", href: LINKS.enpactWorkshop }],
+        where: "CiviConnectors Demo Day، Startup Haus القاهرة",
+        what: "pitch لـ Welmnt قدّام القاعة ولجنة خبراء",
+        links: [{ label: "Startup Haus", href: LINKS.haus.demoDay }],
       },
       {
         when: "سبتمبر 2024",
-        where: "مسرح pitch، القاهرة",
-        what: "pitch لـ Welmnt قدّام قاعة مليانة",
+        where: "ورشة توعية بالسكر، CiviConnectors من enpact",
+        what: "قدّمت Welmnt",
+        links: [
+          { label: "Startup Haus", href: LINKS.haus.workshop },
+          { label: "Welmnt", href: LINKS.enpactWorkshop },
+        ],
       },
       {
         when: "مايو 2024",
@@ -377,15 +409,21 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       },
       {
         when: "أبريل 2024",
-        where: "enpact × Startup Haus، مسابقة health-tech",
-        what: "عملت pitch وكسبت",
-        links: [{ label: "Welmnt", href: LINKS.enpactWin }],
+        where: "مسابقة أفكار CiviConnectors، enpact × Startup Haus",
+        what: "عملت pitch وكسبت: من 6 فرق اتختاروا من 12",
+        links: [
+          { label: "Startup Haus", href: LINKS.haus.competition },
+          { label: "Welmnt", href: LINKS.enpactWin },
+        ],
       },
       {
         when: "نوفمبر 2023",
         where: "CBC سفرة، «الأكيل»",
         what: "لقاء تلفزيوني، كـ CMO لبراند أكل",
-        links: [{ label: "Instagram", href: LINKS.cbcPost }],
+        links: [
+          { label: "الحلقة كاملة", href: LINKS.cbcEpisode },
+          { label: "Instagram", href: LINKS.cbcPost },
+        ],
       },
     ],
     occasionsNote: "غير مسابقات pitch تانية وأكتر من 50 تدريب.",
@@ -401,9 +439,9 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     },
     cbc: {
       name: "CBC سفرة",
-      show: "«الأكيل» · نوفمبر 2023",
+      show: "«الأكيل» مع مراد مكرم · نوفمبر 2023",
       line: "بناء التسويق لبراند أكل، كـ CMO بتاعه.",
-      link: { label: "شوف البوست", href: LINKS.cbcPost },
+      link: { label: "شوف الحلقة", href: LINKS.cbcEpisode },
     },
 
     stageLabel: "على المسرح",
@@ -427,8 +465,13 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     },
     welmnt: {
       name: "pitch لـ Welmnt",
-      line: "4 مسابقات pitch في سنتين، كسبت 3 منهم. دي كانت قاعة مليانة في القاهرة.",
+      line: "4 مسابقات pitch في سنتين، كسبت 3 منهم. ده الـ Demo Day بتاع CiviConnectors في Startup Haus القاهرة، سبتمبر 2024.",
       captions: ["ليه ده مهم", "الرقم اللي بيفتح الـ pitch", "القاعة"],
+      links: [
+        { label: "الـ Demo Day", href: LINKS.haus.demoDay },
+        { label: "لقاء Startup Haus", href: LINKS.haus.interview },
+        { label: "جريدة المال عن Welmnt", href: LINKS.almal },
+      ],
     },
 
     roomLabel: "في قاعة التدريب",

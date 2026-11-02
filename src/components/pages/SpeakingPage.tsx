@@ -160,6 +160,13 @@ export function SpeakingPage({ lang }: { lang: Lang }) {
           <div className="sp-welmnt-copy">
             <h3>{t.welmnt.name}</h3>
             <p>{t.welmnt.line}</p>
+            <p className="sp-links">
+              {t.welmnt.links.map((l) => (
+                <a key={l.href} href={l.href} target="_blank" rel="noopener">
+                  {l.label}
+                </a>
+              ))}
+            </p>
           </div>
           <div className="sp-strip">
             {[M.stageWhy, M.stageNumber, M.stageRoom].map((src, i) => (
