@@ -10,15 +10,11 @@ export const Route = createFileRoute("/ar/speaking")({
       path: "/ar/speaking/",
       title: "حازم عبدالغني · Speaker",
       description:
-        "حازم عبدالغني بيخلّي الـ AI بسيط ومفيد لكل اللي بيتكلموا عربي. محاضرات وورش وpanels.",
+        "حازم عبدالغني بيخلّي الـ AI بسيط، على المسرح وفي التلفزيون وفي قاعة التدريب. أكتر من 50 تدريب لأكتر من 10,000 شخص.",
       lang: "ar",
       alternates,
     });
-    const font = {
-      rel: "stylesheet",
-      href: "https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700;800&display=swap",
-    };
-    return { ...head, links: [...(head.links ?? []), font] };
+    return head;
   },
   component: () => <SpeakingPage lang="ar" />,
 });
