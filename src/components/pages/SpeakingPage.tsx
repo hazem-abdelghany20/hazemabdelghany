@@ -1,10 +1,18 @@
 import { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import type { Lang } from "@/lib/i18n";
-import { SPEAKING, SPEAKING_MEDIA as M, SPEAKING_WHATSAPP } from "@/lib/speaking";
+import {
+  SPEAKING,
+  SPEAKING_MEDIA as M,
+  SPEAKING_WHATSAPP,
+  type Link,
+  type Occasion,
+} from "@/lib/speaking";
 
 /** /speaking/ and /ar/speaking/ — the page Hazem sends to event organizers.
-    Built in the site's own identity (styles/speaking.css reads the theme tokens from global.css):
-    the proof first, as photos and clips, then the count, then what an organizer needs to book. */
+    Laid out like a speaker card, then the proof: clips, the record by year, photos,
+    what he can give, and the kit an organizer needs to book him.
+    Styles in styles/speaking.css read the theme tokens from global.css. */
 export function SpeakingPage({ lang }: { lang: Lang }) {
   const t = SPEAKING[lang];
   const isAr = lang === "ar";
@@ -12,8 +20,8 @@ export function SpeakingPage({ lang }: { lang: Lang }) {
   const otherDir = isAr ? "ltr" : "rtl";
   const wa = `https://wa.me/${SPEAKING_WHATSAPP}?text=${encodeURIComponent(t.whatsappText)}`;
 
-  const Label = ({ id, text, other }: { id: string; text: string; other: string }) => (
-    <div className="sp-label">
+  const Head = ({ id, text, other }: { id: string; text: string; other: string }) => (
+    <div className="sp-head">
       <h2 id={id}>{text}</h2>
       <span lang={otherLang} dir={otherDir}>
         {other}
@@ -23,19 +31,16 @@ export function SpeakingPage({ lang }: { lang: Lang }) {
 
   return (
     <div className={isAr ? "speaking-page is-ar" : "speaking-page"}>
-      <section className="sp-hero" aria-labelledby="sp-title">
+      <header className="sp-hero">
         <div className="sp-hero-copy">
-          <div className="sp-hero-top">
-            <p className="sp-mark">{t.mark}</p>
-          </div>
-          <h1 className="sp-statement" id="sp-title">
-            {t.statementBefore}
-            <em>{t.statementEm}</em>
-            {t.statementAfter}
+          <p className="sp-role">{t.role}</p>
+          <h1 className="sp-names">
+            <span className="sp-name">{t.name}</span>
+            <span className="sp-name sp-name-other" lang={otherLang} dir={otherDir}>
+              {t.nameOther}
+            </span>
           </h1>
-          <p className="sp-other" lang={otherLang} dir={otherDir}>
-            {t.other}
-          </p>
+          <p className="sp-statement">{t.statement}</p>
           <p className="sp-bio">{t.bio}</p>
           <div className="sp-actions">
             <a className="sp-book" href={wa} target="_blank" rel="noopener">
@@ -46,199 +51,211 @@ export function SpeakingPage({ lang }: { lang: Lang }) {
             </a>
           </div>
         </div>
-        <figure className="sp-hero-visual">
-          <img src={M.hero} alt="" width={2000} height={1333} fetchPriority="high" />
-          <figcaption>{t.heroCaption}</figcaption>
+        <figure className="sp-portrait">
+          <img
+            src={M.headshot}
+            alt={t.portraitAlt}
+            width={1254}
+            height={1254}
+            fetchPriority="high"
+          />
         </figure>
+      </header>
+
+      <dl className="sp-counts">
+        {t.counts.map((c) => (
+          <div key={c.what} className="sp-count">
+            <dt>
+              <span className="sp-n" dir="ltr">
+                {c.n}
+              </span>
+              <span className="sp-what">{c.what}</span>
+            </dt>
+            <dd>{c.detail}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <section className="sp-section" aria-labelledby="sp-watch">
+        <Head id="sp-watch" text={t.watch.label} other={t.watch.other} />
+        <div className="sp-reel">
+          <Screen
+            shape="tall"
+            item={t.watch.tiktok}
+            media={<Clip src={M.tiktokClip} poster={M.tiktokPoster} label={t.watch.tiktok.name} />}
+          />
+          <Screen
+            shape="card"
+            item={t.watch.cbc}
+            media={<Clip src={M.cbcClip} poster={M.cbcPoster} label={t.watch.cbc.name} />}
+          />
+          <Screen
+            shape="wide"
+            item={t.watch.asharq}
+            media={
+              <img
+                src={M.asharq}
+                alt={t.watch.asharq.name}
+                width={1170}
+                height={662}
+                loading="lazy"
+              />
+            }
+          />
+        </div>
       </section>
 
-      <section className="sp-section" aria-labelledby="sp-count">
-        <Label id="sp-count" text={t.countLabel} other={t.countOther} />
-        <dl className="sp-counts">
-          {t.counts.map((c) => (
-            <div key={c.what} className="sp-count">
-              <dt>
-                <span className="sp-n" dir="ltr">
-                  {c.n}
-                </span>
-                <span className="sp-what">{c.what}</span>
-              </dt>
-              <dd>{c.detail}</dd>
+      <section className="sp-section" aria-labelledby="sp-record">
+        <Head id="sp-record" text={t.record.label} other={t.record.other} />
+        <div className="sp-years">
+          {byYear(t.record.occasions).map(([year, items]) => (
+            <div key={year} className="sp-year">
+              <p className="sp-year-n" dir="ltr">
+                {year}
+              </p>
+              <ol className="sp-events">
+                {items.map((o) => (
+                  <li key={o.when + o.where} className={o.next ? "is-next" : undefined}>
+                    <span className="sp-month">{o.when.replace(/\s*\d{4}\s*/, "")}</span>
+                    <div className="sp-event">
+                      <h3>
+                        {o.where}
+                        {o.next && <span className="sp-next">{t.record.nextTag}</span>}
+                      </h3>
+                      <p>{o.what}</p>
+                      {o.links && <Sources links={o.links} />}
+                    </div>
+                  </li>
+                ))}
+              </ol>
             </div>
           ))}
-        </dl>
-
-        <h3 className="sp-subhead">{t.occasionsTitle}</h3>
-        <ol className="sp-occasions" reversed>
-          {t.occasions.map((o) => (
-            <li key={o.when + o.where} className={o.next ? "is-next" : undefined}>
-              <span className="sp-when">{o.when}</span>
-              <span className="sp-where">
-                {o.where}
-                {o.next && <span className="sp-next">{t.nextTag}</span>}
-              </span>
-              <span className="sp-what-done">
-                {o.what}
-                {o.links && (
-                  <span className="sp-src">
-                    {o.links.map((l) => (
-                      <a key={l.href} href={l.href} target="_blank" rel="noopener">
-                        {l.label}
-                      </a>
-                    ))}
-                  </span>
-                )}
-              </span>
-            </li>
-          ))}
-        </ol>
-        <p className="sp-note">{t.occasionsNote}</p>
-      </section>
-
-      <section className="sp-section" aria-labelledby="sp-screen">
-        <Label id="sp-screen" text={t.screenLabel} other={t.screenOther} />
-        <div className="sp-screen">
-          <article className="sp-tv">
-            <figure className="sp-frame sp-frame-wide">
-              <img src={M.asharq} alt={t.asharq.name} width={1170} height={662} loading="lazy" />
-            </figure>
-            <h3>{t.asharq.name}</h3>
-            <p className="sp-show">{t.asharq.show}</p>
-            <p>{t.asharq.line}</p>
-            <a href={t.asharq.link.href} target="_blank" rel="noopener">
-              {t.asharq.link.label}
-            </a>
-          </article>
-          <article className="sp-tv">
-            <figure className="sp-frame sp-frame-tall">
-              <Clip src={M.cbcClip} poster={M.cbcPoster} label={t.cbc.name} />
-            </figure>
-            <h3>{t.cbc.name}</h3>
-            <p className="sp-show">{t.cbc.show}</p>
-            <p>{t.cbc.line}</p>
-            <a href={t.cbc.link.href} target="_blank" rel="noopener">
-              {t.cbc.link.label}
-            </a>
-          </article>
         </div>
-      </section>
-
-      <section className="sp-section" aria-labelledby="sp-stage">
-        <Label id="sp-stage" text={t.stageLabel} other={t.stageOther} />
-        <div className="sp-stage">
-          <figure className="sp-frame sp-frame-tall sp-stage-clip">
-            <Clip src={M.tiktokClip} poster={M.tiktokPoster} label={t.tiktok.name} />
-          </figure>
-          <div className="sp-stage-copy">
-            <h3>{t.tiktok.name}</h3>
-            <p>{t.tiktok.line}</p>
-            <p className="sp-links">
-              {t.tiktok.links.map((l) => (
-                <a key={l.href} href={l.href} target="_blank" rel="noopener">
-                  {l.label}
-                </a>
-              ))}
-            </p>
-
-            <figure className="sp-frame sp-pitch">
-              <img src={M.pitchPress} alt="" width={899} height={899} loading="lazy" />
-              <figcaption>{t.pitch.caption}</figcaption>
-            </figure>
-            <h3>{t.pitch.name}</h3>
-            <p>{t.pitch.line}</p>
-            <p className="sp-links">
-              {t.pitch.links.map((l) => (
-                <a key={l.href} href={l.href} target="_blank" rel="noopener">
-                  {l.label}
-                </a>
-              ))}
-            </p>
-          </div>
-        </div>
-
-        <div className="sp-welmnt">
-          <div className="sp-welmnt-copy">
-            <h3>{t.welmnt.name}</h3>
-            <p>{t.welmnt.line}</p>
-            <p className="sp-links">
-              {t.welmnt.links.map((l) => (
-                <a key={l.href} href={l.href} target="_blank" rel="noopener">
-                  {l.label}
-                </a>
-              ))}
-            </p>
-          </div>
-          <div className="sp-strip">
-            {[M.stageWhy, M.stageNumber, M.stageRoom].map((src, i) => (
-              <figure key={src} className="sp-frame">
-                <img src={src} alt="" width={1400} height={933} loading="lazy" />
-                <figcaption>{t.welmnt.captions[i]}</figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
+        <p className="sp-note">{t.record.note}</p>
       </section>
 
       <section className="sp-section" aria-labelledby="sp-room">
-        <Label id="sp-room" text={t.roomLabel} other={t.roomOther} />
-        <div className="sp-room">
-          <div className="sp-room-copy">
-            <p className="sp-room-statement">{t.roomStatement}</p>
-            <p>{t.roomLine}</p>
-          </div>
-          <figure className="sp-frame sp-room-photo">
-            <img src={M.training} alt="" width={1000} height={1333} loading="lazy" />
-            <figcaption>{t.roomCaption}</figcaption>
-          </figure>
+        <Head id="sp-room" text={t.room.label} other={t.room.other} />
+        <div className="sp-room-intro">
+          <p>{t.room.line}</p>
+          <Sources links={t.room.links} />
+        </div>
+        <div className="sp-gallery">
+          {t.room.photos.map((p, i) => (
+            <figure key={p.src} className={`sp-shot sp-shot-${i + 1}`}>
+              <div className="sp-shot-frame">
+                <img src={p.src} alt={p.alt} width={p.w} height={p.h} loading="lazy" />
+              </div>
+              <figcaption>{p.caption}</figcaption>
+            </figure>
+          ))}
         </div>
       </section>
 
       <section className="sp-section" aria-labelledby="sp-talks">
-        <Label id="sp-talks" text={t.talksLabel} other={t.talksOther} />
+        <Head id="sp-talks" text={t.talks.label} other={t.talks.other} />
         <ul className="sp-talks">
-          {t.talks.map((k) => (
+          {t.talks.items.map((k) => (
             <li key={k.title}>
               <h3>{k.title}</h3>
               <p>{k.line}</p>
             </li>
           ))}
         </ul>
-        <p className="sp-formats">{t.formats.join(" / ")}</p>
+        <dl className="sp-facts">
+          {t.talks.facts.map((f) => (
+            <div key={f.k}>
+              <dt>{f.k}</dt>
+              <dd>{f.v}</dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
-      <section className="sp-section" id="press" aria-labelledby="sp-press">
-        <Label id="sp-press" text={t.pressLabel} other={t.pressOther} />
-        <div className="sp-press">
+      <section className="sp-section sp-kit" id="press" aria-labelledby="sp-press">
+        <Head id="sp-press" text={t.press.label} other={t.press.other} />
+        <p className="sp-kit-line">{t.press.line}</p>
+        <div className="sp-kit-grid">
           <div className="sp-bios">
-            {t.bios.map((b) => (
+            {t.press.bios.map((b) => (
               <Bio
                 key={b.lang}
                 label={b.label}
                 lang={b.lang}
                 text={b.text}
-                copy={t.copy}
-                copied={t.copied}
+                copy={t.press.copy}
+                copied={t.press.copied}
               />
             ))}
           </div>
-          <div className="sp-photos">
-            {t.photos.map((p) => (
-              <a key={p.href} className="sp-photo" href={p.href} download={p.file}>
+          <div className="sp-downloads">
+            {t.press.photos.map((p) => (
+              <a key={p.href} className="sp-download" href={p.href} download={p.file}>
                 <img src={p.href} alt="" loading="lazy" />
-                <span>{p.label}</span>
+                <span>
+                  {p.label}
+                  <em>{t.press.download}</em>
+                </span>
               </a>
             ))}
           </div>
         </div>
         <div className="sp-booking">
-          <h3>{t.bookTitle}</h3>
-          <p>{t.bookLine}</p>
+          <div>
+            <h3>{t.bookTitle}</h3>
+            <p>{t.bookLine}</p>
+          </div>
           <a className="sp-book" href={wa} target="_blank" rel="noopener">
             {t.book}
           </a>
         </div>
       </section>
     </div>
+  );
+}
+
+/** Groups the record by year, newest first, keeping the order inside each year. */
+function byYear(items: Occasion[]): [string, Occasion[]][] {
+  const out: [string, Occasion[]][] = [];
+  for (const o of items) {
+    const year = o.when.match(/\d{4}/)?.[0] ?? "";
+    const last = out[out.length - 1];
+    if (last && last[0] === year) last[1].push(o);
+    else out.push([year, [o]]);
+  }
+  return out;
+}
+
+/** Where a credit can be checked: press, the organizer's post, or his own. */
+function Sources({ links }: { links: Link[] }) {
+  return (
+    <p className="sp-src">
+      {links.map((l) => (
+        <a key={l.href} href={l.href} target="_blank" rel="noopener">
+          {l.label}
+        </a>
+      ))}
+    </p>
+  );
+}
+
+function Screen({
+  shape,
+  item,
+  media,
+}: {
+  shape: "tall" | "card" | "wide";
+  item: { name: string; sub: string; line: string; links: Link[] };
+  media: ReactNode;
+}) {
+  return (
+    <article className={`sp-screen sp-screen-${shape}`}>
+      <figure className="sp-screen-frame">{media}</figure>
+      <h3>{item.name}</h3>
+      <p className="sp-screen-sub">{item.sub}</p>
+      <p>{item.line}</p>
+      <Sources links={item.links} />
+    </article>
   );
 }
 
