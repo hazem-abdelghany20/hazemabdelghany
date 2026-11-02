@@ -32,11 +32,19 @@ const LINKS = {
     "https://identity-mag.com/in-collaboration-with-welmnt-and-the-international-school-of-choueifat-tiktok-launches-second-edition-of-family-academy-in-egypt-to-enhance-digital-safety-and-combat-cyberbullying/",
   gazette:
     "https://egyptian-gazette.com/entertainment/tiktok-launches-2nd-edition-of-family-academy-in-egypt/",
+  gtm: "https://www.gtm.travel/",
+  startupPower: "https://www.instagram.com/p/DJZdVfFMt19/",
+  startupPowerWelmnt: "https://www.instagram.com/reel/DJbs06motZL/",
+  asharqAnnounce: "https://www.instagram.com/p/DFxfPSOt7os/",
+  enpactWorkshop: "https://www.instagram.com/reel/C_n22uTsl-X/",
+  enpactWin: "https://www.instagram.com/p/C6HO6JdIOvx/",
+  schoolsExpo: "https://www.instagram.com/p/C7hWlsCIAN9/",
+  schoolsExpoWelmnt: "https://www.instagram.com/reel/C7ywn_jIXZP/",
 };
 
 type Link = { label: string; href: string };
 type Count = { n: string; what: string; detail: string };
-type Occasion = { when: string; where: string; what: string; next?: boolean };
+type Occasion = { when: string; where: string; what: string; next?: boolean; links?: Link[] };
 
 export type SpeakingCopy = {
   title: string;
@@ -66,7 +74,7 @@ export type SpeakingCopy = {
   stageLabel: string;
   stageOther: string;
   tiktok: { name: string; line: string; links: Link[] };
-  pitch: { name: string; line: string; caption: string };
+  pitch: { name: string; line: string; caption: string; links: Link[] };
   welmnt: { name: string; line: string; captions: [string, string, string] };
 
   roomLabel: string;
@@ -92,10 +100,10 @@ export type SpeakingCopy = {
 };
 
 const BIO_EN =
-  "Hazem Abdelghany makes AI simple and useful for Arabic speakers. He is co-founder and CEO of Catalyst, which teaches people and companies AI. He has given more than 50 trainings to over 10,000 people, been interviewed on Asharq Bloomberg and CBC Sofra, and won Ahmed Abou Hashima's Startup Power pitch competition.";
+  "Hazem Abdelghany makes AI simple and useful for Arabic speakers. He is co-founder and CEO of Catalyst, which teaches people and companies AI. He has given more than 50 trainings to over 10,000 people, been interviewed on Asharq Bloomberg and CBC Sofra, and won three startup pitch competitions, including Ahmed Abou Hashima's Startup Power.";
 
 const BIO_AR =
-  "حازم عبدالغني بيخلّي الـ AI بسيط ومفيد لكل اللي بيتكلموا عربي. شريك مؤسس والرئيس التنفيذي لـ Catalyst اللي بتعلّم الأفراد والشركات الـ AI. قدّم أكتر من 50 تدريب لأكتر من 10,000 شخص، واتعمل معاه لقاءات على الشرق Bloomberg وCBC سفرة، وكسب مسابقة Startup Power بتاعة أحمد أبو هشيمة.";
+  "حازم عبدالغني بيخلّي الـ AI بسيط ومفيد لكل اللي بيتكلموا عربي. شريك مؤسس والرئيس التنفيذي لـ Catalyst اللي بتعلّم الأفراد والشركات الـ AI. قدّم أكتر من 50 تدريب لأكتر من 10,000 شخص، واتعمل معاه لقاءات على الشرق Bloomberg وCBC سفرة، وكسب 3 مسابقات pitch، منهم Startup Power بتاعة أحمد أبو هشيمة.";
 
 export const SPEAKING: Record<Lang, SpeakingCopy> = {
   en: {
@@ -127,7 +135,7 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       {
         n: "4",
         what: "pitch competitions",
-        detail: "Won one: Startup Power, by Ahmed Abou Hashima.",
+        detail: "Won three, including enpact × Startup Haus and Startup Power.",
       },
       { n: "2", what: "TV appearances", detail: "Asharq Bloomberg and CBC Sofra." },
     ],
@@ -138,32 +146,65 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
         where: "GTM, Hilton Cairo Grand Nile",
         what: "Speaker, a 2-hour AI workshop for travel companies",
         next: true,
+        links: [{ label: "GTM", href: LINKS.gtm }],
       },
       {
         when: "Nov 2025",
         where: "TikTok Family Academy Egypt",
         what: "Moderated the panel and spoke on stage",
+        links: [
+          { label: "Identity", href: LINKS.identity },
+          { label: "Egyptian Gazette", href: LINKS.gazette },
+        ],
       },
-      { when: "2025", where: "Startup Power, by Ahmed Abou Hashima", what: "Pitched and won" },
+      {
+        when: "May 2025",
+        where: "Startup Power, by Ahmed Abou Hashima",
+        what: "Pitched and won",
+        links: [
+          { label: "Startup Power", href: LINKS.startupPower },
+          { label: "Welmnt", href: LINKS.startupPowerWelmnt },
+        ],
+      },
       {
         when: "Feb 2025",
         where: "Asharq Bloomberg, «ويك اند القاهرة»",
         what: "TV interview with Zeina Safwan",
+        links: [
+          { label: "Clip", href: LINKS.asharqClip },
+          { label: "Instagram", href: LINKS.asharqAnnounce },
+        ],
       },
-      { when: "Sep 2024", where: "CiviConnectors, by enpact", what: "Session for founders" },
+      {
+        when: "Sep 2024",
+        where: "CiviConnectors, by enpact",
+        what: "Presented Welmnt at a health-tech workshop",
+        links: [{ label: "Welmnt", href: LINKS.enpactWorkshop }],
+      },
       { when: "Sep 2024", where: "Pitch stage, Cairo", what: "Pitched Welmnt to a full room" },
       {
         when: "May 2024",
         where: "Schools Expo, Mall of Arabia",
         what: "Spoke at the Welmnt stand",
+        links: [
+          { label: "Instagram", href: LINKS.schoolsExpo },
+          { label: "Welmnt", href: LINKS.schoolsExpoWelmnt },
+        ],
+      },
+      {
+        when: "Apr 2024",
+        where: "enpact × Startup Haus, health-tech competition",
+        what: "Pitched and won",
+        links: [{ label: "Welmnt", href: LINKS.enpactWin }],
       },
       {
         when: "Nov 2023",
         where: "CBC Sofra, «الأكيل»",
         what: "TV interview, as a restaurant brand's CMO",
+        links: [{ label: "Instagram", href: LINKS.cbcPost }],
       },
     ],
-    occasionsNote: "Plus three more pitch competitions and 50+ trainings.",
+    occasionsNote: "Plus more pitch competitions and 50+ trainings.",
     nextTag: "Next",
 
     screenLabel: "On screen",
@@ -195,10 +236,14 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       name: "Startup Power",
       line: "Pitched to Ahmed Abou Hashima, with the press filming, and won.",
       caption: "Pitching at Startup Power",
+      links: [
+        { label: "Startup Power", href: LINKS.startupPower },
+        { label: "Welmnt", href: LINKS.startupPowerWelmnt },
+      ],
     },
     welmnt: {
       name: "Pitching Welmnt",
-      line: "Four pitch competitions in two years. This one was a full room in Cairo.",
+      line: "Four pitch competitions in two years, three of them won. This one was a full room in Cairo.",
       captions: ["Why it matters", "The number that opens the pitch", "The room"],
     },
 
@@ -267,7 +312,11 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       { n: "+60", what: "مرة قدّام جمهور", detail: "تدريبات ومسارح وpanels وتلفزيون، من 2023." },
       { n: "+50", what: "تدريب", detail: "لفرق وشركات وكلاسات مفتوحة." },
       { n: "+10,000", what: "شخص اتدرّبوا على الـ AI", detail: "في كورسات Catalyst وسيشناتها." },
-      { n: "4", what: "مسابقات pitch", detail: "كسبت واحدة: Startup Power بتاعة أحمد أبو هشيمة." },
+      {
+        n: "4",
+        what: "مسابقات pitch",
+        detail: "كسبت 3، منهم enpact × Startup Haus وStartup Power.",
+      },
       { n: "2", what: "لقاءات تلفزيونية", detail: "الشرق Bloomberg وCBC سفرة." },
     ],
     occasionsTitle: "اتكلمت فين",
@@ -277,32 +326,69 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
         where: "GTM، هيلتون القاهرة جراند نايل",
         what: "Speaker، ورشة AI لمدة ساعتين لشركات السياحة",
         next: true,
+        links: [{ label: "GTM", href: LINKS.gtm }],
       },
       {
         when: "نوفمبر 2025",
         where: "TikTok Family Academy مصر",
         what: "أدرت الـ panel واتكلمت على المسرح",
+        links: [
+          { label: "Identity", href: LINKS.identity },
+          { label: "Egyptian Gazette", href: LINKS.gazette },
+        ],
       },
-      { when: "2025", where: "Startup Power، أحمد أبو هشيمة", what: "عملت pitch وكسبت" },
+      {
+        when: "مايو 2025",
+        where: "Startup Power، أحمد أبو هشيمة",
+        what: "عملت pitch وكسبت",
+        links: [
+          { label: "Startup Power", href: LINKS.startupPower },
+          { label: "Welmnt", href: LINKS.startupPowerWelmnt },
+        ],
+      },
       {
         when: "فبراير 2025",
         where: "الشرق Bloomberg، «ويك اند القاهرة»",
         what: "لقاء تلفزيوني مع زينة صفوان",
+        links: [
+          { label: "المقطع", href: LINKS.asharqClip },
+          { label: "Instagram", href: LINKS.asharqAnnounce },
+        ],
       },
-      { when: "سبتمبر 2024", where: "CiviConnectors من enpact", what: "سيشن للـ founders" },
+      {
+        when: "سبتمبر 2024",
+        where: "CiviConnectors من enpact",
+        what: "قدّمت Welmnt في ورشة health-tech",
+        links: [{ label: "Welmnt", href: LINKS.enpactWorkshop }],
+      },
       {
         when: "سبتمبر 2024",
         where: "مسرح pitch، القاهرة",
         what: "pitch لـ Welmnt قدّام قاعة مليانة",
       },
-      { when: "مايو 2024", where: "Schools Expo، مول العرب", what: "اتكلمت في جناح Welmnt" },
+      {
+        when: "مايو 2024",
+        where: "Schools Expo، مول العرب",
+        what: "اتكلمت في جناح Welmnt",
+        links: [
+          { label: "Instagram", href: LINKS.schoolsExpo },
+          { label: "Welmnt", href: LINKS.schoolsExpoWelmnt },
+        ],
+      },
+      {
+        when: "أبريل 2024",
+        where: "enpact × Startup Haus، مسابقة health-tech",
+        what: "عملت pitch وكسبت",
+        links: [{ label: "Welmnt", href: LINKS.enpactWin }],
+      },
       {
         when: "نوفمبر 2023",
         where: "CBC سفرة، «الأكيل»",
         what: "لقاء تلفزيوني، كـ CMO لبراند أكل",
+        links: [{ label: "Instagram", href: LINKS.cbcPost }],
       },
     ],
-    occasionsNote: "غير 3 مسابقات pitch كمان وأكتر من 50 تدريب.",
+    occasionsNote: "غير مسابقات pitch تانية وأكتر من 50 تدريب.",
     nextTag: "الجاي",
 
     screenLabel: "في التلفزيون",
@@ -334,10 +420,14 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       name: "Startup Power",
       line: "عملت pitch قدّام أحمد أبو هشيمة والصحافة بتصوّر، وكسبت.",
       caption: "في Startup Power",
+      links: [
+        { label: "Startup Power", href: LINKS.startupPower },
+        { label: "Welmnt", href: LINKS.startupPowerWelmnt },
+      ],
     },
     welmnt: {
       name: "pitch لـ Welmnt",
-      line: "4 مسابقات pitch في سنتين. دي كانت قاعة مليانة في القاهرة.",
+      line: "4 مسابقات pitch في سنتين، كسبت 3 منهم. دي كانت قاعة مليانة في القاهرة.",
       captions: ["ليه ده مهم", "الرقم اللي بيفتح الـ pitch", "القاعة"],
     },
 

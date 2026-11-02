@@ -77,7 +77,18 @@ export function SpeakingPage({ lang }: { lang: Lang }) {
                 {o.where}
                 {o.next && <span className="sp-next">{t.nextTag}</span>}
               </span>
-              <span className="sp-what-done">{o.what}</span>
+              <span className="sp-what-done">
+                {o.what}
+                {o.links && (
+                  <span className="sp-src">
+                    {o.links.map((l) => (
+                      <a key={l.href} href={l.href} target="_blank" rel="noopener">
+                        {l.label}
+                      </a>
+                    ))}
+                  </span>
+                )}
+              </span>
             </li>
           ))}
         </ol>
@@ -135,6 +146,13 @@ export function SpeakingPage({ lang }: { lang: Lang }) {
             </figure>
             <h3>{t.pitch.name}</h3>
             <p>{t.pitch.line}</p>
+            <p className="sp-links">
+              {t.pitch.links.map((l) => (
+                <a key={l.href} href={l.href} target="_blank" rel="noopener">
+                  {l.label}
+                </a>
+              ))}
+            </p>
           </div>
         </div>
 

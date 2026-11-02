@@ -48,7 +48,7 @@ export default defineConfig({
             failOnError: true,
             // Don't follow links to files in public/ (photos, clips, PDFs): they're already copied,
             // and crawling one writes its bytes back as text over the real file (2026-11-02, /speaking/).
-            filter: ({ path }) =>
+            filter: ({ path }: { path: string }) =>
               !/\.(jpe?g|png|webp|gif|svg|mp4|mov|pdf|zip|docx?|xlsx?|csv)$/i.test(path),
           },
         }

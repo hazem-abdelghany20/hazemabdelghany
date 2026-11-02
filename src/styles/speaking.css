@@ -129,6 +129,10 @@
 .sp-where { font-size: 18px; color: var(--ink); }
 .is-ar .sp-where { font-size: 20px; }
 .sp-what-done { font-size: 16px; color: var(--ink-2); }
+/* where each credit can be checked: press, the organizer's post, or his own */
+.sp-src { display: flex; flex-wrap: wrap; gap: 2px 14px; margin-top: 5px; font-size: 13px; }
+.sp-src a { color: var(--muted); border-bottom: 1px solid var(--hairline); }
+.sp-src a:hover, .sp-src a:focus-visible { color: var(--accent); border-bottom-color: currentColor; }
 .is-ar .sp-what-done { font-size: 18px; }
 .sp-next {
   margin-inline-start: 10px;
