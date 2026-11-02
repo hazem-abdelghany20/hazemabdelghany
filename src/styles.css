@@ -24,6 +24,7 @@
 @import "./styles/bilingual.css" layer(base);
 @import "./styles/ai.css" layer(base);
 @import "./styles/links.css" layer(base);
+@import "./styles/speaking.css" layer(base);
 
 @source "../src";
 /* essays are prose — their words would only generate junk utilities */

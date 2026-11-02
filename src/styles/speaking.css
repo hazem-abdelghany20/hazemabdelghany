@@ -1,0 +1,144 @@
+/* /speaking/ and /ar/speaking/ — the speaker kit (src/components/pages/SpeakingPage.tsx).
+   Same palette and typeface as /links/ (styles/links.css) so the two feel like one family:
+   navy wall, golden accent, cream type, Alexandria for both scripts. One theme, like /links/.
+   Logical properties only, so the Arabic page mirrors cleanly. */
+
+.sk {
+  --sk-wall: #0b0e1f;
+  --sk-wall-2: #141a33;
+  --sk-wall-3: #232c52;
+  --sk-light: #f3b23f;
+  --sk-light-2: #ffd27a;
+  --sk-cream: #fff4dd;
+  --sk-dim: #a9b2d4;
+  --sk-ink: #1b1710;
+  --sk-font: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
+
+  min-height: 100dvh;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 20px 16px 56px;
+  background: var(--sk-wall);
+  color: var(--sk-cream);
+  font-family: var(--sk-font);
+  font-size: 16px;
+  line-height: 1.55;
+}
+body:has(.sk) { background: #0b0e1f; }
+.sk [lang], .sk small, .sk button { font-family: var(--sk-font); }
+.sk a { color: inherit; }
+.sk :focus-visible { outline: 3px solid var(--sk-light-2); outline-offset: 3px; border-radius: 10px; }
+.sk h2 { margin: 0 0 14px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--sk-light); }
+.sk[dir="rtl"] h2 { letter-spacing: 0; font-size: 15px; }
+.sk p { margin: 0; }
+
+/* ---------- Top bar ---------- */
+.sk-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.sk-kicker { color: var(--sk-dim); font-size: 14px; }
+.sk-switch {
+  padding: 6px 14px;
+  border: 1px solid var(--sk-wall-3);
+  border-radius: 999px;
+  font-size: 14px;
+  text-decoration: none;
+}
+.sk-switch:hover { border-color: var(--sk-light); }
+
+/* ---------- Hero ---------- */
+.sk-hero { display: grid; grid-template-columns: 168px 1fr; gap: 22px; align-items: center; }
+.sk-face { width: 168px; height: 168px; border-radius: 24px; object-fit: cover; border: 2px solid var(--sk-wall-3); }
+.sk-name { margin: 0; font-size: 40px; line-height: 1.1; font-weight: 800; letter-spacing: -.01em; }
+.sk-other { margin-top: 4px; color: var(--sk-dim); font-size: 15px; }
+.sk-role { margin-top: 10px; font-weight: 600; }
+.sk-lede { margin-top: 6px; color: var(--sk-dim); }
+.sk-line { margin-top: 8px; color: var(--sk-light); font-weight: 700; }
+.sk[dir="ltr"] .sk-line { text-align: left; } /* an Arabic line inside the English page keeps the page's edge */
+@media (max-width: 560px) {
+  .sk-hero { grid-template-columns: 1fr; gap: 16px; }
+  .sk-face { width: 128px; height: 128px; }
+  .sk-name { font-size: 34px; }
+}
+
+/* ---------- Facts ---------- */
+.sk-facts { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 28px 0 0; padding: 0; }
+.sk-facts li { padding: 14px; border-radius: 16px; background: var(--sk-wall-2); }
+.sk-facts b { display: block; font-size: 26px; font-weight: 800; color: var(--sk-light-2); line-height: 1.1; }
+.sk[dir="rtl"] .sk-facts b { text-align: right; }
+.sk-facts span { display: block; margin-top: 4px; font-size: 13px; color: var(--sk-dim); }
+@media (max-width: 560px) { .sk-facts b { font-size: 22px; } }
+
+/* ---------- Blocks ---------- */
+.sk-block { margin-top: 36px; }
+.sk-sub { margin: 22px 0 10px; font-size: 14px; font-weight: 600; color: var(--sk-dim); }
+
+.sk-credits, .sk-talks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.sk-credits li, .sk-talks li { padding: 16px; border-radius: 16px; background: var(--sk-wall-2); }
+.sk-credit-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
+.sk-credit-head b { font-size: 17px; }
+.sk-when { color: var(--sk-dim); font-size: 14px; }
+.sk-tag { padding: 1px 10px; border-radius: 999px; background: var(--sk-light); color: var(--sk-ink); font-size: 12px; font-weight: 700; }
+.sk-credits p { margin-top: 4px; color: var(--sk-dim); }
+.sk-links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px !important; }
+.sk-links a { color: var(--sk-light-2); font-size: 14px; text-decoration: none; }
+.sk-links a:hover { text-decoration: underline; }
+
+.sk-talks { counter-reset: talk; }
+.sk-talks li { counter-increment: talk; position: relative; padding-inline-start: 52px; }
+.sk-talks li::before {
+  content: counter(talk);
+  position: absolute;
+  inset-inline-start: 16px;
+  top: 15px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--sk-light);
+  color: var(--sk-ink);
+  font-weight: 800;
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+}
+.sk-talks b { font-size: 17px; }
+.sk-talks p { margin-top: 4px; color: var(--sk-dim); }
+
+.sk-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; }
+.sk-chips li { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--sk-wall-3); font-size: 14px; }
+
+/* ---------- Bios ---------- */
+.sk-bios { display: flex; flex-direction: column; gap: 10px; }
+.sk-bio { margin: 0; padding: 16px; border-radius: 16px; background: var(--sk-wall-2); }
+.sk-bio figcaption { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; color: var(--sk-dim); font-size: 14px; }
+.sk-bio button {
+  padding: 4px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--sk-wall-3);
+  color: var(--sk-cream);
+  font-size: 13px;
+  cursor: pointer;
+}
+.sk-bio button:hover { background: var(--sk-light); color: var(--sk-ink); }
+
+/* ---------- Photo ---------- */
+.sk-download { display: inline-flex; flex-direction: column; gap: 8px; text-decoration: none; }
+.sk-download img { width: 220px; height: 220px; border-radius: 18px; object-fit: cover; }
+.sk-download span { color: var(--sk-light-2); font-size: 14px; }
+
+/* ---------- Contact ---------- */
+.sk-contact p { color: var(--sk-dim); }
+.sk-cta {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 14px 22px;
+  border-radius: 14px;
+  background: var(--sk-light);
+  color: var(--sk-ink) !important;
+  font-weight: 800;
+  text-decoration: none;
+}
+.sk-cta:hover { background: var(--sk-light-2); }
+.sk-socials { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 18px !important; }
+.sk[dir="rtl"] .sk-socials { justify-content: flex-end; }
+.sk-socials a { color: var(--sk-dim); font-size: 14px; text-decoration: none; }
+.sk-socials a:hover { color: var(--sk-cream); }

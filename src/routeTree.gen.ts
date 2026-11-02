@@ -16,10 +16,12 @@ import { Route as LinksRouteImport } from './routes/links'
 import { Route as LogDeskRouteImport } from './routes/log-desk'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SpeakingRouteImport } from './routes/speaking'
 import { Route as AiIndexRouteImport } from './routes/ai/index'
 import { Route as ArIndexRouteImport } from './routes/ar/index'
 import { Route as ArSeriesRouteImport } from './routes/ar/$series'
 import { Route as ArAboutRouteImport } from './routes/ar/about'
+import { Route as ArSpeakingRouteImport } from './routes/ar/speaking'
 import { Route as BooksIndexRouteImport } from './routes/books/index'
 import { Route as EssaysIndexRouteImport } from './routes/essays/index'
 import { Route as EssaysIdRouteImport } from './routes/essays/$id'
@@ -75,6 +77,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SpeakingRoute = SpeakingRouteImport.update({
+  id: '/speaking',
+  path: '/speaking',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AiIndexRoute = AiIndexRouteImport.update({
   id: '/ai/',
   path: '/ai/',
@@ -93,6 +100,11 @@ const ArSeriesRoute = ArSeriesRouteImport.update({
 const ArAboutRoute = ArAboutRouteImport.update({
   id: '/ar/about',
   path: '/ar/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArSpeakingRoute = ArSpeakingRouteImport.update({
+  id: '/ar/speaking',
+  path: '/ar/speaking',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BooksIndexRoute = BooksIndexRouteImport.update({
@@ -199,8 +211,10 @@ export interface FileRoutesByFullPath {
   '/log-desk': typeof LogDeskRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/speaking': typeof SpeakingRoute
   '/ar/$series': typeof ArSeriesRoute
   '/ar/about': typeof ArAboutRoute
+  '/ar/speaking': typeof ArSpeakingRoute
   '/essays/$id': typeof EssaysIdRoute
   '/free/$slug': typeof FreeSlugRoute
   '/logs/$id': typeof LogsIdRoute
@@ -231,8 +245,10 @@ export interface FileRoutesByTo {
   '/log-desk': typeof LogDeskRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/speaking': typeof SpeakingRoute
   '/ar/$series': typeof ArSeriesRoute
   '/ar/about': typeof ArAboutRoute
+  '/ar/speaking': typeof ArSpeakingRoute
   '/essays/$id': typeof EssaysIdRoute
   '/free/$slug': typeof FreeSlugRoute
   '/logs/$id': typeof LogsIdRoute
@@ -264,8 +280,10 @@ export interface FileRoutesById {
   '/log-desk': typeof LogDeskRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/speaking': typeof SpeakingRoute
   '/ar/$series': typeof ArSeriesRoute
   '/ar/about': typeof ArAboutRoute
+  '/ar/speaking': typeof ArSpeakingRoute
   '/essays/$id': typeof EssaysIdRoute
   '/free/$slug': typeof FreeSlugRoute
   '/logs/$id': typeof LogsIdRoute
@@ -298,8 +316,10 @@ export interface FileRouteTypes {
     | '/log-desk'
     | '/rss.xml'
     | '/sitemap.xml'
+    | '/speaking'
     | '/ar/$series'
     | '/ar/about'
+    | '/ar/speaking'
     | '/essays/$id'
     | '/free/$slug'
     | '/logs/$id'
@@ -330,8 +350,10 @@ export interface FileRouteTypes {
     | '/log-desk'
     | '/rss.xml'
     | '/sitemap.xml'
+    | '/speaking'
     | '/ar/$series'
     | '/ar/about'
+    | '/ar/speaking'
     | '/essays/$id'
     | '/free/$slug'
     | '/logs/$id'
@@ -362,8 +384,10 @@ export interface FileRouteTypes {
     | '/log-desk'
     | '/rss.xml'
     | '/sitemap.xml'
+    | '/speaking'
     | '/ar/$series'
     | '/ar/about'
+    | '/ar/speaking'
     | '/essays/$id'
     | '/free/$slug'
     | '/logs/$id'
@@ -395,8 +419,10 @@ export interface RootRouteChildren {
   LogDeskRoute: typeof LogDeskRoute
   RssDotxmlRoute: typeof RssDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SpeakingRoute: typeof SpeakingRoute
   ArSeriesRoute: typeof ArSeriesRoute
   ArAboutRoute: typeof ArAboutRoute
+  ArSpeakingRoute: typeof ArSpeakingRoute
   EssaysIdRoute: typeof EssaysIdRoute
   FreeSlugRoute: typeof FreeSlugRoute
   LogsIdRoute: typeof LogsIdRoute
@@ -471,6 +497,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/speaking': {
+      id: '/speaking'
+      path: '/speaking'
+      fullPath: '/speaking'
+      preLoaderRoute: typeof SpeakingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ai/': {
       id: '/ai/'
       path: '/ai'
@@ -497,6 +530,13 @@ declare module '@tanstack/react-router' {
       path: '/ar/about'
       fullPath: '/ar/about'
       preLoaderRoute: typeof ArAboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ar/speaking': {
+      id: '/ar/speaking'
+      path: '/ar/speaking'
+      fullPath: '/ar/speaking'
+      preLoaderRoute: typeof ArSpeakingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/books/': {
@@ -643,8 +683,10 @@ const rootRouteChildren: RootRouteChildren = {
   LogDeskRoute: LogDeskRoute,
   RssDotxmlRoute: RssDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SpeakingRoute: SpeakingRoute,
   ArSeriesRoute: ArSeriesRoute,
   ArAboutRoute: ArAboutRoute,
+  ArSpeakingRoute: ArSpeakingRoute,
   EssaysIdRoute: EssaysIdRoute,
   FreeSlugRoute: FreeSlugRoute,
   LogsIdRoute: LogsIdRoute,

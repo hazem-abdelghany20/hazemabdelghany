@@ -18,6 +18,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           { loc: localePath(lang, "/essays/"), pri: "0.9" },
           { loc: localePath(lang, "/logs/"), pri: "0.8" },
           { loc: localePath(lang, "/about/"), pri: "0.7" },
+          { loc: localePath(lang, "/speaking/"), pri: "0.6" },
           { loc: localePath(lang, "/ai/"), pri: "0.9" },
           { loc: localePath(lang, "/ai/writing/"), pri: "0.8" },
           ...Object.values(SERIES).map((s) => ({
