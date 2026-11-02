@@ -323,7 +323,7 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       facts: [
         { k: "Formats", v: "Talk, hands-on workshop, panel moderation" },
         { k: "Length", v: "Talks of 20 to 40 minutes, workshops up to 2 hours" },
-        { k: "Language", v: "Egyptian Arabic" },
+        { k: "Language", v: "Egyptian Arabic or English" },
       ],
     },
 
@@ -549,7 +549,7 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       facts: [
         { k: "الشكل", v: "محاضرة، ورشة عملي، إدارة panel" },
         { k: "المدة", v: "محاضرة من 20 لـ 40 دقيقة، ورشة لحد ساعتين" },
-        { k: "اللغة", v: "العامية المصرية" },
+        { k: "اللغة", v: "العامية المصرية أو الإنجليزي" },
       ],
     },
 
