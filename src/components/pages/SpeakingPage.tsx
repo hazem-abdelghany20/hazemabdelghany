@@ -10,8 +10,9 @@ import {
 } from "@/lib/speaking";
 
 /** /speaking/ and /ar/speaking/ — the page Hazem sends to event organizers.
-    Laid out like a speaker card, then the proof: clips, the record by year, photos,
-    what he can give, and the kit an organizer needs to book him.
+    It opens on him on stage (the speaker reel), then the proof in the order an organizer
+    asks for it: the event films, the talks he gives, the record by year, photos,
+    and the kit they need to book him.
     Styles in styles/speaking.css read the theme tokens from global.css. */
 export function SpeakingPage({ lang }: { lang: Lang }) {
   const t = SPEAKING[lang];
@@ -32,34 +33,28 @@ export function SpeakingPage({ lang }: { lang: Lang }) {
   return (
     <div className={isAr ? "speaking-page is-ar" : "speaking-page"}>
       <header className="sp-hero">
-        <div className="sp-hero-copy">
-          <p className="sp-role">{t.role}</p>
-          <h1 className="sp-names">
-            <span className="sp-name">{t.name}</span>
-            <span className="sp-name sp-name-other" lang={otherLang} dir={otherDir}>
-              {t.nameOther}
-            </span>
-          </h1>
+        <p className="sp-role">{t.role}</p>
+        <h1 className="sp-names">
+          <span className="sp-name">{t.name}</span>
+          <span className="sp-name sp-name-other" lang={otherLang} dir={otherDir}>
+            {t.nameOther}
+          </span>
+        </h1>
+        <Reel src={M.reel} poster={M.reelPoster} copy={t.reel} />
+        <div className="sp-pitch">
           <p className="sp-statement">{t.statement}</p>
-          <p className="sp-bio">{t.bio}</p>
-          <div className="sp-actions">
-            <a className="sp-book" href={wa} target="_blank" rel="noopener">
-              {t.book}
-            </a>
-            <a className="sp-quiet" href="#press">
-              {t.pressJump}
-            </a>
+          <div className="sp-pitch-side">
+            <p className="sp-bio">{t.bio}</p>
+            <div className="sp-actions">
+              <a className="sp-book" href={wa} target="_blank" rel="noopener">
+                {t.book}
+              </a>
+              <a className="sp-quiet" href="#press">
+                {t.pressJump}
+              </a>
+            </div>
           </div>
         </div>
-        <figure className="sp-portrait">
-          <img
-            src={M.headshot}
-            alt={t.portraitAlt}
-            width={1254}
-            height={1254}
-            fetchPriority="high"
-          />
-        </figure>
       </header>
 
       <dl className="sp-counts">
@@ -78,6 +73,11 @@ export function SpeakingPage({ lang }: { lang: Lang }) {
 
       <section className="sp-section" aria-labelledby="sp-watch">
         <Head id="sp-watch" text={t.watch.label} other={t.watch.other} />
+        <div className="sp-films">
+          <FilmCard item={t.watch.ateb} src={M.atebFilm} poster={M.atebPoster} />
+          <FilmCard item={t.watch.ais} src={M.aisFilm} poster={M.aisPoster} />
+        </div>
+        <h3 className="sp-more">{t.watch.more}</h3>
         <div className="sp-reel">
           <Screen
             shape="tall"
@@ -103,6 +103,30 @@ export function SpeakingPage({ lang }: { lang: Lang }) {
             }
           />
         </div>
+      </section>
+
+      <section className="sp-section" aria-labelledby="sp-talks">
+        <Head id="sp-talks" text={t.talks.label} other={t.talks.other} />
+        <p className="sp-talks-line">{t.talks.line}</p>
+        <ul className="sp-talks">
+          {t.talks.items.map((k) => (
+            <li key={k.title}>
+              <div>
+                <h3>{k.title}</h3>
+                <p className="sp-talk-line">{k.line}</p>
+              </div>
+              <p className="sp-talk-body">{k.body}</p>
+            </li>
+          ))}
+        </ul>
+        <dl className="sp-facts">
+          {t.talks.facts.map((f) => (
+            <div key={f.k}>
+              <dt>{f.k}</dt>
+              <dd>{f.v}</dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
       <section className="sp-section" aria-labelledby="sp-record">
@@ -152,26 +176,6 @@ export function SpeakingPage({ lang }: { lang: Lang }) {
         </div>
       </section>
 
-      <section className="sp-section" aria-labelledby="sp-talks">
-        <Head id="sp-talks" text={t.talks.label} other={t.talks.other} />
-        <ul className="sp-talks">
-          {t.talks.items.map((k) => (
-            <li key={k.title}>
-              <h3>{k.title}</h3>
-              <p>{k.line}</p>
-            </li>
-          ))}
-        </ul>
-        <dl className="sp-facts">
-          {t.talks.facts.map((f) => (
-            <div key={f.k}>
-              <dt>{f.k}</dt>
-              <dd>{f.v}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-
       <section className="sp-section sp-kit" id="press" aria-labelledby="sp-press">
         <Head id="sp-press" text={t.press.label} other={t.press.other} />
         <p className="sp-kit-line">{t.press.line}</p>
@@ -191,7 +195,7 @@ export function SpeakingPage({ lang }: { lang: Lang }) {
           <div className="sp-downloads">
             {t.press.photos.map((p) => (
               <a key={p.href} className="sp-download" href={p.href} download={p.file}>
-                <img src={p.href} alt="" loading="lazy" />
+                <img src={p.thumb ?? p.href} alt="" loading="lazy" />
                 <span>
                   {p.label}
                   <em>{t.press.download}</em>
@@ -255,6 +259,99 @@ function Screen({
       <p className="sp-screen-sub">{item.sub}</p>
       <p>{item.line}</p>
       <Sources links={item.links} />
+    </article>
+  );
+}
+
+/** The speaker reel. It plays muted on a loop the moment the page opens, so the first thing
+    an organizer sees is him on stage; one button restarts it from the top with sound.
+    With reduced motion (or autoplay blocked) it waits on its poster with the same button. */
+function Reel({
+  src,
+  poster,
+  copy,
+}: {
+  src: string;
+  poster: string;
+  copy: { play: string; length: string; label: string };
+}) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [sound, setSound] = useState(false);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    void v.play().catch(() => {});
+  }, []);
+  const withSound = () => {
+    const v = ref.current;
+    if (!v) return;
+    v.muted = false;
+    v.loop = false;
+    v.currentTime = 0;
+    setSound(true);
+    void v.play();
+  };
+  return (
+    <figure className="sp-reel-hero">
+      <video
+        ref={ref}
+        src={src}
+        poster={poster}
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        controls={sound}
+        aria-label={copy.label}
+      />
+      {!sound && (
+        <button type="button" className="sp-reel-play" onClick={withSound}>
+          <svg viewBox="0 0 12 14" width="12" height="14" aria-hidden="true">
+            <path d="M0 0v14l12-7z" fill="currentColor" />
+          </svg>
+          <span>{copy.play}</span>
+          <span className="sp-reel-len" dir="ltr">
+            {copy.length}
+          </span>
+        </button>
+      )}
+    </figure>
+  );
+}
+
+/** One event film: a poster until it is pressed, then the browser's own player with sound. */
+function FilmCard({
+  item,
+  src,
+  poster,
+}: {
+  item: { name: string; sub: string; line: string; length: string };
+  src: string;
+  poster: string;
+}) {
+  const [started, setStarted] = useState(false);
+  return (
+    <article className="sp-film">
+      <figure className="sp-film-frame">
+        <video
+          src={src}
+          poster={poster}
+          controls
+          playsInline
+          preload="none"
+          aria-label={item.name}
+          onPlay={() => setStarted(true)}
+        />
+        {!started && (
+          <span className="sp-film-len" dir="ltr">
+            {item.length}
+          </span>
+        )}
+      </figure>
+      <h3>{item.name}</h3>
+      <p className="sp-screen-sub">{item.sub}</p>
+      <p className="sp-film-line">{item.line}</p>
     </article>
   );
 }

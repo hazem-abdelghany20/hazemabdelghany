@@ -23,6 +23,17 @@ export const SPEAKING_MEDIA = {
   stageRoom: `${IMG}/stage-room.jpg`,
   training: `${IMG}/training-room.jpg`,
   headshot: `${IMG}/hazem-abdelghany-headshot.jpg`,
+  // the speaker reel and the two event films, cut in remotion-captions/src/portfolio/
+  reel: `${MEDIA}/speaker-reel.mp4`,
+  reelPoster: `${IMG}/speaker-reel.jpg`,
+  atebFilm: `${MEDIA}/ateb-highlight.mp4`,
+  atebPoster: `${IMG}/ateb-highlight.jpg`,
+  aisFilm: `${MEDIA}/ais-highlight.mp4`,
+  aisPoster: `${IMG}/ais-highlight.jpg`,
+  aisWest: `${IMG}/stage-ais-west.jpg`,
+  aisEast: `${IMG}/stage-ais-east.jpg`,
+  aisPanel: `${IMG}/stage-ais-panel.jpg`,
+  ateb: `${IMG}/stage-ateb.jpg`,
 };
 
 const LINKS = {
@@ -61,6 +72,7 @@ export type Occasion = {
   links?: Link[];
 };
 type Screen = { name: string; sub: string; line: string; links: Link[] };
+type Film = { name: string; sub: string; line: string; length: string };
 type Photo = { src: string; alt: string; caption: string; w: number; h: number };
 
 export type SpeakingCopy = {
@@ -72,15 +84,26 @@ export type SpeakingCopy = {
   portraitAlt: string;
   book: string;
   pressJump: string;
+  reel: { play: string; length: string; label: string };
   counts: Count[];
 
-  watch: { label: string; other: string; tiktok: Screen; cbc: Screen; asharq: Screen };
+  watch: {
+    label: string;
+    other: string;
+    ateb: Film;
+    ais: Film;
+    more: string;
+    tiktok: Screen;
+    cbc: Screen;
+    asharq: Screen;
+  };
   record: { label: string; other: string; occasions: Occasion[]; note: string; nextTag: string };
   room: { label: string; other: string; line: string; photos: Photo[]; links: Link[] };
   talks: {
     label: string;
     other: string;
-    items: { title: string; line: string }[];
+    line: string;
+    items: { title: string; line: string; body: string }[];
     facts: { k: string; v: string }[];
   };
   press: {
@@ -91,7 +114,7 @@ export type SpeakingCopy = {
     copy: string;
     copied: string;
     download: string;
-    photos: { label: string; file: string; href: string }[];
+    photos: { label: string; file: string; href: string; thumb?: string }[];
   };
   bookTitle: string;
   bookLine: string;
@@ -111,6 +134,10 @@ const PHOTO = {
   room: { src: SPEAKING_MEDIA.stageRoom, w: 1400, h: 933 },
   pitch: { src: SPEAKING_MEDIA.pitchPress, w: 899, h: 899 },
   training: { src: SPEAKING_MEDIA.training, w: 1000, h: 1333 },
+  aisWest: { src: SPEAKING_MEDIA.aisWest, w: 1800, h: 1200 },
+  aisEast: { src: SPEAKING_MEDIA.aisEast, w: 827, h: 1125 },
+  aisPanel: { src: SPEAKING_MEDIA.aisPanel, w: 1500, h: 1000 },
+  ateb: { src: SPEAKING_MEDIA.ateb, w: 1140, h: 760 },
 };
 
 export const SPEAKING: Record<Lang, SpeakingCopy> = {
@@ -118,11 +145,12 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     role: "Speaker",
     name: "Hazem Abdelghany",
     nameOther: "حازم عبدالغني",
-    statement: "I make AI simple, on stage, on screen, and in the training room.",
+    statement: "I make AI simple. Your audience leaves with something to try the next morning.",
     bio: "Co-founder and CEO of Catalyst, which teaches people and companies AI. I talk the way the room talks: Egyptian Arabic, real screens, things you can try tomorrow.",
     portraitAlt: "Hazem Abdelghany",
     book: "Book me on WhatsApp",
     pressJump: "Bio and photos",
+    reel: { play: "Play with sound", length: "1:20", label: "Speaker reel: Hazem on stage" },
     counts: [
       {
         n: "60+",
@@ -146,6 +174,19 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     watch: {
       label: "Watch",
       other: "اتفرّج",
+      ateb: {
+        name: "AI training for ATEB Group",
+        sub: "Bibliotheca Alexandrina, November 2026",
+        line: "Day one of a two-day AI training for the company's team.",
+        length: "2:50",
+      },
+      ais: {
+        name: "TikTok Family Academy at AIS",
+        sub: "Host and panel moderator, November 2026",
+        line: "The third edition, with Welmnt, at the American International School's two campuses.",
+        length: "2:38",
+      },
+      more: "Earlier, on stage and on TV",
       tiktok: {
         name: "TikTok Family Academy Egypt",
         sub: "Moderator and speaker, November 2025",
@@ -185,6 +226,22 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
           what: "Speaker, a 2-hour AI workshop for travel companies",
           next: true,
           links: [{ label: "GTM", href: LINKS.gtm }],
+        },
+        {
+          when: "Dec 2026",
+          where: "KEMET-X, Pyramids of Giza",
+          what: "Moderating the panel «Building in Public: How Tech Creators Are Changing Who Gets to Learn»",
+          next: true,
+        },
+        {
+          when: "Nov 2026",
+          where: "TikTok Family Academy, AIS East and West",
+          what: "Hosted both days and moderated the panel, in Arabic and English",
+        },
+        {
+          when: "Nov 2026",
+          where: "ATEB Group, Bibliotheca Alexandrina",
+          what: "A two-day AI training for the company's team",
         },
         {
           when: "Nov 2025",
@@ -257,33 +314,33 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
         },
       ],
       note: "Plus more pitch competitions and 50+ trainings.",
-      nextTag: "Next",
+      nextTag: "Coming up",
     },
 
     room: {
       label: "In the room",
       other: "في القاعة",
-      line: "Pitches, talks and workshops. In a workshop, everyone leaves with something working on their own data, not a slide deck.",
+      line: "Talks, trainings and panels. In a workshop, everyone leaves with something working on their own data, not a slide deck.",
       photos: [
         {
-          ...PHOTO.stage,
-          alt: "Hazem on stage with a microphone",
-          caption: "CiviConnectors Demo Day, Startup Haus Cairo, 2024",
+          ...PHOTO.aisWest,
+          alt: "Hazem on a theatre stage, opening the day in front of a large screen",
+          caption: "Opening TikTok Family Academy at AIS West, 2026",
         },
         {
-          ...PHOTO.training,
-          alt: "Hazem presenting to a seated room",
-          caption: "Presenting at a CiviConnectors workshop, 2024",
+          ...PHOTO.aisEast,
+          alt: "Hazem standing between two screens, talking to the room",
+          caption: "AIS East, 2026",
         },
         {
-          ...PHOTO.why,
-          alt: "Hazem next to a slide that asks why it matters",
-          caption: "The problem, in one slide",
+          ...PHOTO.ateb,
+          alt: "Hazem pointing at a projected slide in a lecture hall",
+          caption: "Teaching at the ATEB Group training, Alexandria, 2026",
         },
         {
-          ...PHOTO.number,
-          alt: "A slide about Egyptian students' mental health",
-          caption: "The number that opens the pitch",
+          ...PHOTO.aisPanel,
+          alt: "Hazem on a panel, a slide behind him reads rizz",
+          caption: "The slang round with parents, AIS West, 2026",
         },
         {
           ...PHOTO.pitch,
@@ -306,18 +363,22 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     talks: {
       label: "Talks",
       other: "المحاضرات",
+      line: "Three talks I give now. Each one is rebuilt around your audience and their work.",
       items: [
         {
           title: "AI for business owners",
           line: "Cut costs, make your team faster, and read your numbers with AI.",
+          body: "For owners and managers who hear about AI every day and still run the company the old way. I open the tools on the big screen and work through real tasks: a report from raw numbers, a reply to a client, a job the team repeats every week. The room sees what AI gets right, where it guesses, and what to hand it first.",
         },
         {
           title: "ChatGPT is built to please you, not help you",
           line: "Why AI flatters you, and the settings that make it tell you the truth.",
+          body: "This started as a reel that passed 1.6 million views. On stage I show the flattery happening live, explain why the model does it, and change the settings in front of the room until it disagrees when you're wrong. You leave with the same settings on your own phone.",
         },
         {
           title: "Running several companies on AI",
           line: "What works and what breaks, on real screens.",
+          body: "I run my own companies with AI doing a real share of the work: ads, reports, content and code. This talk opens those screens. What I trust it with, what I still check by hand, and what it broke along the way.",
         },
       ],
       facts: [
@@ -330,7 +391,7 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     press: {
       label: "For organizers",
       other: "للمنظّمين",
-      line: "Copy a bio, download a photo, or message me with the event, the date and the audience.",
+      line: "Copy a bio, download a photo or the reel, or message me with the event, the date and the audience.",
       bios: [
         { label: "Bio in English", lang: "en", text: BIO_EN },
         { label: "النبذة بالعربي", lang: "ar", text: BIO_AR },
@@ -344,7 +405,13 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
           file: "Hazem Abdelghany, portrait.jpg",
           href: SPEAKING_MEDIA.headshot,
         },
-        { label: "On stage", file: "Hazem Abdelghany, on stage.jpg", href: SPEAKING_MEDIA.hero },
+        { label: "On stage", file: "Hazem Abdelghany, on stage.jpg", href: SPEAKING_MEDIA.aisWest },
+        {
+          label: "Speaker reel, 1:20",
+          file: "Hazem Abdelghany, speaker reel.mp4",
+          href: SPEAKING_MEDIA.reel,
+          thumb: SPEAKING_MEDIA.reelPoster,
+        },
       ],
     },
     bookTitle: "Book me",
@@ -356,11 +423,12 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     role: "متحدّث",
     name: "حازم عبدالغني",
     nameOther: "Hazem Abdelghany",
-    statement: "بخلّي الـ AI بسيط، على المسرح، في التلفزيون، وفي قاعة التدريب.",
+    statement: "بخلّي الـ AI بسيط. جمهورك بيخرج بحاجة يجرّبها تاني يوم الصبح.",
     bio: "شريك مؤسس والرئيس التنفيذي لـ Catalyst اللي بتعلّم الأفراد والشركات الـ AI. بتكلم زي ما القاعة بتتكلم: بالمصري، على شاشات حقيقية، وبحاجات تجربها بكرة.",
     portraitAlt: "حازم عبدالغني",
     book: "احجزني على WhatsApp",
     pressJump: "النبذة والصور",
+    reel: { play: "شغّل بالصوت", length: "1:20", label: "فيديو المتحدّث: حازم على المسرح" },
     counts: [
       { n: "+60", what: "مرة قدّام جمهور", detail: "تدريبات ومسارح وpanels وتلفزيون، من 2023." },
       { n: "+50", what: "تدريب", detail: "لفرق وشركات وكلاسات مفتوحة." },
@@ -376,6 +444,19 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     watch: {
       label: "اتفرّج",
       other: "Watch",
+      ateb: {
+        name: "تدريب AI لمجموعة ATEB",
+        sub: "مكتبة الإسكندرية، نوفمبر 2026",
+        line: "اليوم الأول من تدريب AI على يومين لفريق الشركة.",
+        length: "2:50",
+      },
+      ais: {
+        name: "TikTok Family Academy في AIS",
+        sub: "قدّمت اليوم وأدرت الـ panel، نوفمبر 2026",
+        line: "النسخة التالتة، مع Welmnt، في فرعين للمدرسة الأمريكية الدولية.",
+        length: "2:38",
+      },
+      more: "قبل كده، على المسرح وفي التلفزيون",
       tiktok: {
         name: "TikTok Family Academy مصر",
         sub: "أدرت الـ panel واتكلمت، نوفمبر 2025",
@@ -415,6 +496,22 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
           what: "Speaker، ورشة AI لمدة ساعتين لشركات السياحة",
           next: true,
           links: [{ label: "GTM", href: LINKS.gtm }],
+        },
+        {
+          when: "ديسمبر 2026",
+          where: "KEMET-X، أهرامات الجيزة",
+          what: "هدير panel «Building in Public: How Tech Creators Are Changing Who Gets to Learn»",
+          next: true,
+        },
+        {
+          when: "نوفمبر 2026",
+          where: "TikTok Family Academy، AIS الشرق والغرب",
+          what: "قدّمت اليومين وأدرت الـ panel، بالعربي والإنجليزي",
+        },
+        {
+          when: "نوفمبر 2026",
+          where: "مجموعة ATEB، مكتبة الإسكندرية",
+          what: "تدريب AI على يومين لفريق الشركة",
         },
         {
           when: "نوفمبر 2025",
@@ -487,29 +584,33 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
         },
       ],
       note: "غير مسابقات pitch تانية وأكتر من 50 تدريب.",
-      nextTag: "الجاي",
+      nextTag: "جاي قريب",
     },
 
     room: {
       label: "في القاعة",
       other: "In the room",
-      line: "pitches ومحاضرات وورش. في الورشة، كل واحد بيخرج بحاجة شغالة على شغله هو، مش slides.",
+      line: "محاضرات وتدريبات وpanels. في الورشة، كل واحد بيخرج بحاجة شغالة على شغله هو، مش slides.",
       photos: [
         {
-          ...PHOTO.stage,
-          alt: "حازم على المسرح بالمايك",
-          caption: "CiviConnectors Demo Day، Startup Haus القاهرة، 2024",
+          ...PHOTO.aisWest,
+          alt: "حازم على مسرح بيفتتح اليوم قدّام شاشة كبيرة",
+          caption: "افتتاح TikTok Family Academy في AIS الغرب، 2026",
         },
         {
-          ...PHOTO.training,
-          alt: "حازم بيقدّم قدّام قاعة",
-          caption: "في ورشة CiviConnectors، 2024",
+          ...PHOTO.aisEast,
+          alt: "حازم واقف بين شاشتين بيكلّم القاعة",
+          caption: "AIS الشرق، 2026",
         },
-        { ...PHOTO.why, alt: "حازم جنب slide بتسأل ليه ده مهم", caption: "المشكلة في slide واحدة" },
         {
-          ...PHOTO.number,
-          alt: "slide عن الصحة النفسية للطلاب في مصر",
-          caption: "الرقم اللي بيفتح الـ pitch",
+          ...PHOTO.ateb,
+          alt: "حازم بيشاور على slide في قاعة محاضرات",
+          caption: "في تدريب مجموعة ATEB، الإسكندرية، 2026",
+        },
+        {
+          ...PHOTO.aisPanel,
+          alt: "حازم في panel ووراه slide مكتوب عليها rizz",
+          caption: "جولة الـ slang مع الأهالي، AIS الغرب، 2026",
         },
         {
           ...PHOTO.pitch,
@@ -532,18 +633,22 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     talks: {
       label: "المحاضرات",
       other: "Talks",
+      line: "تلات محاضرات بقدّمهم دلوقتي. كل واحدة بتتبني من الأول على جمهورك وشغلهم.",
       items: [
         {
           title: "الـ AI لصاحب الشركة",
           line: "قلّل التكاليف، خلّي فريقك أسرع، واقرا أرقامك بالـ AI.",
+          body: "لأصحاب الشركات والمديرين اللي بيسمعوا عن الـ AI كل يوم ولسه بيديروا الشركة بالطريقة القديمة. بفتح الأدوات على الشاشة الكبيرة وبشتغل على مهام حقيقية: تقرير من أرقام خام، رد على عميل، شغلانة الفريق بيكررها كل أسبوع. القاعة بتشوف الـ AI بيصيب في إيه، بيخمّن فين، وتبدأ تدّيله إيه الأول.",
         },
         {
           title: "ChatGPT متصمّم إنه يرضيك، مش إنه يفيدك",
           line: "ليه الـ AI بيطبّلك، والإعدادات اللي تخليه يقولك الحقيقة.",
+          body: "المحاضرة دي بدأت بـ reel عدّى 1.6 مليون مشاهدة. على المسرح بورّي التطبيل وهو بيحصل قدّامكم، بشرح ليه الموديل بيعمل كده، وبغيّر الإعدادات قدّام القاعة لحد ما يعترض لما تكون غلطان. بتخرج بنفس الإعدادات على موبايلك.",
         },
         {
           title: "إزاي بدير كذا شركة بالـ AI",
           line: "إيه اللي بيشتغل وإيه اللي بيبوظ، على شاشات حقيقية.",
+          body: "بدير شركاتي والـ AI شايل جزء حقيقي من الشغل: إعلانات وتقارير ومحتوى وكود. المحاضرة دي بتفتح الشاشات دي. بأمّنه على إيه، لسه براجع إيه بإيدي، وبوّظ إيه في السكة.",
         },
       ],
       facts: [
@@ -556,7 +661,7 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     press: {
       label: "للمنظّمين",
       other: "For organizers",
-      line: "انسخ نبذة، نزّل صورة، أو ابعتلي اسم الـ event والتاريخ والجمهور.",
+      line: "انسخ نبذة، نزّل صورة أو الفيديو، أو ابعتلي اسم الـ event والتاريخ والجمهور.",
       bios: [
         { label: "النبذة بالعربي", lang: "ar", text: BIO_AR },
         { label: "Bio in English", lang: "en", text: BIO_EN },
@@ -570,7 +675,13 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
           file: "Hazem Abdelghany, portrait.jpg",
           href: SPEAKING_MEDIA.headshot,
         },
-        { label: "على المسرح", file: "Hazem Abdelghany, on stage.jpg", href: SPEAKING_MEDIA.hero },
+        { label: "على المسرح", file: "Hazem Abdelghany, on stage.jpg", href: SPEAKING_MEDIA.aisWest },
+        {
+          label: "فيديو المتحدّث، 1:20",
+          file: "Hazem Abdelghany, speaker reel.mp4",
+          href: SPEAKING_MEDIA.reel,
+          thumb: SPEAKING_MEDIA.reelPoster,
+        },
       ],
     },
     bookTitle: "احجزني",

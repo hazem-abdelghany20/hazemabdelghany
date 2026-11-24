@@ -1,8 +1,9 @@
 /* /speaking/ and /ar/speaking/ — the speaker page (src/components/pages/SpeakingPage.tsx).
    Part of the reading site, not a separate look: the theme tokens and typefaces from global.css
-   (Cairo paper / Nocturne archive, Newsreader + Amiri). It reads like a speaker card:
-   the name set in both languages, mirrored across the column, then the proof.
-   One moment of motion: the two names slide in from opposite sides on load.
+   (Cairo paper / Nocturne archive, Newsreader + Amiri). The name is set in both languages,
+   mirrored across the column, then the page opens on him on stage: the speaker reel, wider
+   than the text column. After it, the proof in the order an organizer asks for it.
+   One moment of motion besides the reel: the two names slide in from opposite sides on load.
    Logical properties only, so /ar/speaking/ mirrors cleanly. */
 
 .speaking-page { --sp-dir: 1; padding-bottom: 48px; }
@@ -15,51 +16,83 @@
 /* numbers and years read as print figures */
 .sp-n, .sp-year-n { font-family: var(--font-en); font-variant-numeric: oldstyle-nums; font-optical-sizing: auto; }
 
-/* ---------- hero: the speaker card ---------- */
-.sp-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.6fr);
-  gap: clamp(32px, 5vw, 80px);
-  align-items: end;
-  padding: 64px 0 56px;
-}
+/* ---------- hero: the names, the reel, the promise ---------- */
+.sp-hero { padding: 40px 0 52px; }
 .sp-role { font-size: 18px; font-style: italic; color: var(--accent); }
 .is-ar .sp-role { font-style: normal; font-weight: 700; font-size: 21px; }
 
-.sp-names { display: flex; flex-direction: column; margin: 10px 0 30px; }
+.sp-names { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0 32px; margin: 4px 0 24px; }
 .sp-name {
   --from: calc(-32px * var(--sp-dir));
-  font-size: clamp(54px, 7.6vw, 116px);
-  line-height: 0.96;
+  font-size: clamp(40px, 5.6vw, 84px);
+  line-height: 1.02;
   letter-spacing: -0.035em;
   font-optical-sizing: auto;
   animation: sp-arrive 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 .sp-name-other {
   --from: calc(32px * var(--sp-dir));
-  align-self: flex-end;
   color: var(--accent);
   animation-delay: 0.12s;
 }
 .sp-name[lang='ar'], .is-ar .sp-name:not([lang='en']) {
   font-family: var(--font-ar);
   font-weight: 700;
-  font-size: clamp(52px, 7.2vw, 110px);
+  font-size: clamp(38px, 5.2vw, 78px);
   line-height: 1.35;
   letter-spacing: 0;
 }
 /* on the Arabic page the English name is the echo, so it steps down and stays on one line */
-.sp-name-other[lang='en'] { font-family: var(--font-en); font-size: clamp(38px, 5.4vw, 84px); white-space: nowrap; }
+.sp-name-other[lang='en'] { font-family: var(--font-en); font-size: clamp(30px, 4.2vw, 62px); white-space: nowrap; }
 @keyframes sp-arrive {
   from { opacity: 0; transform: translateX(var(--from)); }
 }
 
-.sp-statement { max-width: 28ch; font-size: clamp(23px, 2.3vw, 31px); line-height: 1.28; letter-spacing: -0.01em; }
-.is-ar .sp-statement { max-width: 32ch; font-size: clamp(25px, 2.5vw, 33px); line-height: 1.7; letter-spacing: 0; }
-.sp-bio { max-width: 54ch; margin-top: 16px !important; font-size: 17px; line-height: 1.65; color: var(--muted); }
+/* the reel breaks out of the text column, like the screens under Watch */
+.sp-reel-hero {
+  position: relative;
+  margin: 0;
+  margin-inline: calc((100% - min(100vw - 48px, 1360px)) / 2);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--line);
+}
+.sp-reel-hero video { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* sits on the footage in both themes, so its colours are fixed */
+.sp-reel-play {
+  position: absolute;
+  inset-block-end: clamp(14px, 2.2vw, 28px);
+  inset-inline-start: clamp(14px, 2.2vw, 28px);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border: 1px solid rgba(241, 232, 216, 0.45);
+  border-radius: 2px;
+  background: rgba(11, 16, 32, 0.72);
+  color: #f1e8d8;
+  font: inherit;
+  font-size: 17px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.sp-reel-play:hover { background: var(--accent); border-color: var(--accent); }
+.sp-reel-len { padding-inline-start: 12px; border-inline-start: 1px solid rgba(241, 232, 216, 0.45); font-variant-numeric: tabular-nums; opacity: 0.85; }
+.is-ar .sp-reel-play { font-size: 19px; }
+
+.sp-pitch {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 24px clamp(32px, 5vw, 80px);
+  align-items: start;
+  margin-top: clamp(28px, 3.4vw, 44px);
+}
+.sp-statement { max-width: 24ch; font-size: clamp(27px, 3vw, 42px); line-height: 1.2; letter-spacing: -0.018em; }
+.is-ar .sp-statement { max-width: 28ch; font-size: clamp(27px, 2.9vw, 40px); line-height: 1.65; letter-spacing: 0; }
+.sp-bio { max-width: 54ch; margin-top: 6px !important; font-size: 17px; line-height: 1.65; color: var(--muted); }
 .is-ar .sp-bio { font-size: 20px; line-height: 1.9; }
 
-.sp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: 30px; }
+.sp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: 26px; }
 .sp-book {
   display: inline-block;
   padding: 14px 24px;
@@ -74,17 +107,6 @@
 .sp-quiet { font-size: 16px; color: var(--ink-2); border-bottom: 1px solid var(--hairline); padding: 4px 0; }
 .sp-quiet:hover { color: var(--accent); border-color: var(--accent); }
 .is-ar .sp-quiet { font-size: 18px; }
-
-.sp-portrait { position: relative; margin: 0; aspect-ratio: 4 / 5; overflow: hidden; background: var(--line); }
-.sp-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; }
-/* an inner rule, like a printed card's border */
-.sp-portrait::after {
-  content: "";
-  position: absolute;
-  inset: 12px;
-  border: 1px solid rgba(241, 232, 216, 0.32);
-  pointer-events: none;
-}
 
 /* ---------- the count ---------- */
 .sp-counts {
@@ -117,7 +139,31 @@
 .sp-src a:hover, .sp-src a:focus-visible { color: var(--accent); border-bottom-color: currentColor; }
 .is-ar .sp-src { font-size: 15px; }
 
-/* ---------- watch: three screens at one height ---------- */
+/* ---------- watch: the two event films, then the older clips ---------- */
+.sp-films { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2vw, 28px); align-items: start; }
+.sp-film-frame { position: relative; margin: 0 0 16px; aspect-ratio: 16 / 9; overflow: hidden; background: var(--line); }
+.sp-film-frame video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.sp-film-len {
+  position: absolute;
+  inset-block-start: 12px;
+  inset-inline-end: 12px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: rgba(11, 16, 32, 0.72);
+  color: #f1e8d8;
+  font-family: var(--font-en);
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.sp-film h3 { font-size: clamp(21px, 2vw, 26px); line-height: 1.25; letter-spacing: -0.01em; }
+.is-ar .sp-film h3 { line-height: 1.5; letter-spacing: 0; }
+.sp-film-line { margin-top: 8px !important; max-width: 52ch; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
+.is-ar .sp-film-line { font-size: 18.5px; line-height: 1.8; }
+.sp-more { margin: clamp(44px, 5.4vw, 72px) 0 22px; font-size: 19px; font-style: italic; font-weight: 400 !important; color: var(--muted); }
+.is-ar .sp-more { font-style: normal; font-size: 21px; }
+
+/* three screens at one height */
 .sp-reel {
   display: grid;
   /* widths follow each frame's shape (9:16, 4:5, 16:9), so the frames line up at one height */
@@ -204,19 +250,23 @@
 .is-ar .sp-shot figcaption { font-style: normal; font-size: 15.5px; }
 
 /* ---------- talks ---------- */
+.sp-talks-line { max-width: 60ch; margin-bottom: 26px !important; font-size: 18px; line-height: 1.6; color: var(--ink-2); }
+.is-ar .sp-talks-line { font-size: 20px; line-height: 1.85; }
 .sp-talks { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hairline); }
 .sp-talks li {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  gap: 12px 40px;
-  align-items: baseline;
-  padding: 24px 0;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 14px clamp(28px, 4vw, 64px);
+  align-items: start;
+  padding: 30px 0 32px;
   border-bottom: 1px solid var(--line);
 }
-.sp-talks h3 { font-size: clamp(23px, 2.4vw, 31px); line-height: 1.2; letter-spacing: -0.01em; }
-.is-ar .sp-talks h3 { line-height: 1.55; letter-spacing: 0; }
-.sp-talks p { font-size: 17px; line-height: 1.55; color: var(--muted); }
-.is-ar .sp-talks p { font-size: 19px; line-height: 1.8; }
+.sp-talks h3 { font-size: clamp(25px, 2.7vw, 36px); line-height: 1.15; letter-spacing: -0.015em; }
+.is-ar .sp-talks h3 { line-height: 1.5; letter-spacing: 0; }
+.sp-talk-line { margin-top: 10px !important; max-width: 36ch; font-size: 17px; font-style: italic; line-height: 1.5; color: var(--accent); }
+.is-ar .sp-talk-line { font-style: normal; font-size: 19px; line-height: 1.8; }
+.sp-talk-body { max-width: 60ch; font-size: 17px; line-height: 1.7; color: var(--ink-2); }
+.is-ar .sp-talk-body { font-size: 19.5px; line-height: 1.95; }
 .sp-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px 32px; margin: 30px 0 0; }
 .sp-facts dt { font-size: 14px; font-style: italic; color: var(--accent); }
 .is-ar .sp-facts dt { font-style: normal; font-size: 16px; }
@@ -273,8 +323,10 @@
 
 /* ---------- smaller screens ---------- */
 @media (max-width: 900px) {
-  .sp-hero { grid-template-columns: 1fr; padding: 36px 0 44px; }
-  .sp-portrait { max-width: 360px; aspect-ratio: 1 / 1; }
+  .sp-hero { padding: 28px 0 40px; }
+  .sp-reel-hero { margin-inline: 0; }
+  .sp-pitch { grid-template-columns: 1fr; }
+  .sp-films { grid-template-columns: 1fr; gap: 32px; }
   .sp-counts { grid-template-columns: 1fr 1fr; }
   .sp-count, .sp-count:first-child { padding: 18px 0 18px; border-inline-start: 0; border-top: 1px solid var(--line); }
   .sp-count:first-child { grid-column: 1 / -1; border-top: 0; }
@@ -292,12 +344,16 @@
   .sp-shot-6 .sp-shot-frame { aspect-ratio: 3 / 2; }
   .sp-talks li { grid-template-columns: 1fr; }
   .sp-facts { grid-template-columns: 1fr; }
-  .sp-kit-grid { grid-template-columns: 1fr; }
-  .sp-bios { grid-template-columns: 1fr; }
-  .sp-downloads { flex-direction: row; }
-  .sp-download { flex: 1 1 0; }
+  .sp-kit-grid { grid-template-columns: minmax(0, 1fr); }
+  .sp-bios { grid-template-columns: minmax(0, 1fr); }
+  /* three downloads now (portrait, stage, reel): equal columns that are allowed to shrink */
+  .sp-downloads { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .sp-download span { flex-wrap: wrap; gap: 2px 10px; }
 }
 @media (max-width: 560px) {
+  .sp-names { flex-direction: column; gap: 0; }
+  .sp-name-other { align-self: flex-end; }
+  .sp-reel-play { padding: 10px 14px; font-size: 15px; gap: 9px; }
   .sp-reel { grid-template-columns: 1fr 1fr; }
   .sp-screen-tall .sp-screen-frame, .sp-screen-card .sp-screen-frame { aspect-ratio: 4 / 5; }
 }
