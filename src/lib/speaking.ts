@@ -14,7 +14,11 @@ export const SPEAKING_MEDIA = {
   hero: `${IMG}/stage-coming-soon.jpg`,
   asharq: `${IMG}/tv-asharq-bloomberg.jpg`,
   cbcClip: `${MEDIA}/tv-cbc-sofra.mp4`,
-  cbcPoster: `${IMG}/tv-cbc-sofra-clip.jpg`,
+  cbcPoster: `${IMG}/tv-cbc-sofra-poster.jpg`,
+  asharqClip: `${MEDIA}/tv-asharq-bloomberg.mp4`,
+  asharqPoster: `${IMG}/tv-asharq-bloomberg-poster.jpg`,
+  pitchClip: `${MEDIA}/pitch-demo-day.mp4`,
+  pitchPoster: `${IMG}/pitch-demo-day.jpg`,
   tiktokClip: `${MEDIA}/tiktok-stage.mp4`,
   tiktokPoster: `${IMG}/tiktok-stage.jpg`,
   pitchPress: `${IMG}/pitch-press.jpg`,
@@ -24,8 +28,11 @@ export const SPEAKING_MEDIA = {
   training: `${IMG}/training-room.jpg`,
   headshot: `${IMG}/hazem-abdelghany-headshot.jpg`,
   // the speaker reel and the two event films, cut in remotion-captions/src/portfolio/
+  // reel = the download (with his name card); reelHero = the same cut without it, since the page sets his name above the video
   reel: `${MEDIA}/speaker-reel.mp4`,
+  reelHero: `${MEDIA}/speaker-reel-hero.mp4`,
   reelPoster: `${IMG}/speaker-reel.jpg`,
+  reelHeroPoster: `${IMG}/speaker-reel-hero.jpg`,
   atebFilm: `${MEDIA}/ateb-highlight.mp4`,
   atebPoster: `${IMG}/ateb-highlight.jpg`,
   aisFilm: `${MEDIA}/ais-highlight.mp4`,
@@ -71,7 +78,7 @@ export type Occasion = {
   next?: boolean;
   links?: Link[];
 };
-type Screen = { name: string; sub: string; line: string; links: Link[] };
+type Screen = { name: string; sub: string; line: string; links: Link[]; length?: string };
 type Film = { name: string; sub: string; line: string; length: string };
 type Photo = { src: string; alt: string; caption: string; w: number; h: number };
 
@@ -85,7 +92,16 @@ export type SpeakingCopy = {
   book: string;
   pressJump: string;
   reel: { play: string; length: string; label: string };
+  seen: { label: string; names: string[] };
+  bar: { links: Link[]; book: string };
   counts: Count[];
+  offers: {
+    label: string;
+    other: string;
+    line: string;
+    items: { name: string; spec: string; body: string; proof: string }[];
+    note: string;
+  };
 
   watch: {
     label: string;
@@ -93,9 +109,11 @@ export type SpeakingCopy = {
     ateb: Film;
     ais: Film;
     more: string;
+    play: string;
     tiktok: Screen;
     cbc: Screen;
     asharq: Screen;
+    pitch: Screen;
   };
   record: { label: string; other: string; occasions: Occasion[]; note: string; nextTag: string };
   room: { label: string; other: string; line: string; photos: Photo[]; links: Link[] };
@@ -104,7 +122,9 @@ export type SpeakingCopy = {
     other: string;
     line: string;
     items: { title: string; line: string; body: string }[];
-    facts: { k: string; v: string }[];
+    ask: string;
+    /** WhatsApp text for one talk; {talk} is replaced with its title */
+    askText: string;
   };
   press: {
     label: string;
@@ -151,6 +171,27 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     book: "Book me on WhatsApp",
     pressJump: "Bio and photos",
     reel: { play: "Play with sound", length: "0:45", label: "Speaker reel: Hazem on stage" },
+    seen: {
+      label: "On screen and on stage at",
+      names: [
+        "Asharq Bloomberg",
+        "CBC Sofra",
+        "TikTok Family Academy",
+        "ATEB Group",
+        "Startup Power",
+        "Startup Haus Cairo",
+      ],
+    },
+    bar: {
+      links: [
+        { label: "What you can book", href: "#sp-offers" },
+        { label: "Talks", href: "#sp-talks" },
+        { label: "Watch", href: "#sp-watch" },
+        { label: "Where I've spoken", href: "#sp-record" },
+        { label: "For organizers", href: "#press" },
+      ],
+      book: "Book me",
+    },
     counts: [
       {
         n: "60+",
@@ -171,6 +212,33 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       { n: "2", what: "TV interviews", detail: "Asharq Bloomberg and CBC Sofra." },
     ],
 
+    offers: {
+      label: "What you can book",
+      other: "تحجز إيه",
+      line: "Three ways I work with an event.",
+      items: [
+        {
+          name: "A talk",
+          spec: "20 to 40 minutes",
+          body: "One of the three talks below, rebuilt around your audience and shown live on the big screen.",
+          proof: "On stage at TikTok Family Academy Egypt, 2025",
+        },
+        {
+          name: "A hands-on workshop",
+          spec: "Up to 2 hours, or a training over several days",
+          body: "Everyone works on their own tasks and leaves with something working, not a slide deck.",
+          proof: "Two days with ATEB Group's team at Bibliotheca Alexandrina, 2026",
+        },
+        {
+          name: "Panel moderation",
+          spec: "Arabic, English, or both in one panel",
+          body: "I prepare the questions with your panelists, keep time, and bring the audience into it.",
+          proof: "TikTok Family Academy, 2025 and 2026. Next: KEMET-X at the Pyramids of Giza",
+        },
+      ],
+      note: "All of it in Egyptian Arabic or English.",
+    },
+
     watch: {
       label: "Watch",
       other: "اتفرّج",
@@ -178,7 +246,7 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
         name: "AI training for ATEB Group",
         sub: "Bibliotheca Alexandrina, November 2026",
         line: "Day one of a two-day AI training for the company's team.",
-        length: "2:50",
+        length: "2:48",
       },
       ais: {
         name: "TikTok Family Academy at AIS",
@@ -186,7 +254,8 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
         line: "The third edition, with Welmnt, at the American International School's two campuses.",
         length: "2:38",
       },
-      more: "Earlier, on stage and on TV",
+      more: "On TV and earlier stages",
+      play: "Play",
       tiktok: {
         name: "TikTok Family Academy Egypt",
         sub: "Moderator and speaker, November 2025",
@@ -199,7 +268,8 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       cbc: {
         name: "CBC Sofra, «الأكيل»",
         sub: "With Mourad Makram, November 2023",
-        line: "Building a food brand's marketing, as its CMO.",
+        line: "On building an Egyptian restaurant brand, as its CMO.",
+        length: "0:22",
         links: [
           { label: "Full episode", href: LINKS.cbcEpisode },
           { label: "Instagram", href: LINKS.cbcPost },
@@ -208,11 +278,19 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       asharq: {
         name: "Asharq Bloomberg, «ويك اند القاهرة»",
         sub: "With Zeina Safwan, February 2025",
-        line: "How AI can teach life skills in schools.",
+        line: "How Welmnt teaches life skills in schools.",
+        length: "0:15",
         links: [
           { label: "Clip", href: LINKS.asharqClip },
           { label: "Instagram", href: LINKS.asharqAnnounce },
         ],
+      },
+      pitch: {
+        name: "CiviConnectors Demo Day",
+        sub: "Startup Haus Cairo, September 2024",
+        line: "Pitching Welmnt to the room and a panel of experts.",
+        length: "0:11",
+        links: [{ label: "Startup Haus", href: LINKS.haus.demoDay }],
       },
     },
 
@@ -381,11 +459,8 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
           body: "I run my own companies with AI doing a real share of the work: ads, reports, content and code. This talk opens those screens. What I trust it with, what I still check by hand, and what it broke along the way.",
         },
       ],
-      facts: [
-        { k: "Formats", v: "Talk, hands-on workshop, panel moderation" },
-        { k: "Length", v: "Talks of 20 to 40 minutes, workshops up to 2 hours" },
-        { k: "Language", v: "Egyptian Arabic or English" },
-      ],
+      ask: "Ask about this talk",
+      askText: 'Hi Hazem, I\'d like the talk "{talk}" at our event: [event, date, audience]',
     },
 
     press: {
@@ -429,6 +504,27 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     book: "احجزني على WhatsApp",
     pressJump: "النبذة والصور",
     reel: { play: "شغّل بالصوت", length: "0:45", label: "فيديو المتحدّث: حازم على المسرح" },
+    seen: {
+      label: "على الشاشة وعلى المسرح في",
+      names: [
+        "الشرق Bloomberg",
+        "CBC سفرة",
+        "TikTok Family Academy",
+        "مجموعة ATEB",
+        "Startup Power",
+        "Startup Haus Cairo",
+      ],
+    },
+    bar: {
+      links: [
+        { label: "تحجز إيه", href: "#sp-offers" },
+        { label: "المحاضرات", href: "#sp-talks" },
+        { label: "اتفرّج", href: "#sp-watch" },
+        { label: "اتكلمت فين", href: "#sp-record" },
+        { label: "للمنظّمين", href: "#press" },
+      ],
+      book: "احجزني",
+    },
     counts: [
       { n: "+60", what: "مرة قدّام جمهور", detail: "تدريبات ومسارح وpanels وتلفزيون، من 2023." },
       { n: "+50", what: "تدريب", detail: "لفرق وشركات وكلاسات مفتوحة." },
@@ -441,6 +537,33 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       { n: "2", what: "لقاءات تلفزيونية", detail: "الشرق Bloomberg وCBC سفرة." },
     ],
 
+    offers: {
+      label: "تحجز إيه",
+      other: "What you can book",
+      line: "تلات طرق بشتغل بيهم مع أي event.",
+      items: [
+        {
+          name: "محاضرة",
+          spec: "من 20 لـ 40 دقيقة",
+          body: "واحدة من التلات محاضرات اللي تحت، بتتبني على جمهورك وبتتعرض live على الشاشة الكبيرة.",
+          proof: "على المسرح في TikTok Family Academy مصر، 2025",
+        },
+        {
+          name: "ورشة عملي",
+          spec: "لحد ساعتين، أو تدريب على كذا يوم",
+          body: "كل واحد بيشتغل على شغله هو وبيخرج بحاجة شغّالة، مش slides.",
+          proof: "يومين مع فريق مجموعة ATEB في مكتبة الإسكندرية، 2026",
+        },
+        {
+          name: "إدارة panel",
+          spec: "عربي، إنجليزي، أو الاتنين في نفس الـ panel",
+          body: "بحضّر الأسئلة مع ضيوفك، بمسك الوقت، وبدخّل الجمهور في الكلام.",
+          proof: "TikTok Family Academy، 2025 و2026. الجاي: KEMET-X عند أهرامات الجيزة",
+        },
+      ],
+      note: "كله بالعامية المصرية أو بالإنجليزي.",
+    },
+
     watch: {
       label: "اتفرّج",
       other: "Watch",
@@ -448,7 +571,7 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
         name: "تدريب AI لمجموعة ATEB",
         sub: "مكتبة الإسكندرية، نوفمبر 2026",
         line: "اليوم الأول من تدريب AI على يومين لفريق الشركة.",
-        length: "2:50",
+        length: "2:48",
       },
       ais: {
         name: "TikTok Family Academy في AIS",
@@ -456,7 +579,8 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
         line: "النسخة التالتة، مع Welmnt، في فرعين للمدرسة الأمريكية الدولية.",
         length: "2:38",
       },
-      more: "قبل كده، على المسرح وفي التلفزيون",
+      more: "في التلفزيون، ومسارح قبل كده",
+      play: "شغّل",
       tiktok: {
         name: "TikTok Family Academy مصر",
         sub: "أدرت الـ panel واتكلمت، نوفمبر 2025",
@@ -469,7 +593,8 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       cbc: {
         name: "CBC سفرة، «الأكيل»",
         sub: "مع مراد مكرم، نوفمبر 2023",
-        line: "بناء التسويق لبراند أكل، كـ CMO بتاعه.",
+        line: "عن بناء براند مطاعم مصري، كـ CMO بتاعه.",
+        length: "0:22",
         links: [
           { label: "الحلقة كاملة", href: LINKS.cbcEpisode },
           { label: "Instagram", href: LINKS.cbcPost },
@@ -478,11 +603,19 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
       asharq: {
         name: "الشرق Bloomberg، «ويك اند القاهرة»",
         sub: "مع زينة صفوان، فبراير 2025",
-        line: "إزاي الـ AI يعلّم المهارات الحياتية في المدارس.",
+        line: "إزاي Welmnt بتعلّم المهارات الحياتية في المدارس.",
+        length: "0:15",
         links: [
           { label: "المقطع", href: LINKS.asharqClip },
           { label: "Instagram", href: LINKS.asharqAnnounce },
         ],
+      },
+      pitch: {
+        name: "CiviConnectors Demo Day",
+        sub: "Startup Haus Cairo، سبتمبر 2024",
+        line: "Pitch لـ Welmnt قدّام القاعة ولجنة خبراء.",
+        length: "0:11",
+        links: [{ label: "Startup Haus", href: LINKS.haus.demoDay }],
       },
     },
 
@@ -651,11 +784,9 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
           body: "بدير شركاتي والـ AI شايل جزء حقيقي من الشغل: إعلانات وتقارير ومحتوى وكود. المحاضرة دي بتفتح الشاشات دي. بأمّنه على إيه، لسه براجع إيه بإيدي، وبوّظ إيه في السكة.",
         },
       ],
-      facts: [
-        { k: "الشكل", v: "محاضرة، ورشة عملي، إدارة panel" },
-        { k: "المدة", v: "محاضرة من 20 لـ 40 دقيقة، ورشة لحد ساعتين" },
-        { k: "اللغة", v: "العامية المصرية أو الإنجليزي" },
-      ],
+      ask: "اسأل عن المحاضرة دي",
+      askText:
+        "أهلاً يا حازم 👋 عايز محاضرة «{talk}» في الـ event بتاعنا: [الـ event، التاريخ، الجمهور]",
     },
 
     press: {
@@ -675,7 +806,11 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
           file: "Hazem Abdelghany, portrait.jpg",
           href: SPEAKING_MEDIA.headshot,
         },
-        { label: "على المسرح", file: "Hazem Abdelghany, on stage.jpg", href: SPEAKING_MEDIA.aisWest },
+        {
+          label: "على المسرح",
+          file: "Hazem Abdelghany, on stage.jpg",
+          href: SPEAKING_MEDIA.aisWest,
+        },
         {
           label: "فيديو المتحدّث، 0:45",
           file: "Hazem Abdelghany, speaker reel.mp4",

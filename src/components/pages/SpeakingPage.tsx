@@ -10,16 +10,19 @@ import {
 } from "@/lib/speaking";
 
 /** /speaking/ and /ar/speaking/ — the page Hazem sends to event organizers.
-    It opens on him on stage (the speaker reel), then the proof in the order an organizer
-    asks for it: the event films, the talks he gives, the record by year, photos,
-    and the kit they need to book him.
+    It opens on him on stage (the speaker reel) and where he has appeared, then answers an
+    organizer's questions in the order they ask them: what can I book, what are the talks,
+    can I watch more, where has he spoken, and what do I need to book him.
+    A slim bar with the section links and the booking button stays in reach while they scroll.
     Styles in styles/speaking.css read the theme tokens from global.css. */
 export function SpeakingPage({ lang }: { lang: Lang }) {
   const t = SPEAKING[lang];
   const isAr = lang === "ar";
   const otherLang = isAr ? "en" : "ar";
   const otherDir = isAr ? "ltr" : "rtl";
-  const wa = `https://wa.me/${SPEAKING_WHATSAPP}?text=${encodeURIComponent(t.whatsappText)}`;
+  const waText = (text: string) =>
+    `https://wa.me/${SPEAKING_WHATSAPP}?text=${encodeURIComponent(text)}`;
+  const wa = waText(t.whatsappText);
 
   const Head = ({ id, text, other }: { id: string; text: string; other: string }) => (
     <div className="sp-head">
@@ -40,7 +43,15 @@ export function SpeakingPage({ lang }: { lang: Lang }) {
             {t.nameOther}
           </span>
         </h1>
-        <Reel src={M.reel} poster={M.reelPoster} copy={t.reel} />
+        <Reel src={M.reelHero} poster={M.reelHeroPoster} copy={t.reel} />
+        <div className="sp-seen">
+          <p>{t.seen.label}</p>
+          <ul>
+            {t.seen.names.map((n) => (
+              <li key={n}>{n}</li>
+            ))}
+          </ul>
+        </div>
         <div className="sp-pitch">
           <p className="sp-statement">{t.statement}</p>
           <div className="sp-pitch-side">
@@ -71,38 +82,33 @@ export function SpeakingPage({ lang }: { lang: Lang }) {
         ))}
       </dl>
 
-      <section className="sp-section" aria-labelledby="sp-watch">
-        <Head id="sp-watch" text={t.watch.label} other={t.watch.other} />
-        <div className="sp-films">
-          <FilmCard item={t.watch.ateb} src={M.atebFilm} poster={M.atebPoster} />
-          <FilmCard item={t.watch.ais} src={M.aisFilm} poster={M.aisPoster} />
-        </div>
-        <h3 className="sp-more">{t.watch.more}</h3>
-        <div className="sp-reel">
-          <Screen
-            shape="tall"
-            item={t.watch.tiktok}
-            media={<Clip src={M.tiktokClip} poster={M.tiktokPoster} label={t.watch.tiktok.name} />}
-          />
-          <Screen
-            shape="card"
-            item={t.watch.cbc}
-            media={<Clip src={M.cbcClip} poster={M.cbcPoster} label={t.watch.cbc.name} />}
-          />
-          <Screen
-            shape="wide"
-            item={t.watch.asharq}
-            media={
-              <img
-                src={M.asharq}
-                alt={t.watch.asharq.name}
-                width={1170}
-                height={662}
-                loading="lazy"
-              />
-            }
-          />
-        </div>
+      <nav className="sp-bar" aria-label={t.bar.book}>
+        <ul>
+          {t.bar.links.map((l) => (
+            <li key={l.href}>
+              <a href={l.href}>{l.label}</a>
+            </li>
+          ))}
+        </ul>
+        <a className="sp-bar-book" href={wa} target="_blank" rel="noopener">
+          {t.bar.book}
+        </a>
+      </nav>
+
+      <section className="sp-section" aria-labelledby="sp-offers">
+        <Head id="sp-offers" text={t.offers.label} other={t.offers.other} />
+        <p className="sp-talks-line">{t.offers.line}</p>
+        <ul className="sp-offers">
+          {t.offers.items.map((o) => (
+            <li key={o.name}>
+              <h3>{o.name}</h3>
+              <p className="sp-offer-spec">{o.spec}</p>
+              <p className="sp-offer-body">{o.body}</p>
+              <p className="sp-offer-proof">{o.proof}</p>
+            </li>
+          ))}
+        </ul>
+        <p className="sp-note">{t.offers.note}</p>
       </section>
 
       <section className="sp-section" aria-labelledby="sp-talks">
@@ -115,18 +121,71 @@ export function SpeakingPage({ lang }: { lang: Lang }) {
                 <h3>{k.title}</h3>
                 <p className="sp-talk-line">{k.line}</p>
               </div>
-              <p className="sp-talk-body">{k.body}</p>
+              <div>
+                <p className="sp-talk-body">{k.body}</p>
+                <a
+                  className="sp-talk-ask"
+                  href={waText(t.talks.askText.replace("{talk}", k.title))}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {t.talks.ask}
+                </a>
+              </div>
             </li>
           ))}
         </ul>
-        <dl className="sp-facts">
-          {t.talks.facts.map((f) => (
-            <div key={f.k}>
-              <dt>{f.k}</dt>
-              <dd>{f.v}</dd>
-            </div>
-          ))}
-        </dl>
+      </section>
+
+      <section className="sp-section" aria-labelledby="sp-watch">
+        <Head id="sp-watch" text={t.watch.label} other={t.watch.other} />
+        <div className="sp-films">
+          <Player
+            shape="wide"
+            item={t.watch.ateb}
+            src={M.atebFilm}
+            poster={M.atebPoster}
+            play={t.watch.play}
+            big
+          />
+          <Player
+            shape="wide"
+            item={t.watch.ais}
+            src={M.aisFilm}
+            poster={M.aisPoster}
+            play={t.watch.play}
+            big
+          />
+        </div>
+        <h3 className="sp-more">{t.watch.more}</h3>
+        <div className="sp-wall">
+          <Player
+            shape="wide"
+            item={t.watch.cbc}
+            src={M.cbcClip}
+            poster={M.cbcPoster}
+            play={t.watch.play}
+          />
+          <Player
+            shape="wide"
+            item={t.watch.asharq}
+            src={M.asharqClip}
+            poster={M.asharqPoster}
+            play={t.watch.play}
+          />
+          <Player
+            shape="tall"
+            item={t.watch.pitch}
+            src={M.pitchClip}
+            poster={M.pitchPoster}
+            play={t.watch.play}
+          />
+          <Screen
+            shape="tall"
+            item={t.watch.tiktok}
+            media={<Clip src={M.tiktokClip} poster={M.tiktokPoster} label={t.watch.tiktok.name} />}
+          />
+        </div>
       </section>
 
       <section className="sp-section" aria-labelledby="sp-record">
@@ -286,6 +345,9 @@ function Reel({
   const withSound = () => {
     const v = ref.current;
     if (!v) return;
+    document.querySelectorAll<HTMLVideoElement>(".speaking-page video").forEach((o) => {
+      if (o !== v && !o.muted) o.pause();
+    });
     v.muted = false;
     v.loop = false;
     v.currentTime = 0;
@@ -320,38 +382,69 @@ function Reel({
   );
 }
 
-/** One event film: a poster until it is pressed, then the browser's own player with sound. */
-function FilmCard({
+/** A clip with sound: a poster and one play button until it is pressed, then the browser's own player.
+    Starting one pauses any other that is playing. */
+function Player({
+  shape,
   item,
   src,
   poster,
+  play,
+  big,
 }: {
-  item: { name: string; sub: string; line: string; length: string };
+  shape: "wide" | "tall";
+  item: { name: string; sub: string; line: string; length?: string; links?: Link[] };
   src: string;
   poster: string;
+  play: string;
+  big?: boolean;
 }) {
+  const ref = useRef<HTMLVideoElement>(null);
   const [started, setStarted] = useState(false);
+  const start = () => {
+    const v = ref.current;
+    if (!v) return;
+    document.querySelectorAll<HTMLVideoElement>(".speaking-page video").forEach((o) => {
+      if (o !== v && !o.muted) o.pause();
+    });
+    setStarted(true);
+    void v.play();
+  };
   return (
-    <article className="sp-film">
-      <figure className="sp-film-frame">
+    <article className={`sp-screen sp-screen-${shape}${big ? " sp-screen-big" : ""}`}>
+      <figure className="sp-screen-frame sp-player">
         <video
+          ref={ref}
           src={src}
           poster={poster}
-          controls
+          controls={started}
           playsInline
           preload="none"
           aria-label={item.name}
-          onPlay={() => setStarted(true)}
         />
         {!started && (
-          <span className="sp-film-len" dir="ltr">
-            {item.length}
-          </span>
+          <button
+            type="button"
+            className="sp-play"
+            onClick={start}
+            aria-label={`${play}: ${item.name}`}
+          >
+            <svg viewBox="0 0 12 14" width="12" height="14" aria-hidden="true">
+              <path d="M0 0v14l12-7z" fill="currentColor" />
+            </svg>
+            <span>{play}</span>
+            {item.length && (
+              <span className="sp-reel-len" dir="ltr">
+                {item.length}
+              </span>
+            )}
+          </button>
         )}
       </figure>
       <h3>{item.name}</h3>
       <p className="sp-screen-sub">{item.sub}</p>
-      <p className="sp-film-line">{item.line}</p>
+      <p>{item.line}</p>
+      {item.links && <Sources links={item.links} />}
     </article>
   );
 }
