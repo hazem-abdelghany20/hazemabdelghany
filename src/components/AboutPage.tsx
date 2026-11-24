@@ -42,6 +42,14 @@ export function AboutPage({ lang = "en" }: { lang?: "en" | "ar" }) {
         </p>
         <p className="opening-statement">{c.statement}</p>
         <p className="opening-note">{c.note}</p>
+        <p className="opening-note opening-speaking">
+          {isAr
+            ? "وبتكلم قدام الناس كمان: محاضرات وورش عن الـAI، وإدارة panels، ولقاءات تلفزيون. "
+            : "I also speak: AI talks and workshops, panel moderation, and TV. "}
+          <Link to={isAr ? "/ar/speaking/" : "/speaking/"}>
+            {isAr ? "شوف صفحة المحاضرات ←" : "See the speaking page →"}
+          </Link>
+        </p>
       </section>
 
       <section className="about-section story" aria-labelledby="longer-version">

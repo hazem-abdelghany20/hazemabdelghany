@@ -48,6 +48,9 @@ export function Footer({ lang = "en" }: { lang?: "en" | "ar" }) {
               <L href={localePath(lang, "/essays/")}>{isAr ? "المقالات" : "Articles"}</L>
             </li>
             <li>
+              <L href={localePath(lang, "/speaking/")}>{isAr ? "المحاضرات" : "Speaking"}</L>
+            </li>
+            <li>
               <L href={localePath(lang, "/about/")}>{isAr ? "عنّي" : "About"}</L>
             </li>
             <li>

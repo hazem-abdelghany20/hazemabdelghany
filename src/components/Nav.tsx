@@ -42,6 +42,12 @@ export function Nav({ lang = "en" }: { lang?: Lang }) {
                 </span>
               </L>
             )}
+            <L href={to("/speaking/")}>
+              {"محاضرات "}
+              <span className="en" dir="ltr" lang="en">
+                Speaking
+              </span>
+            </L>
             <L href={to("/about/")}>
               {"عنّي "}
               <span className="en" dir="ltr" lang="en">
@@ -71,6 +77,12 @@ export function Nav({ lang = "en" }: { lang?: Lang }) {
                 </span>
               </L>
             )}
+            <L href={to("/speaking/")}>
+              {"Speaking "}
+              <span className="ar" dir="rtl" lang="ar">
+                محاضرات
+              </span>
+            </L>
             <L href={to("/about/")}>
               {"About "}
               <span className="ar" dir="rtl" lang="ar">
