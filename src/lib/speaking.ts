@@ -150,7 +150,7 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     portraitAlt: "Hazem Abdelghany",
     book: "Book me on WhatsApp",
     pressJump: "Bio and photos",
-    reel: { play: "Play with sound", length: "1:20", label: "Speaker reel: Hazem on stage" },
+    reel: { play: "Play with sound", length: "0:45", label: "Speaker reel: Hazem on stage" },
     counts: [
       {
         n: "60+",
@@ -407,7 +407,7 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
         },
         { label: "On stage", file: "Hazem Abdelghany, on stage.jpg", href: SPEAKING_MEDIA.aisWest },
         {
-          label: "Speaker reel, 1:20",
+          label: "Speaker reel, 0:45",
           file: "Hazem Abdelghany, speaker reel.mp4",
           href: SPEAKING_MEDIA.reel,
           thumb: SPEAKING_MEDIA.reelPoster,
@@ -428,7 +428,7 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
     portraitAlt: "حازم عبدالغني",
     book: "احجزني على WhatsApp",
     pressJump: "النبذة والصور",
-    reel: { play: "شغّل بالصوت", length: "1:20", label: "فيديو المتحدّث: حازم على المسرح" },
+    reel: { play: "شغّل بالصوت", length: "0:45", label: "فيديو المتحدّث: حازم على المسرح" },
     counts: [
       { n: "+60", what: "مرة قدّام جمهور", detail: "تدريبات ومسارح وpanels وتلفزيون، من 2023." },
       { n: "+50", what: "تدريب", detail: "لفرق وشركات وكلاسات مفتوحة." },
@@ -677,7 +677,7 @@ export const SPEAKING: Record<Lang, SpeakingCopy> = {
         },
         { label: "على المسرح", file: "Hazem Abdelghany, on stage.jpg", href: SPEAKING_MEDIA.aisWest },
         {
-          label: "فيديو المتحدّث، 1:20",
+          label: "فيديو المتحدّث، 0:45",
           file: "Hazem Abdelghany, speaker reel.mp4",
           href: SPEAKING_MEDIA.reel,
           thumb: SPEAKING_MEDIA.reelPoster,
